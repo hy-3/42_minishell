@@ -37,7 +37,6 @@
 - Done with Hiro .
 
 [Hiro] Environment variables ($ followed by characters) should expand to their values.
-- 
 
 [Check] $? should expand to the exit status of the most recently executed foreground pipeline.
 - Make sure exit status code whenever we handles error.
@@ -47,5 +46,3 @@
       [Edu] ctrl-C print a new prompt on a newline.
       [Edu] ctrl-D exit the shell.
       [Edu] ctrl-\ do nothing.
-
-hiroki
