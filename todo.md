@@ -2,7 +2,7 @@
 
 [Check] Not use more than one global variable, think about it and be ready to explain why you do it.
 
-[] Show a prompt when waiting for a new command.
+[x] Show a prompt when waiting for a new command.
 - Done by Edu
 
 [x] Have a working History.
