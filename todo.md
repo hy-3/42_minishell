@@ -41,7 +41,7 @@
 [Check] $? should expand to the exit status of the most recently executed foreground pipeline.
 - Make sure exit status code whenever we handles error.
 
-[Edu] ctrl-C ctrl-D ctrl-\ should work like in bash.∫
+[Edu] ctrl-C ctrl-D ctrl-\ should work like in bash.
     When interactive:
       [Edu] ctrl-C print a new prompt on a newline.
       [Edu] ctrl-D exit the shell.
