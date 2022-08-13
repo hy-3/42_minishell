@@ -6,4 +6,19 @@
 # include <readline/history.h>
 # include "../lib/libft/libft.h"
 
+typedef struct s_imput
+{
+	char			*str;
+	struct s_imput	*next;
+}	t_imput;
+// typedef struct s_quotes
+// {
+// 	int	num_of_double_quote;
+// 	int	num_of_single_quote;
+// }	t_quotes
+
+
+void	parse(char *original_imput, t_imput *parsed_imput);
+void	cust_split(char const *s, char c, t_imput *parsed_imput);
+
 #endif

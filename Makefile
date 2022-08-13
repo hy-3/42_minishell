@@ -4,7 +4,10 @@ CC = gcc
 FLAG_LIB = -lreadline
 LIBFT_PATH = lib/libft/
 LIBFT = lib/libft/libft.a
-SRC = src/main.c
+SRC = src/main.c \
+	  src/parse/parse.c \
+	  src/parse/str_split.c
+
 OBJ = $(SRC:%.c=%.o)
 
 all: $(NAME)
