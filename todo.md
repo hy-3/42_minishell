@@ -46,3 +46,16 @@
       [Edu] ctrl-C print a new prompt on a newline.
       [Edu] ctrl-D exit the shell.
       [Edu] ctrl-\ do nothing.
+
+
+# possible imputs (to think how we parse from readline imput)
+$ cmd
+$ cmd option
+$ cmd | cmd
+$ < input_file | cmd > output_file h
+$ cmd file
+$ > file
+$ >> file
+$ << file
+$ $<ENV>
+$ "consider as one command" or 'consider as one command'
