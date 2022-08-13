@@ -18,8 +18,16 @@ int	main(int argc, char *argv[], char *env[])
 		int i = 0;
 		while (parsed_imput->next != NULL)
 		{
-			printf("%i: %s\n", ++i, parsed_imput->str);
+			printf("%i: %s\n", i, parsed_imput->str);
+			int k = 0;
+			while (parsed_imput->extra != NULL)
+			{
+				parsed_imput = parsed_imput->extra;
+				printf("%i.%i: %s\n", i, k, parsed_imput->str);
+				k++;
+			}
 			parsed_imput = parsed_imput->next;
+			i++;
 		}
 		/* --- */
 

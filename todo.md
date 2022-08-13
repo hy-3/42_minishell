@@ -90,3 +90,17 @@
 1. ["]
 
 1. [']
+
+# Thigs to be careful with quatation
+    bash-3.2$ echo "$USER"
+    hiyamamo
+    bash-3.2$ echo '$USER'
+    $USER
+    bash-3.2$ echo "'$USER'"
+    'hiyamamo'
+    bash-3.2$ echo '"$USER"'
+    "$USER"
+    bash-3.2$ echo "'"$USER"'"
+    'hiyamamo'
+    bash-3.2$ echo '"'"$USER"'"'
+    "hiyamamo"

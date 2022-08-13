@@ -10,15 +10,12 @@ typedef struct s_imput
 {
 	char			*str;
 	struct s_imput	*next;
+	struct s_imput	*extra;
 }	t_imput;
-// typedef struct s_quotes
-// {
-// 	int	num_of_double_quote;
-// 	int	num_of_single_quote;
-// }	t_quotes
-
 
 void	parse(char *original_imput, t_imput *parsed_imput);
 void	cust_split(char const *s, char c, t_imput *parsed_imput);
+char	*ft_strchr(const char *s, int c);
+size_t	ft_strlen(const char *str);
 
 #endif
