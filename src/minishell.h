@@ -12,8 +12,12 @@ typedef struct s_imput
 	struct s_imput	*next;
 }	t_imput;
 
+//	src/parse/parse.c
 t_imput	*parse(char *original_imput);
+//	src/parse/str_split.c
 t_imput	*cust_split(char const *s, char c);
-char	*ft_strchr(const char *s, int c);
+//	Libft
+size_t	ft_strlen(const char *str);
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 
 #endif

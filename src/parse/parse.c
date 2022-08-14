@@ -17,10 +17,11 @@ t_imput	*cust_lstlast(t_imput *lst)
 	return (current_node);
 }
 
-void	cust_onelstadd_back(t_imput **lst, t_imput *new)
+void	cust_onelst_addback(t_imput **lst, t_imput *new)
 {
 	t_imput	*current_node;
 	t_imput	*current_next;
+	size_t	len_of_str;
 
 	if (*lst == NULL)
 	{
@@ -29,23 +30,30 @@ void	cust_onelstadd_back(t_imput **lst, t_imput *new)
 	}
 	current_node = (*lst);
 	current_next = (*lst)->next;
-	if (current_next != NULL)
+	while (current_next != NULL)
 	{
 		current_node = current_next;
 		current_next = current_next->next;
 	}
-	current_node->next = new;
+	current_node->next = (t_imput *) malloc(sizeof(t_imput));
+	current_node = current_node->next;
+	len_of_str = ft_strlen(new->str);
+	current_node->str = (char *) malloc((len_of_str + 1) * sizeof(char));
+	ft_strlcpy(current_node->str, new->str, len_of_str + 1);
+	current_node->next = NULL;
 }
 
 int	check_pipe(t_imput *parsed_imput)
 {
-	t_imput *lstnode;
+	t_imput	*lstnode;
+	size_t	len_of_str;
 
 	lstnode = cust_lstlast(parsed_imput);
-	if (ft_strchr(lstnode->str, '|') == NULL)
-		return (0);
-	else
+	len_of_str = ft_strlen(lstnode->str);
+	if (lstnode->str[len_of_str - 1] == '|')
 		return (1);
+	else
+		return (0);
 }
 
 void	check_and_modify(t_imput *parsed_imput)
@@ -59,7 +67,7 @@ void	check_and_modify(t_imput *parsed_imput)
 		prompt = "pipe> "; //TODO: check if prompt [pipe>] has to be like [pipe pipe>] based on num of | .
 		extra_imput = readline(prompt);
 		extra_parsed_imput = cust_split(extra_imput, ' ');
-		cust_onelstadd_back(&parsed_imput, extra_parsed_imput);
+		cust_onelst_addback(&parsed_imput, extra_parsed_imput);
 		free(extra_imput);
 	}
 }
