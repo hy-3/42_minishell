@@ -14,5 +14,6 @@ typedef struct s_imput
 
 t_imput	*parse(char *original_imput);
 t_imput	*cust_split(char const *s, char c);
+char	*ft_strchr(const char *s, int c);
 
 #endif

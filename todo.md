@@ -58,6 +58,7 @@
     $ > file    -> [Override] you can write to mentioned file without prompt (you can end imput with ctl+C)
     $ >> file   -> [Add] you can write to mentioned file without prompt (you can end imput with ctl+C)
     $ < input_file | cmd > output_file h
+        - if begin is < & one arg & file exists: < a(if file named a exists)    -> cat file & show (END)
     $ << TERMINATE_WORD
         ex) << TERMINATE_WORD    -> heredoc>
                                     (Work as 'echo' with new line after putting TERMINATE_WORD)

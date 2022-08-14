@@ -1,5 +1,8 @@
 #include "minishell.h"
 
+//TODO: Check below cases.
+// - if begin is >/>> & one arg: > a	-> no prompt but wait imput from user
+// - if contains << anywhere			-> heredoc> : can I throw error if there are not enough params?
 int	main(int argc, char *argv[], char *env[])
 {
 	char	*prompt;
