@@ -39,6 +39,12 @@ t_imput	*cust_split(char const *s, char c)
 			{
 				if (s[i] == 34 || s[i] == 39)
 					num_of_quote++;
+				if (s[i] == '|')
+				{
+					if (start == i)
+						i++;
+					break ;
+				}
 				i++;
 			}
 			parsed_imput->str = (char *) malloc((i - start + 1) * sizeof(char));
