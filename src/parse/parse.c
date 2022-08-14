@@ -1,11 +1,9 @@
 #include "../minishell.h"
 
-void	parse(char *original_imput, t_imput *parsed_imput)
+t_imput	*parse(char *original_imput)
 {
-	cust_split(original_imput, ' ', parsed_imput);
-	//	- if contains odd num of "			-> dquote>
-	//	- if contains odd num of '			-> quote>
-
+	return (cust_split(original_imput, ' '));
+	// When below cases happen, add lists based on user input.
 	//	- if end is pipe
 	//		ex) a |							-> pipe>
 	//		ex) la | a |					-> pipe pipe>

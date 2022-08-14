@@ -6,12 +6,11 @@ int	main(int argc, char *argv[], char *env[])
 	char	*original_imput;
 	t_imput	*parsed_imput;
 
-	parsed_imput = (t_imput *) malloc(sizeof(t_imput));
 	prompt = "minishell> ";
 	while (1)
 	{
 		original_imput = readline(prompt);
-		parse(original_imput, parsed_imput);
+		parsed_imput = parse(original_imput);
 		free(original_imput);
 
 		/* --- to check --- */
@@ -22,7 +21,8 @@ int	main(int argc, char *argv[], char *env[])
 			parsed_imput = parsed_imput->next;
 			i++;
 		}
-		/* --- */
+		printf("%i: %s\n", i, parsed_imput->str);
+		/* ---------------- */
 
 	}
 }

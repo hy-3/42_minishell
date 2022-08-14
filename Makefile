@@ -14,7 +14,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	make -C $(LIBFT_PATH)
-	$(CC) $(OBJ) $(LIBFT) $(FLAG_LIB) $(FLAG_WARN) -o $(NAME)
+	$(CC) $(OBJ) $(LIBFT) $(FLAG_LIB) $(FLAG_WARN) -fsanitize=address -o $(NAME)
 
 %.o: %.c
 	$(CC) $(FLAGS) -c $< -o $@

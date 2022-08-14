@@ -1,20 +1,38 @@
 #include "../minishell.h"
 
-void	fill_string(char const *s, char c, t_imput *parsed_imput)
+t_imput	*cust_split(char const *s, char c)
 {
 	int		i;
 	int		k;
 	int		start;
-	t_imput	*current;
+	t_imput	*parsed_imput;
+	t_imput	*first_parsed_imput;
 	int		num_of_quote;
 	char 	tmp_quote;
+	int		count;
 
+	// if (s == NULL)
+		//TODO: error handle
 	i = 0;
-	current = parsed_imput;
+	count = 0;
+	parsed_imput = (t_imput *) malloc(sizeof(t_imput));
+	// if (parsed_imput == NULL)
+		//TODO: error handle
+	parsed_imput->str = NULL;
+	parsed_imput->next = NULL;
+	first_parsed_imput = parsed_imput;
 	while (s[i] != '\0')
 	{
 		if (s[i] != c)
 		{
+			count++;
+			if (count > 1)
+			{
+				parsed_imput->next = (t_imput *) malloc(sizeof(t_imput));
+				// if (parsed_imput->next == NULL)
+					//TODO: error handle
+				parsed_imput = parsed_imput->next;
+			}
 			start = i;
 			num_of_quote = 0;
 			while ((num_of_quote > 0 && s[i] != '\0') || (s[i] != c && s[i] != '\0'))
@@ -23,9 +41,9 @@ void	fill_string(char const *s, char c, t_imput *parsed_imput)
 					num_of_quote++;
 				i++;
 			}
-			current->str = (char *) malloc((i - start + 1) * sizeof(char));
-			// if (current->str == NULL)
-			// 	free
+			parsed_imput->str = (char *) malloc((i - start + 1) * sizeof(char));
+			// if (parsed_imput->str == NULL)
+				//TODO: error handle
 			k = 0;
 			while ((i - start) > 0)
 			{
@@ -39,40 +57,18 @@ void	fill_string(char const *s, char c, t_imput *parsed_imput)
 							printf("ERROR: quote is not closed.\n");
 							exit(1); //TODO: error handling
 						}
-						current->str[k++] = s[start];
+						parsed_imput->str[k++] = s[start];
 					}
 					start++;
 					continue;
 				}
-				current->str[k++] = s[start++];
+				parsed_imput->str[k++] = s[start++];
 			}
-			current->str[k] = '\0';
-			current->next = (t_imput *) malloc(sizeof(t_imput));
-			// if (current->next == NULL)
-				// free
-			current = current->next;
+			parsed_imput->str[k] = '\0';
+			parsed_imput->next = NULL;
 		}
 		else
 			i++;
 	}
-	current = NULL;
+	return (first_parsed_imput);
 }
-
-void	cust_split(char const *s, char c, t_imput *parsed_imput)
-{
-	// if (s == NULL)
-	fill_string(s, c, parsed_imput);
-}
-
-
-//TODO: Fix segmentation fault
-/*
-$ ./minishell 
-minishell> ls "'"'sa'""
-0: ls
-1: 'sa
-minishell> ls "'"'sa'""
-0: ls
-1: 'sa
-Segmentation fault: 11
-*/

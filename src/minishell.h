@@ -12,7 +12,7 @@ typedef struct s_imput
 	struct s_imput	*next;
 }	t_imput;
 
-void	parse(char *original_imput, t_imput *parsed_imput);
-void	cust_split(char const *s, char c, t_imput *parsed_imput);
+t_imput	*parse(char *original_imput);
+t_imput	*cust_split(char const *s, char c);
 
 #endif
