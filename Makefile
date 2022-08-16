@@ -6,7 +6,12 @@ LIBFT_PATH = lib/libft/
 LIBFT = lib/libft/libft.a
 SRC = src/main.c \
 	  src/parse/parse.c \
-	  src/parse/str_split.c
+	  src/parse/split_to_lst.c \
+	  src/cmd/split_to_str.c \
+	  src/cmd/stderr.c \
+	  src/cmd/pipex.c \
+	  src/cmd/check_cmd.c \
+	  src/cmd/list.c
 
 OBJ = $(SRC:%.c=%.o)
 

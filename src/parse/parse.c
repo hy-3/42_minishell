@@ -66,7 +66,7 @@ void	check_and_modify(t_imput *parsed_imput)
 	{
 		prompt = "pipe> "; //TODO: check if prompt [pipe>] has to be like [pipe pipe>] based on num of | .
 		extra_imput = readline(prompt);
-		extra_parsed_imput = cust_split(extra_imput, ' ');
+		extra_parsed_imput = split_to_lst(extra_imput, ' ');
 		cust_onelst_addback(&parsed_imput, extra_parsed_imput);
 		free(extra_imput);
 	}
@@ -76,7 +76,7 @@ t_imput	*parse(char *original_imput)
 {
 	t_imput *parsed_imput;
 
-	parsed_imput = cust_split(original_imput, ' ');
+	parsed_imput = split_to_lst(original_imput, ' ');
 	check_and_modify(parsed_imput);
 	return (parsed_imput);
 }

@@ -1,6 +1,6 @@
 #include "../minishell.h"
 
-t_imput	*cust_split(char const *s, char c)
+t_imput	*split_to_lst(char const *s, char c)
 {
 	int		i;
 	int		k;
