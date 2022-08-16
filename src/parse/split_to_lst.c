@@ -78,3 +78,15 @@ t_imput	*split_to_lst(char const *s, char c)
 	}
 	return (first_parsed_imput);
 }
+
+//TODO: fix below cases
+/*
+minishell> "ls | wc"
+ERROR: quote is not closed.
+-> quote is closed so shouldn't give errors.
+
+minishell> "ls " | "wc"
+segfault happens without this line: 0x6020000002f0
+       5       5      35
+-> "ls " should be command not found so result should be [0 0 0]
+*/
