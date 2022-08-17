@@ -79,26 +79,30 @@ int	main(int argc, char *argv[], char *envp[])
 	{
 		original_imput = readline(prompt);
 		parsed_imput = parse(original_imput);
+		t_imput *first_node = parsed_imput; //TODO: to check(tmp)
 		free(original_imput);
 		result_of_is_cmd = is_cmd(parsed_imput);
 		if (result_of_is_cmd == 1)
 		{
 			//TODO: Implement check contents of list, before omitting pipe. ex) ls | | wc -> gives error
 			omit_pipe_from_lst(parsed_imput);
-			printf("segfault happens without this line: %p\n", (parsed_imput)->next->str); //TODO: fix segmentation fault
+			// printf("%s\n", parsed_imput->next->str); //TODO: seg fault without this line.
+			// printf("-- first: s:%s, p:%p\n", (parsed_imput)->str, (parsed_imput)->str);
+			// printf("-- second: s:%s, p:%p\n", (parsed_imput)->next->str, (parsed_imput)->next->str);
 			pipex(&parsed_imput, envp);
 		}
 		else
 			deal_non_cmd(result_of_is_cmd, parsed_imput);
-
 		/* --- to check --- */
 		int i = 0;
-		while (parsed_imput != NULL)
+		printf("=====\n");
+		while (first_node != NULL)
 		{
-			printf("%i: %s\n", i, parsed_imput->str);
-			parsed_imput = parsed_imput->next;
+			printf("%i: %s\n", i, first_node->str);
+			first_node = first_node->next;
 			i++;
 		}
+		printf("=====\n");
 		/* ---------------- */
 	}
 }

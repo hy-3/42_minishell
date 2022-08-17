@@ -7,7 +7,8 @@ t_imput	*split_to_lst(char const *s, char c)
 	int		start;
 	t_imput	*parsed_imput;
 	t_imput	*first_parsed_imput;
-	int		num_of_quote;
+	int		num_of_single_quote;
+	int		num_of_double_quote;
 	char 	tmp_quote;
 	int		count;
 
@@ -34,12 +35,20 @@ t_imput	*split_to_lst(char const *s, char c)
 				parsed_imput = parsed_imput->next;
 			}
 			start = i;
-			num_of_quote = 0;
-			while ((num_of_quote > 0 && s[i] != '\0') || (s[i] != c && s[i] != '\0'))
+			num_of_single_quote = 0;
+			num_of_double_quote = 0;
+			while (((num_of_single_quote > 0 || num_of_double_quote > 0) && s[i] != '\0') || (s[i] != c && s[i] != '\0'))
 			{
-				if (s[i] == 34 || s[i] == 39)
-					num_of_quote++;
-				if (s[i] == '|')
+				if (s[i] == 34)
+					num_of_double_quote++;
+				if (s[i] == 39)
+					num_of_single_quote++;
+				if (s[i] == '|' && (num_of_double_quote % 2 != 0 || num_of_single_quote % 2 != 0))
+				{
+					i++;
+					continue ;
+				}
+				if (s[i] == '|' && (num_of_double_quote % 2 == 0 && num_of_single_quote % 2 == 0))
 				{
 					if (start == i)
 						i++;
@@ -55,15 +64,15 @@ t_imput	*split_to_lst(char const *s, char c)
 			{
 				if (s[start] == 34 || s[start] == 39)
 				{
-					tmp_quote = s[start];
-					while (s[++start] != tmp_quote)
+					tmp_quote = s[start++];
+					while (s[start] != tmp_quote)
 					{
 						if (s[start] == '\0')
 						{
 							printf("ERROR: quote is not closed.\n");
 							exit(1); //TODO: error handling
 						}
-						parsed_imput->str[k++] = s[start];
+						parsed_imput->str[k++] = s[start++];
 					}
 					start++;
 					continue;
@@ -84,9 +93,4 @@ t_imput	*split_to_lst(char const *s, char c)
 minishell> "ls | wc"
 ERROR: quote is not closed.
 -> quote is closed so shouldn't give errors.
-
-minishell> "ls " | "wc"
-segfault happens without this line: 0x6020000002f0
-       5       5      35
--> "ls " should be command not found so result should be [0 0 0]
 */
