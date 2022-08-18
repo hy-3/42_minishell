@@ -46,10 +46,4 @@ char	**split_to_str(char const *s, char c);
 int		count_num_of_str(char const *s, char c);
 void	cust_free(char **res);
 
-//	Libft
-char	*ft_strchr(const char *s, int c);
-size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
-size_t	ft_strlen(const char *str);
-char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
-
 #endif

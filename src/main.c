@@ -86,6 +86,7 @@ int	main(int argc, char *argv[], char *envp[])
 	while (1)
 	{
 		original_str = readline(prompt);
+		//TODO: add history
 		list = parse(original_str);
 		free(original_str);
 		if (list == NULL)
