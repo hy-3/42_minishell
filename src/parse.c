@@ -104,9 +104,3 @@ t_list	*parse(char *original_str)
 	}
 	return (first_node);
 }
-
-//TODO: fix
-/*
-minishell> '" dasf' " fadsf
-ERROR: quote is not closed.
-*/
