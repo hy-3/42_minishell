@@ -8,11 +8,11 @@
 # include <readline/history.h>
 # include "../lib/libft/libft.h"
 
-typedef struct s_imput
+typedef struct s_list
 {
 	char			*str;
-	struct s_imput	*next;
-}	t_imput;
+	struct s_list	*next;
+}	t_list;
 
 typedef struct s_env_param
 {
@@ -29,18 +29,15 @@ typedef struct s_cmd_param
 	int		status; //TODO: implement
 }	t_cmd_param;
 
-//	src/parse/parse.c
-t_imput	*parse(char *original_imput);
-//	src/parse/split_to_lst.c
-t_imput	*split_to_lst(char const *s, char c);
+//	src/parse.c
+t_list	*parse(char *original_str);
 //	src/cmd/pipex.c
-int	pipex(t_imput **parsed_imput, char *envp[]);
+int		pipex(t_list *list, char *envp[], int list_size);
 //	src/cmd/check_cmd.c
 char	*get_value_of_pathenv(char **envp);
 char	*is_cmd_exist_and_executable(char *path_env, char *cmd);
 //	src/cmd/list.c
-int		cust_lstsize(t_imput **lst);
-void	lstiter_exec_cmd(t_imput **lst, t_env_param *env_p, int num_of_args, void (*f)(char *str, t_env_param *env_p, int i, int num_of_args));
+void	list_iter(t_list *list, t_env_param *env_p, int num_of_args, void (*f)(char *str, t_env_param *env_p, int i, int num_of_args));
 //	src/cmd/stderr.c
 void	cust_perror(char *str, int status);
 void	cust_write(char *str, int status);

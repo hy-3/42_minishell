@@ -22,18 +22,20 @@
 char	*ft_strchr(const char *s, int c)
 {
 	char	*new_s;
+	int		i;
 
 	if (s == NULL)
 		return (NULL);
 	new_s = (char *) s;
-	while (*new_s != '\0')
+	i = 0;
+	while (new_s[i] != '\0')
 	{
-		if (*new_s == (char) c)
-			return (new_s);
-		new_s++;
+		if (new_s[i] == (char) c)
+			return (&new_s[i]);
+		i++;
 	}
 	if (c == 0)
-		return (new_s);
+		return (&new_s[i]);
 	else
 		return (NULL);
 }

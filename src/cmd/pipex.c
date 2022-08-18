@@ -67,20 +67,16 @@ void	cust_waitpid(int num_of_executed_cmd)
 	}
 }
 
-int	pipex(t_imput **parsed_imput, char *envp[])
+int	pipex(t_list *list, char *envp[], int list_size)
 {
-	t_env_param	*env_p;
-	int			num_of_args;
+	t_env_param	env_p;
 	int			status_code; //TODO: get from last exec cmd.
 	char		*pathenv;
 
 	status_code = 0;
-	env_p->envp = envp;
-	env_p->pathenv = get_value_of_pathenv(envp);
-	printf(">> first: s:%s, p:%p\n", (*parsed_imput)->str, (*parsed_imput)->str);
-	printf(">> second: s:%s, p:%p\n", (*parsed_imput)->next->str, (*parsed_imput)->next->str);
-	num_of_args = cust_lstsize(parsed_imput);
-	lstiter_exec_cmd(parsed_imput, env_p, num_of_args, exec_cmd);
-	cust_waitpid(num_of_args);
+	env_p.envp = envp;
+	env_p.pathenv = get_value_of_pathenv(envp);
+	list_iter(list, &env_p, list_size, exec_cmd);
+	cust_waitpid(list_size);
 	return (status_code);
 }
