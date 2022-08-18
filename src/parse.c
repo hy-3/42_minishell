@@ -104,3 +104,14 @@ t_list	*parse(char *original_str)
 	}
 	return (first_node);
 }
+
+//TODO: fix
+/*
+$ minishell> "ls "
+Makefile        lib             minishell       src             todo.md
+
+$ "ls "
+bash: ls : command not found
+
+-> should change to 'command not found'
+*/
