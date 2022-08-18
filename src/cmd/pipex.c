@@ -1,15 +1,15 @@
 #include "../minishell.h"
 
-void	child(int *p1, int *p2, t_cmd_param *cmd_p, t_env_param *env_p, int i, int num_of_args)
+void	child(int *p1, int *p2, t_cmd_param *cmd_p, t_env_param *env_p, int i, int list_size)
 {
 	char	*cmd_path;
 
-	if (i == 0)
+	if (i == 0 && list_size > 1)
 	{
 		if (dup2(p2[1], 1) == -1)
 			cust_perror("Error(first_child: dup2 p1[1])", 1);
 	}
-	else if (0 < i && i < num_of_args - 1)
+	else if (0 < i && i < list_size - 1)
 	{
 		if (close(p1[1]) == -1)
 			cust_perror("Error(middle_child: close p1[1])", 1);
@@ -20,7 +20,7 @@ void	child(int *p1, int *p2, t_cmd_param *cmd_p, t_env_param *env_p, int i, int 
 		if (dup2(p2[1], 1) == -1)
 			cust_perror("Error(middle_child: dup2 p2[1])", 1);
 	}
-	else
+	else if (0 < i && i == list_size - 1)
 	{
 		if (close(p1[1]) == -1)
 			cust_perror("Error(last_child: close p1[1])", 1);
@@ -32,7 +32,7 @@ void	child(int *p1, int *p2, t_cmd_param *cmd_p, t_env_param *env_p, int i, int 
 		cust_write("command not found\n", 127);
 }
 
-void	exec_cmd(char *str, t_env_param *env_p, int i, int num_of_args)
+void	exec_cmd(char *str, t_env_param *env_p, int i, int list_size)
 {
 	t_cmd_param	cmd_p;
 	int			p[100][2]; //TODO: p[ARG_MAX][2];
@@ -50,7 +50,7 @@ void	exec_cmd(char *str, t_env_param *env_p, int i, int num_of_args)
 	if (cmd_p.pid < 0)
 		cust_perror("Error(exec_cmd: fork)", 1);
 	if (cmd_p.pid == 0)
-		child(p[i], p[i + 1], &cmd_p, env_p, i, num_of_args);
+		child(p[i], p[i + 1], &cmd_p, env_p, i, list_size);
 	if (i > 0)
 		if (!((close(p[i][0]) == 0) && (close(p[i][1]) == 0)))
 			cust_perror("Error(cmd: close p[i][0] or p[i][1])", 1);

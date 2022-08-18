@@ -37,7 +37,7 @@ int		pipex(t_list *list, char *envp[], int list_size);
 char	*get_value_of_pathenv(char **envp);
 char	*is_cmd_exist_and_executable(char *path_env, char *cmd);
 //	src/cmd/list.c
-void	list_iter(t_list *list, t_env_param *env_p, int num_of_args, void (*f)(char *str, t_env_param *env_p, int i, int num_of_args));
+void	list_iter(t_list *list, t_env_param *env_p, int list_size, void (*f)(char *str, t_env_param *env_p, int i, int list_size));
 //	src/cmd/stderr.c
 void	cust_perror(char *str, int status);
 void	cust_write(char *str, int status);

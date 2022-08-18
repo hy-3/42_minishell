@@ -38,23 +38,20 @@ t_list	*parse(char *original_str)
 			start = i;
 			num_of_single_quote = 0;
 			num_of_double_quote = 0;
-			while (((num_of_single_quote > 0 || num_of_double_quote > 0) && original_str[i] != '\0') || (original_str[i] != ' ' && original_str[i] != '\0'))
+			while (original_str[i] != '\0')
 			{
+				if (original_str[i] == ' ' || original_str[i] == '|')
+				{
+					if (num_of_double_quote % 2 == 0 && num_of_single_quote % 2 == 0)
+					{
+						i++;
+						break ;
+					}
+				}
 				if (original_str[i] == 34)
 					num_of_double_quote++;
 				if (original_str[i] == 39)
 					num_of_single_quote++;
-				if (original_str[i] == '|' && (num_of_double_quote % 2 != 0 || num_of_single_quote % 2 != 0))
-				{
-					i++;
-					continue ;
-				}
-				if (original_str[i] == '|' && (num_of_double_quote % 2 == 0 && num_of_single_quote % 2 == 0))
-				{
-					if (start == i)
-						i++;
-					break ;
-				}
 				i++;
 			}
 			list->str = (char *) malloc((i - start + 1) * sizeof(char));
