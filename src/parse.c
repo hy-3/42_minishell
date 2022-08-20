@@ -129,27 +129,20 @@ t_list	*parse(char *original_str)
 
 //TODO: fix
 /*
-0.
-Execcmd -> differenciate between no quote and with quote
-ex) ls -l & "ls -l"
-ex) ls "Makefile  a" b
-
-1.
-$ minishell> "ls "
-Makefile        lib             minishell       src             todo.md
-
-$ "ls "
-bash: ls : command not found
-
--> should change to 'command not found'
-
-2.
-$ minishell> ls -l | wc
+$ minishell> ls|wc
 command not found
-       0       0       0
-=====
-0: ls 
-1: -l 
-2: wc
-=====
+wc: UH���\rS�1`H�=��-`]�<�\001: open: No such file or directory
+//=====
+---
+node[0]:ls|wc.
+---
+---
+node[1]:wc.
+---
+=====//
+
+$ minishell> ls -l | wc
+       6
+$ ls -l | wc
+       6      47     285
 */

@@ -24,8 +24,6 @@ typedef struct s_env_param
 typedef struct s_cmd_param
 {
 	char	*exec_args[100]; //TODO: *exec_args[ARG_MAX];
-	char	**cmd_with_option;
-	int		n;
 	int		pid;
 	int		status; //TODO: implement
 }	t_cmd_param;
@@ -33,12 +31,14 @@ typedef struct s_cmd_param
 //	src/parse.c
 t_list	*parse(char *original_str);
 //	src/cmd/pipex.c
-int		pipex(t_list *list, char *envp[], int list_size);
+int		pipex(t_list *list, char *envp[]);
 //	src/cmd/check_cmd.c
 char	*get_value_of_pathenv(char **envp);
 char	*is_cmd_exist_and_executable(char *path_env, char *cmd);
 //	src/cmd/list.c
-void	list_iter(t_list *list, t_env_param *env_p, int list_size, void (*f)(char *str, t_env_param *env_p, int i, int list_size));
+void	list_iter(t_list *list, t_env_param *env_p, int list_size, void (*f)(t_list *list, t_env_param *env_p, int i, int list_size));
+int		count_next(t_list *list);
+int		count_extra(t_list *list);
 //	src/cmd/stderr.c
 void	cust_perror(char *str, int status);
 void	cust_write(char *str, int status);

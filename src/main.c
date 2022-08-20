@@ -48,21 +48,6 @@ int	is_cmd(t_list *list)
 	return (1);
 }
 
-int	count_listsize(t_list *list)
-{
-	t_list	*prev_node;
-	int		list_size;
-
-	list_size = 0;
-	while (list != NULL)
-	{
-		prev_node = list;
-		list = list->next;
-		list_size++;
-	}
-	return (list_size);
-}
-
 int	main(int argc, char *argv[], char *envp[])
 {
 	char	*prompt;
@@ -77,7 +62,18 @@ int	main(int argc, char *argv[], char *envp[])
 		original_str = readline(prompt);
 		//TODO: add history
 		list = parse(original_str);
-		
+		free(original_str);
+		if (list == NULL)
+			continue ;
+		condition = is_cmd(list);
+		if (condition == 1)
+		{
+			//TODO: Implement check contents of list. ex) ls | | wc -> gives error
+			pipex(list, envp);
+		}
+		else
+			deal_non_cmd(condition, list); //TODO: implement
+
 		/* --- to check args --- */
 		t_list *ex;
 		int	i = 0;
@@ -102,20 +98,6 @@ int	main(int argc, char *argv[], char *envp[])
 		}
 		printf("=====//\n");
 		/* ---------------- */
-
-		free(original_str);
-		if (list == NULL)
-			continue ;
-		condition = is_cmd(list);
-		if (condition == 1)
-		{
-			//TODO: Implement check contents of list. ex) ls | | wc -> gives error
-			list_size = count_listsize(list);
-			pipex(list, envp, list_size);
-
-		}
-		else
-			deal_non_cmd(condition, list); //TODO: implement
 
 	}
 }
