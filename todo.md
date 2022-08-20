@@ -12,14 +12,17 @@
 [Hiro] Search and launch the right executable (based on the PATH variable or by using relative or absolute path)
 - Done.
 
-[Both] It must implement the builtins:
+[Hiro] It must implement the builtins:
     [Hiro] echo with option -n
-    [Edu] cd with only a relative or absolute path
-    [Edu] pwd with no options
+    - Done
+    [Hiro] cd with only a relative or absolute path
+    [Hiro] pwd with no options
+    - Done
     [Hiro] export with no options
     [Hiro] unset with no options
-    [Edu] env with no options or arguments
-    [Edu] exit with no options
+    [Hiro] env with no options or arguments
+    - Done
+    [Hiro] exit with no options
 
 [Hiro] ’ inhibit all interpretation of a sequence of characters.
 

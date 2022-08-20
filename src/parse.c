@@ -89,14 +89,17 @@ t_list	*parse(char *original_str)
 	int		num_of_double_quote;
 	int		start;
 
+
+	i = 0;
+	start = i;
+	count = 0;
 	num_of_single_quote = 0;
 	num_of_double_quote = 0;
-	if (original_str == NULL)
-		return (NULL);
-	i = 0;
-	count = 0;
 	first_node = NULL;
-	start = i;
+	while (original_str[start] == ' ')
+		start++;
+	if (original_str == NULL || original_str[start] == '\0')
+		return (first_node);
 	while (original_str[i] != '\0')
 	{
 		if (original_str[i] == 39)
