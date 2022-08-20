@@ -1,43 +1,13 @@
 #include "minishell.h"
 
-void	fill_str(char *original_str, t_list *list, int start, int i)
-{
-	int		k;
-	char	tmp_quote;
-	char	*tmp_str;
-
-	k = 0;
-	tmp_str = (char *) malloc((i - start + 1) * sizeof(char));
-	if (tmp_str == NULL)
-		printf("malloc failed\n"); //TODO: error handle
-	while ((i - start) > 0)
-	{
-		if (original_str[start] == 34 || original_str[start] == 39)
-		{
-			tmp_quote = original_str[start];
-			while (original_str[++start] != tmp_quote)
-			{
-				if (original_str[start] == '\0')
-					cust_write("ERROR: quote is not closed.\n", 1); //TODO: error handling(check exit code.)
-				tmp_str[k++] = original_str[start];
-			}
-			start++;
-			continue ;
-		}
-		tmp_str[k++] = original_str[start++];
-	}
-	tmp_str[k] = '\0';
-	list->str = ft_strtrim(tmp_str, " ");
-	free(tmp_str);
-}
-
-t_list *create_node(t_list *list, int count)
+t_list *create_next_node(t_list *list, int count)
 {
 	if (count == 0)
 	{
 		list = (t_list *) malloc(sizeof(t_list));
 		if (list == NULL)
 			printf("malloc failed\n"); //TODO: error handle
+		list->extra = NULL;
 		list->next = NULL;
 	}
 	else
@@ -46,9 +16,65 @@ t_list *create_node(t_list *list, int count)
 		if (list->next == NULL)
 			printf("malloc failed\n"); //TODO: error handle
 		list = list->next;
+		list->extra = NULL;
 		list->next = NULL;
 	}
 	return (list);
+}
+
+t_list *create_extra_node(t_list *list)
+{
+	list->extra = (t_list *) malloc(sizeof(t_list));
+	if (list->extra == NULL)
+		printf("malloc failed\n"); //TODO: error handle
+	list = list->extra;
+	list->extra = NULL;
+	list->next = NULL;
+	return (list);
+}
+
+void	fill_str(char *original_str, t_list *list, int start, int i)
+{
+	int		k;
+	char	tmp_quote;
+	char	*tmp_str;
+	int		count;
+	t_list	*extra;
+
+	count = 0;
+	while ((i - start) > 0)
+	{
+		k = 0;
+		while (original_str[start] == ' ')
+			start++;
+		if (original_str[start] == '|' || original_str[start] == '\0')
+			break ;
+		tmp_str = (char *) malloc((i - start + 1) * sizeof(char));
+		if (tmp_str == NULL)
+			printf("malloc failed\n"); //TODO: error handle
+		while (original_str[start] != ' ' && original_str[start] != '\0')
+		{
+			if (original_str[start] == 34 || original_str[start] == 39)
+			{
+				tmp_quote = original_str[start];
+				while (original_str[++start] != tmp_quote)
+				{
+					if (original_str[start] == '\0')
+						cust_write("ERROR: quote is not closed.\n", 1); //TODO: error handling(check exit code.)
+					tmp_str[k++] = original_str[start];
+				}
+				start++;
+				continue ;
+			}
+			tmp_str[k++] = original_str[start++];
+		}
+		tmp_str[k] = '\0';
+		if (count != 0)
+			list = create_extra_node(list);
+		list->str = ft_strdup(tmp_str);
+		free(tmp_str);
+		count++;
+	}
 }
 
 t_list	*parse(char *original_str)
@@ -79,7 +105,7 @@ t_list	*parse(char *original_str)
 		{
 			if (num_of_single_quote % 2 == 0 && num_of_double_quote % 2 == 0)
 			{
-				list = create_node(list, count);
+				list = create_next_node(list, count);
 				if (count++ == 0)
 					first_node = list;
 				if (i == 0)
@@ -94,8 +120,8 @@ t_list	*parse(char *original_str)
 		else
 			i++;
 	}
-	list = create_node(list, count);
-	if (count++ == 0)
+	list = create_next_node(list, count);
+	if (count == 0)
 		first_node = list;
 	fill_str(original_str, list, start, i);
 	return (first_node);

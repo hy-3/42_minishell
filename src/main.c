@@ -77,31 +77,45 @@ int	main(int argc, char *argv[], char *envp[])
 		original_str = readline(prompt);
 		//TODO: add history
 		list = parse(original_str);
+		
+		/* --- to check args --- */
+		t_list *ex;
+		int	i = 0;
+		int	k;
+		printf("//=====\n");
+		while (list != NULL)
+		{
+			printf("---\n");
+			printf("node[%i]:%s.", i, list->str);
+			printf("\n");
+			k = 0;
+			ex = list->extra;
+			while (ex != NULL)
+			{
+				printf("node[%i.%i]:%s.",i,k,ex->str);
+				printf("\n");
+				ex = ex->extra;
+			}
+			printf("---\n");
+			list = list->next;
+			i++;
+		}
+		printf("=====//\n");
+		/* ---------------- */
+
 		free(original_str);
 		if (list == NULL)
 			continue ;
 		condition = is_cmd(list);
 		if (condition == 1)
 		{
-			//TODO: Implement check contents of list, before omitting pipe. ex) ls | | wc -> gives error
+			//TODO: Implement check contents of list. ex) ls | | wc -> gives error
 			list_size = count_listsize(list);
 			pipex(list, envp, list_size);
+
 		}
 		else
 			deal_non_cmd(condition, list); //TODO: implement
-
-		/* --- to check args --- */
-		int i = 0;
-		printf("=====\n");
-		while (list != NULL)
-		{
-			printf("%i: %s.", i, list->str);
-			printf("\n");
-			list = list->next;
-			i++;
-		}
-		printf("=====\n");
-		/* ---------------- */
 
 	}
 }

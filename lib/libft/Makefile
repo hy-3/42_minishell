@@ -4,6 +4,7 @@ NAME = libft.a
 
 PART1_SRC = \
 	ft_strchr.c \
+	ft_strdup.c \
 	ft_strjoin.c \
 	ft_strlcpy.c \
 	ft_strlen.c \
