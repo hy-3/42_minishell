@@ -86,18 +86,3 @@ int	pipex(t_list *list, char *envp[])
 	cust_waitpid(num_node_hor);
 	return (status_code);
 }
-
-//TODO: fix
-/*
-minishell> ls | wc
-ls: dyld_v1 x86_64h: No such file or directory
-wc: dyld_v1 x86_64h: open: No such file or directory
-//=====
----
-node[0]:ls.
----
----
-node[1]:wc.
----
-=====//
-*/

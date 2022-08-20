@@ -54,6 +54,8 @@ void	fill_str(char *original_str, t_list *list, int start, int i)
 			printf("malloc failed\n"); //TODO: error handle
 		while (original_str[start] != ' ' && original_str[start] != '\0')
 		{
+			if (original_str[start] == '|')
+				break ;
 			if (original_str[start] == 34 || original_str[start] == 39)
 			{
 				tmp_quote = original_str[start];
@@ -129,20 +131,8 @@ t_list	*parse(char *original_str)
 
 //TODO: fix
 /*
-$ minishell> ls|wc
-command not found
-wc: UH���\rS�1`H�=��-`]�<�\001: open: No such file or directory
-//=====
----
-node[0]:ls|wc.
----
----
-node[1]:wc.
----
-=====//
-
-$ minishell> ls -l | wc
-       6
-$ ls -l | wc
-       6      47     285
+ls||wc
+ls || wc
+ls | | wc
+-> fix segfault
 */
