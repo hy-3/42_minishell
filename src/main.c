@@ -48,28 +48,17 @@ int	is_cmd(t_list *list)
 	return (1);
 }
 
-int	omit_pipe(t_list *list)
+int	count_listsize(t_list *list)
 {
-	t_list	*tmp;
 	t_list	*prev_node;
 	int		list_size;
 
 	list_size = 0;
 	while (list != NULL)
 	{
-		if (list->str[0] == '|') //TODO: check if checking str[0] is enough.
-		{
-			prev_node->next = list->next;
-			free(list->str);
-			free(list);
-			list = prev_node->next;
-		}
-		else
-		{
-			prev_node = list;
-			list = list->next;
-			list_size++;
-		}
+		prev_node = list;
+		list = list->next;
+		list_size++;
 	}
 	return (list_size);
 }
@@ -95,7 +84,7 @@ int	main(int argc, char *argv[], char *envp[])
 		if (condition == 1)
 		{
 			//TODO: Implement check contents of list, before omitting pipe. ex) ls | | wc -> gives error
-			list_size = omit_pipe(list);
+			list_size = count_listsize(list);
 			pipex(list, envp, list_size);
 		}
 		else
@@ -106,7 +95,8 @@ int	main(int argc, char *argv[], char *envp[])
 		printf("=====\n");
 		while (list != NULL)
 		{
-			printf("%i: %s\n", i, list->str);
+			printf("%i: %s.", i, list->str);
+			printf("\n");
 			list = list->next;
 			i++;
 		}
