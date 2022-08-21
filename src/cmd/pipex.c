@@ -1,10 +1,5 @@
 #include "../minishell.h"
 
-void	exec_cd()
-{
-	
-}
-
 void	child(int *p1, int *p2, t_cmd_param *cmd_p, t_env_param *env_p, int i, int num_node_hor)
 {
 	char	*cmd_path;
@@ -58,14 +53,18 @@ int	exec_cmd(t_list *list, t_env_param *env_p, int i, int num_node_hor)
 		list = list->extra;
 	}
 	cmd_p.exec_args[num_node_ver] = NULL;
-	if (ft_strlen(cmd_p.exec_args[0]) == 2 && cmd_p.exec_args[0][0] == 'c' && cmd_p.exec_args[0][1] == 'd')
+	// To run 'exit' command
+	if (ft_strlen(cmd_p.exec_args[0]) == 4 && ft_strncmp(cmd_p.exec_args[0], "exit", 4) == 0)
+		exit(0); //TODO: check which status code I should return.
+	// To run 'cd' command
+	if (ft_strlen(cmd_p.exec_args[0]) == 2 && ft_strncmp(cmd_p.exec_args[0], "cd", 2) == 0)
 	{
 		if (num_node_ver == 2)
 			chdir(cmd_p.exec_args[1]);
 		else
 			cust_write("ERROR: Specify relative or absolute path\n", 1); //TODO: error handle
 	}
-	else
+	else // To run other commands. ex) ls, wc etc
 	{
 		cmd_p.pid = fork();
 		if (cmd_p.pid < 0)

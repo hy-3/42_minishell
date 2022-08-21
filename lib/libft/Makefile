@@ -8,6 +8,7 @@ PART1_SRC = \
 	ft_strjoin.c \
 	ft_strlcpy.c \
 	ft_strlen.c \
+	ft_strncmp.c \
 	ft_strnstr.c \
 	ft_strtrim.c
 MANDATORY_SRC = $(PART1_SRC)
