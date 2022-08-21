@@ -81,7 +81,6 @@ int	main(int argc, char *argv[], char *envp[])
 		printf("//=====\n");
 		while (list != NULL)
 		{
-			printf("---\n");
 			printf("node[%i]:%s.", i, list->str);
 			printf("\n");
 			k = 0;
@@ -92,7 +91,6 @@ int	main(int argc, char *argv[], char *envp[])
 				printf("\n");
 				ex = ex->extra;
 			}
-			printf("---\n");
 			list = list->next;
 			i++;
 		}

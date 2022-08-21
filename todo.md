@@ -1,27 +1,25 @@
 [Hiro] Not interpret unclosed quotes or unspecified special characters like \ or ;.
--> throw error when pipe is unclosed as well because it is not asked.
+Implemented: 
+ - throw error when quote is unclosed
+TODO:
+ - throw error when pipe is unclosed
 
 [Check_at_the_end] Not use more than one global variable, think about it and be ready to explain why you do it.
 
-[Hiro] Show a prompt when waiting for a new command.
-- Done.
+x [Hiro] Show a prompt when waiting for a new command.
 
 [Edu] Have a working History.
 - Change to allowed methods.
 
-[Hiro] Search and launch the right executable (based on the PATH variable or by using relative or absolute path)
-- Done.
+x [Hiro] Search and launch the right executable (based on the PATH variable or by using relative or absolute path)
 
 [Hiro] It must implement the builtins:
-    [Hiro] echo with option -n
-    - Done
-    [Hiro] cd with only a relative or absolute path
-    [Hiro] pwd with no options
-    - Done
+    x [Hiro] echo with option -n
+    x [Hiro] cd with only a relative or absolute path
+    x [Hiro] pwd with no options
     [Hiro] export with no options
     [Hiro] unset with no options
-    [Hiro] env with no options or arguments
-    - Done
+    x [Hiro] env with no options or arguments
     [Hiro] exit with no options
 
 [Hiro] ’ inhibit all interpretation of a sequence of characters.
@@ -37,8 +35,7 @@
 - Implement heredoc.
 - Make sure << doesn't update history.
 
-[Hiro] Pipes | The output of each command in the pipeline is connected via a pipe to the input of the next command.
-- Done.
+x [Hiro] Pipes | The output of each command in the pipeline is connected via a pipe to the input of the next command.
 
 [Hiro] Environment variables ($ followed by characters) should expand to their values.
 

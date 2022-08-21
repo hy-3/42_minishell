@@ -1,5 +1,10 @@
 #include "../minishell.h"
 
+void	exec_cd()
+{
+	
+}
+
 void	child(int *p1, int *p2, t_cmd_param *cmd_p, t_env_param *env_p, int i, int num_node_hor)
 {
 	char	*cmd_path;
@@ -32,13 +37,15 @@ void	child(int *p1, int *p2, t_cmd_param *cmd_p, t_env_param *env_p, int i, int 
 		cust_write("command not found\n", 127);
 }
 
-void	exec_cmd(t_list *list, t_env_param *env_p, int i, int num_node_hor)
+int	exec_cmd(t_list *list, t_env_param *env_p, int i, int num_node_hor)
 {
 	t_cmd_param	cmd_p;
 	int			p[100][2]; //TODO: p[ARG_MAX][2];
 	int			k;
 	int			num_node_ver;
+	int			num_of_child;
 
+	num_of_child = 0;
 	if (pipe(p[i + 1]) < 0) //TODO: now, not using p[0] so wasting it is not ideal
 		cust_perror("Error(main: pipe p[i]", 1);
 	k = 0;
@@ -51,15 +58,26 @@ void	exec_cmd(t_list *list, t_env_param *env_p, int i, int num_node_hor)
 		list = list->extra;
 	}
 	cmd_p.exec_args[num_node_ver] = NULL;
-	printf("###:%i,%s,%s\n",num_node_ver,cmd_p.exec_args[0],cmd_p.exec_args[1]);
-	cmd_p.pid = fork();
-	if (cmd_p.pid < 0)
-		cust_perror("Error(exec_cmd: fork)", 1);
-	if (cmd_p.pid == 0)
-		child(p[i], p[i + 1], &cmd_p, env_p, i, num_node_hor);
-	if (i > 0)
-		if (!((close(p[i][0]) == 0) && (close(p[i][1]) == 0)))
-			cust_perror("Error(cmd: close p[i][0] or p[i][1])", 1);
+	if (ft_strlen(cmd_p.exec_args[0]) == 2 && cmd_p.exec_args[0][0] == 'c' && cmd_p.exec_args[0][1] == 'd')
+	{
+		if (num_node_ver == 2)
+			chdir(cmd_p.exec_args[1]);
+		else
+			cust_write("ERROR: Specify relative or absolute path\n", 1); //TODO: error handle
+	}
+	else
+	{
+		cmd_p.pid = fork();
+		if (cmd_p.pid < 0)
+			cust_perror("Error(exec_cmd: fork)", 1);
+		if (cmd_p.pid == 0)
+			child(p[i], p[i + 1], &cmd_p, env_p, i, num_node_hor);
+		if (i > 0)
+			if (!((close(p[i][0]) == 0) && (close(p[i][1]) == 0)))
+				cust_perror("Error(cmd: close p[i][0] or p[i][1])", 1);
+		num_of_child = 1;
+	}
+	return (num_of_child);
 }
 
 void	cust_waitpid(int num_of_executed_cmd)
@@ -77,12 +95,13 @@ int	pipex(t_list *list, char *envp[])
 	int			status_code; //TODO: get from last exec cmd.
 	char		*pathenv;
 	int			num_node_hor;
+	int			num_of_child;
 
 	status_code = 0;
 	env_p.envp = envp;
 	env_p.pathenv = get_value_of_pathenv(envp);
 	num_node_hor = count_next(list);
-	list_iter(list, &env_p, num_node_hor, exec_cmd);
-	cust_waitpid(num_node_hor);
+	num_of_child = list_iter(list, &env_p, num_node_hor, exec_cmd);
+	cust_waitpid(num_of_child);
 	return (status_code);
 }
