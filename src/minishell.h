@@ -33,6 +33,8 @@ typedef struct s_cmd_param
 t_list	*parse(char *original_str);
 //	src/cmd/pipex.c
 int		pipex(t_list *list, char *envp[]);
+//	src/cmd/cmds.c
+int		exec_basedon_cmdtype(t_cmd_param *cmd_p, t_env_param *env_p, int num_node_ver, int num_node_hor, int i);
 //	src/cmd/check_cmd.c
 char	*get_value_of_pathenv(char **envp);
 char	*is_cmd_exist_and_executable(char *path_env, char *cmd);

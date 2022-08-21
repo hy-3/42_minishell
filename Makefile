@@ -10,7 +10,8 @@ SRC = src/main.c \
 	  src/cmd/stderr.c \
 	  src/cmd/pipex.c \
 	  src/cmd/check_cmd.c \
-	  src/cmd/list.c
+	  src/cmd/list.c \
+	  src/cmd/cmds.c
 
 OBJ = $(SRC:%.c=%.o)
 
