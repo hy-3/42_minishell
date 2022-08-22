@@ -8,6 +8,15 @@ void	exec_cd(t_cmd_param *cmd_p, int num_node_ver)
 		cust_write("ERROR: Specify relative or absolute path\n", 1); //TODO: error handle
 }
 
+void	exec_pwd()
+{
+	char	path[PATH_MAX];
+
+	getcwd(path, PATH_MAX);
+	printf("%s\n", path);
+}
+
+//TODO: implement
 void	exec_export(t_cmd_param *cmd_p, t_env_param *env_p, int num_node_ver)
 {
 	int	i;
@@ -31,8 +40,6 @@ void	exec_export(t_cmd_param *cmd_p, t_env_param *env_p, int num_node_ver)
 		while (cmd_p->exec_args[i] != NULL)
 		{
 			env_p->envp[k++] = cmd_p->exec_args[i++];
-			env_p->envp[k++] = "adf=";
-			env_p->envp[k++] = "adf=cgh";
 			env_p->envp[k] = NULL;
 		}
 	}
@@ -101,11 +108,13 @@ int	exec_basedon_cmdtype(t_cmd_param *cmd_p, t_env_param *env_p, int num_node_ve
 		exit(0); //TODO: check which status code I should return.
 	if (ft_strlen(cmd_p->exec_args[0]) == 2 && ft_strncmp(cmd_p->exec_args[0], "cd", 2) == 0)
 		exec_cd(cmd_p, num_node_ver);
+	else if (ft_strlen(cmd_p->exec_args[0]) == 3 && ft_strncmp(cmd_p->exec_args[0], "pwd", 3) == 0)
+		exec_pwd();
 	else if (ft_strlen(cmd_p->exec_args[0]) == 6 && ft_strncmp(cmd_p->exec_args[0], "export", 6) == 0)
 		exec_export(cmd_p, env_p, num_node_ver);
 	else if (ft_strlen(cmd_p->exec_args[0]) == 5 && ft_strncmp(cmd_p->exec_args[0], "unset", 5) == 0)
 		exec_unset();
-	else // To run other commands. ex) ls, wc etc
+	else
 	{
 		exec_other_cmd(cmd_p, env_p, num_node_hor, i);
 		num_of_child = 1;

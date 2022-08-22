@@ -50,14 +50,12 @@ int	is_cmd(t_list *list)
 
 int	main(int argc, char *argv[], char *envp[])
 {
-	static char	**static_envp; //TODO: check if using global var for 'export/unset' is good idea.
 	char	*prompt;
 	char	*original_str;
 	t_list	*list;
 	int		condition;
 	int		list_size;
 
-	static_envp = envp;
 	prompt = "minishell> ";
 	while (1)
 	{
@@ -71,7 +69,7 @@ int	main(int argc, char *argv[], char *envp[])
 		if (condition == 1)
 		{
 			//TODO: Implement check contents of list. ex) ls | | wc -> gives error
-			pipex(list, static_envp);
+			pipex(list, envp);
 		}
 		else
 			deal_non_cmd(condition, list); //TODO: implement

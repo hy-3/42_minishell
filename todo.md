@@ -5,7 +5,6 @@ TODO:
  - throw error when pipe is unclosed (now segfault will happen)
 
 [Check_at_the_end] Not use more than one global variable, think about it and be ready to explain why you do it.
-- Use it for having copy of envp so that I can run export/unset without setenv cmd.
 
 x [Hiro] Show a prompt when waiting for a new command.
 
@@ -15,13 +14,12 @@ x [Hiro] Show a prompt when waiting for a new command.
 x [Hiro] Search and launch the right executable (based on the PATH variable or by using relative or absolute path)
 
 [Hiro] It must implement the builtins:
-    x [Hiro] echo with option -n
+    [Hiro] echo with option -n
+    -> change to builtin
     x [Hiro] cd with only a relative or absolute path
     x [Hiro] pwd with no options
     [Hiro] export with no options
-        - check using global var is reasobale.
     [Hiro] unset with no options
-        - after I check above, I'll implement.
     x [Hiro] env with no options or arguments
     x [Hiro] exit with no options
 
