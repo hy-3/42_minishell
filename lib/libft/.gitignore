@@ -1,0 +1,9 @@
+a.out
+*.o
+libft.a
+github_tests/
+tests/
+.DS_Store
+.bonus
+deepthought
+.vscode
