@@ -1,5 +1,11 @@
 #include "../minishell.h"
 
+//TODO: implement
+void	exec_echo()
+{
+
+}
+
 void	exec_cd(t_cmd_param *cmd_p, int num_node_ver)
 {
 	if (num_node_ver == 2)
@@ -27,7 +33,7 @@ void	exec_export(t_cmd_param *cmd_p, t_env_param *env_p, int num_node_ver)
 	{
 		while (env_p->envp[i] != NULL)
 		{
-			printf("%s=%s\n", env_p->envp[i], getenv(env_p->envp[i])); //TODO: not sure if I need to do an alpabetic order
+			printf("%s%s\n", env_p->envp[i], getenv(env_p->envp[i])); //TODO: add 'declare x'
 			i++;
 		}
 	}
@@ -83,6 +89,13 @@ void	child(int *p1, int *p2, t_cmd_param *cmd_p, t_env_param *env_p, int i, int 
 		cust_write("command not found\n", 127);
 }
 
+//TODO: implement
+//TODO: differenciate from export cmd. don't print added env
+void	exec_env()
+{
+
+}
+
 void	exec_other_cmd(t_cmd_param *cmd_p, t_env_param *env_p, int num_node_hor, int i)
 {
 	int	p[100][2]; //TODO: p[ARG_MAX][2];
@@ -106,7 +119,9 @@ int	exec_basedon_cmdtype(t_cmd_param *cmd_p, t_env_param *env_p, int num_node_ve
 	num_of_child = 0;
 	if (ft_strlen(cmd_p->exec_args[0]) == 4 && ft_strncmp(cmd_p->exec_args[0], "exit", 4) == 0)
 		exit(0); //TODO: check which status code I should return.
-	if (ft_strlen(cmd_p->exec_args[0]) == 2 && ft_strncmp(cmd_p->exec_args[0], "cd", 2) == 0)
+	if (ft_strlen(cmd_p->exec_args[0]) == 4 && ft_strncmp(cmd_p->exec_args[0], "echo", 4) == 0)
+		exec_echo(cmd_p, num_node_ver);
+	else if (ft_strlen(cmd_p->exec_args[0]) == 2 && ft_strncmp(cmd_p->exec_args[0], "cd", 2) == 0)
 		exec_cd(cmd_p, num_node_ver);
 	else if (ft_strlen(cmd_p->exec_args[0]) == 3 && ft_strncmp(cmd_p->exec_args[0], "pwd", 3) == 0)
 		exec_pwd();

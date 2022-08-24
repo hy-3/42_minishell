@@ -20,7 +20,8 @@ x [Hiro] Search and launch the right executable (based on the PATH variable or b
     x [Hiro] pwd with no options
     [Hiro] export with no options
     [Hiro] unset with no options
-    x [Hiro] env with no options or arguments
+    [Hiro] env with no options or arguments
+    -> change to builtin
     x [Hiro] exit with no options
 
 x [Hiro] ’ inhibit all interpretation of a sequence of characters.

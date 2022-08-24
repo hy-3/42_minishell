@@ -56,6 +56,8 @@ int	main(int argc, char *argv[], char *envp[])
 	int		condition;
 	int		list_size;
 
+	//TODO: make copy of envp
+
 	prompt = "minishell> ";
 	while (1)
 	{
