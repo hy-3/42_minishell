@@ -1,32 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_lstadd_front_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hiyamamo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/13 17:39:04 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/04/16 19:27:25 by hiyamamo         ###   ########.fr       */
+/*   Created: 2022/04/19 13:49:58 by hiyamamo          #+#    #+#             */
+/*   Updated: 2022/04/19 13:50:02 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 /**
- * @brief Count length of a given string[str].
- *
- * @param str(const char *): Source string.
- * @return (size_t): Length of string.
+ * @brief Add a new node[new] to beginning of the list[lst].
+ * 
+ * @param lst(t_list **): Source list.
+ * @param new(t_list *): Node to be added.
+ * @return (void)
  */
-size_t	ft_strlen(const char *str)
+void	ft_lstadd_front(t_list **lst, t_list *new)
 {
-	int	count;
+	t_list	*tmp;
 
-	count = 0;
-	while (*str != '\0')
-	{
-		count++;
-		str++;
-	}
-	return (count);
+	tmp = *lst;
+	*lst = new;
+	(*lst)->next = tmp;
 }

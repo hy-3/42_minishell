@@ -1,32 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hiyamamo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/13 17:39:04 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/04/16 19:27:25 by hiyamamo         ###   ########.fr       */
+/*   Created: 2022/04/13 17:37:50 by hiyamamo          #+#    #+#             */
+/*   Updated: 2022/04/13 17:37:51 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 /**
- * @brief Count length of a given string[str].
- *
- * @param str(const char *): Source string.
- * @return (size_t): Length of string.
+ * @brief Outpu character to given file discriptor[fd].
+ * 
+ * @param c(char): Character to output.
+ * @param fd(int): File discriptor.
+ * @return (void)
  */
-size_t	ft_strlen(const char *str)
+void	ft_putchar_fd(char c, int fd)
 {
-	int	count;
-
-	count = 0;
-	while (*str != '\0')
-	{
-		count++;
-		str++;
-	}
-	return (count);
+	write(fd, &c, 1);
 }

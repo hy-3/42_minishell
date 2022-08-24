@@ -1,32 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/13 17:39:04 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/04/16 19:27:25 by hiyamamo         ###   ########.fr       */
+/*   Created: 2022/04/13 17:38:31 by hiyamamo          #+#    #+#             */
+/*   Updated: 2022/04/15 16:23:42 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 /**
- * @brief Count length of a given string[str].
+ * @brief Apply function[f] to each character of given string[s].
  *
- * @param str(const char *): Source string.
- * @return (size_t): Length of string.
+ * @param s(char *): Source string.
+ * @param f(void *(unsigned int, char *)): Pointer of function to be applied.
+ * @return (void)
  */
-size_t	ft_strlen(const char *str)
+void	ft_striteri(char *s, void (*f)(unsigned int, char*))
 {
-	int	count;
+	int	i;
 
-	count = 0;
-	while (*str != '\0')
+	i = 0;
+	if (s == NULL)
+		return ;
+	while (s[i] != '\0')
 	{
-		count++;
-		str++;
+		f(i, &s[i]);
+		i++;
 	}
-	return (count);
 }

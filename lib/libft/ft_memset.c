@@ -1,32 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/13 17:39:04 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/04/16 19:27:25 by hiyamamo         ###   ########.fr       */
+/*   Created: 2022/04/13 17:37:15 by hiyamamo          #+#    #+#             */
+/*   Updated: 2022/04/19 11:20:53 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 /**
- * @brief Count length of a given string[str].
+ * @brief Write [len] bytes of char[c] to string[b].
  *
- * @param str(const char *): Source string.
- * @return (size_t): Length of string.
+ * @param b(void *): Target string.
+ * @param c(int): Character to be written.
+ * @param len(size_t): Bytes to be write.
+ * @return (void *): Target string[b].
  */
-size_t	ft_strlen(const char *str)
+void	*ft_memset(void *b, int c, size_t len)
 {
-	int	count;
+	unsigned char	*tmp_b;
 
-	count = 0;
-	while (*str != '\0')
+	tmp_b = (unsigned char *) b;
+	while (len > 0)
 	{
-		count++;
-		str++;
+		*tmp_b++ = (unsigned char) c;
+		len--;
 	}
-	return (count);
+	return (b);
 }

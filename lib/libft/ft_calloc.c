@@ -1,39 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/13 17:38:20 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/04/16 19:31:20 by hiyamamo         ###   ########.fr       */
+/*   Created: 2022/04/13 17:35:11 by hiyamamo          #+#    #+#             */
+/*   Updated: 2022/04/19 16:50:54 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 /**
- * @brief Find first occurence of [c] from [s].
+ * @brief Allocates [count] objects which are [size] bytes to memory.
  * 
- * @param s(const char *): Source string to be looked for.
- * @param c(int): Char that it will look for.
- * @return (char *): Pointer to [c] or NULL if [c] doesn't appear.
+ * @param count(size_t): Number of objects
+ * @param size(size_t): Byte sizes.
+ * @return (void *): Pointer to allocated memory.
  */
-char	*ft_strchr(const char *s, int c)
+void	*ft_calloc(size_t count, size_t size)
 {
-	char	*new_s;
+	void	*res;
 
-	if (s == NULL)
+	if (size != 0)
+		if (count > SIZE_MAX / size)
+			return (NULL);
+	res = (void *) malloc(count * size);
+	if (res == NULL)
 		return (NULL);
-	new_s = (char *) s;
-	while (*new_s != '\0')
-	{
-		if (*new_s == (char) c)
-			return (new_s);
-		new_s++;
-	}
-	if (c == 0)
-		return (new_s);
-	else
-		return (NULL);
+	ft_bzero(res, count * size);
+	return (res);
 }

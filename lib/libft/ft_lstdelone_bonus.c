@@ -1,32 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_lstdelone_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hiyamamo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/13 17:39:04 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/04/16 19:27:25 by hiyamamo         ###   ########.fr       */
+/*   Created: 2022/04/19 13:50:30 by hiyamamo          #+#    #+#             */
+/*   Updated: 2022/04/19 13:50:32 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 /**
- * @brief Count length of a given string[str].
- *
- * @param str(const char *): Source string.
- * @return (size_t): Length of string.
+ * @brief Delete a given node[lst].
+ * 
+ * @param lst(t_list **): Source node.
+ * @param del(void *(void *)): Pointer of function to delete a content of node.
+ * @return (void)
  */
-size_t	ft_strlen(const char *str)
+void	ft_lstdelone(t_list *lst, void (*del)(void *))
 {
-	int	count;
-
-	count = 0;
-	while (*str != '\0')
-	{
-		count++;
-		str++;
-	}
-	return (count);
+	del(lst->content);
+	free(lst);
 }

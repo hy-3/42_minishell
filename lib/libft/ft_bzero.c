@@ -1,32 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/13 17:39:04 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/04/16 19:27:25 by hiyamamo         ###   ########.fr       */
+/*   Created: 2022/04/13 17:35:02 by hiyamamo          #+#    #+#             */
+/*   Updated: 2022/04/19 10:59:39 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 /**
- * @brief Count length of a given string[str].
+ * @brief Writes [n] bytes of 0 to [s].
  *
- * @param str(const char *): Source string.
- * @return (size_t): Length of string.
+ * @param s(void *): Target string.
+ * @param n(size_t): Bytes of writing 0.
+ * @return (void)
  */
-size_t	ft_strlen(const char *str)
+void	ft_bzero(void *s, size_t n)
 {
-	int	count;
+	unsigned char	*char_s;
 
-	count = 0;
-	while (*str != '\0')
+	char_s = (unsigned char *) s;
+	while (n > 0)
 	{
-		count++;
-		str++;
+		*char_s++ = 0;
+		n--;
 	}
-	return (count);
 }

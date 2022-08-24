@@ -1,32 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_isprint.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/13 17:39:04 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/04/16 19:27:25 by hiyamamo         ###   ########.fr       */
+/*   Created: 2022/04/13 17:36:25 by hiyamamo          #+#    #+#             */
+/*   Updated: 2022/04/15 12:09:10 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
 /**
- * @brief Count length of a given string[str].
- *
- * @param str(const char *): Source string.
- * @return (size_t): Length of string.
+ * @brief Check if given char[i] is printable (space char inclusive)
+ * 
+ * @param i(int): Character which will be checked.
+ * @return (int): If it is true, return 1. If not, return 0.
  */
-size_t	ft_strlen(const char *str)
+int	ft_isprint(int i)
 {
-	int	count;
-
-	count = 0;
-	while (*str != '\0')
-	{
-		count++;
-		str++;
-	}
-	return (count);
+	if (31 < i && i < 127)
+		return (1);
+	else
+		return (0);
 }
