@@ -17,7 +17,7 @@ int	exec_cmd(t_list *list, t_env_param *env_p, int i, int num_node_hor)
 
 	k = 0;
 	cmd_p.exec_args[k++] = list->str;
-	num_node_ver = count_extra(list);
+	num_node_ver = count_extra_node(list);
 	list = list->extra;
 	while (list != NULL)
 	{
@@ -28,19 +28,21 @@ int	exec_cmd(t_list *list, t_env_param *env_p, int i, int num_node_hor)
 	return (exec_basedon_cmdtype(&cmd_p, env_p, num_node_ver, num_node_hor, i));
 }
 
-int	pipex(t_list *list, char *envp[])
+t_pipex_res	*pipex(t_list *list, char *envp[])
 {
 	t_env_param	env_p;
 	int			status_code; //TODO: get from last exec cmd.
 	char		*pathenv;
 	int			num_node_hor;
 	int			num_of_child;
+	t_pipex_res	*res;
 
-	status_code = 0;
+	res->status_code = 0;
 	env_p.envp = envp;
 	env_p.pathenv = get_value_of_pathenv(envp);
-	num_node_hor = count_next(list);
+	num_node_hor = count_next_node(list);
 	num_of_child = list_iter(list, &env_p, num_node_hor, exec_cmd);
 	cust_waitpid(num_of_child);
-	return (status_code);
+	res->envp = env_p.envp;
+	return (res);
 }

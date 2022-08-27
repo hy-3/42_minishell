@@ -16,7 +16,7 @@ int	list_iter(t_list *list, t_env_param *env_p, int num_node_hor, int (*f)(t_lis
 	return (num_of_child);
 }
 
-int	count_next(t_list *list)
+int	count_next_node(t_list *list)
 {
 	t_list	*prev_node;
 	int		list_size;
@@ -31,7 +31,7 @@ int	count_next(t_list *list)
 	return (list_size);
 }
 
-int	count_extra(t_list *list)
+int	count_extra_node(t_list *list)
 {
 	t_list	*prev_node;
 	int		list_size;

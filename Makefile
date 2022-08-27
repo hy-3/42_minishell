@@ -6,6 +6,7 @@ LIBFT_PATH = lib/libft/
 LIBFT = lib/libft/libft.a
 SRC = src/main.c \
 	  src/parse.c \
+	  src/env.c \
 	  src/cmd/split_to_str.c \
 	  src/cmd/stderr.c \
 	  src/cmd/pipex.c \

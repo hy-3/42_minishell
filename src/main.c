@@ -50,14 +50,15 @@ int	is_cmd(t_list *list)
 
 int	main(int argc, char *argv[], char *envp[])
 {
-	char	*prompt;
-	char	*original_str;
-	t_list	*list;
-	int		condition;
-	int		list_size;
+	char		**new_envp;
+	char		*prompt;
+	char		*original_str;
+	t_list		*list;
+	int			condition;
+	int			list_size;
+	t_pipex_res	*res;
 
-	//TODO: make copy of envp
-
+	new_envp = copy_env(envp);
 	prompt = "minishell> ";
 	while (1)
 	{
@@ -71,7 +72,8 @@ int	main(int argc, char *argv[], char *envp[])
 		if (condition == 1)
 		{
 			//TODO: Implement check contents of list. ex) ls | | wc -> gives error
-			pipex(list, envp);
+			res = pipex(list, new_envp);
+			new_envp = res->envp;
 		}
 		else
 			deal_non_cmd(condition, list); //TODO: implement

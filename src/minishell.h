@@ -29,10 +29,21 @@ typedef struct s_cmd_param
 	int		status; //TODO: implement
 }	t_cmd_param;
 
+typedef struct s_pipex_res
+{
+	int		status_code;
+	char	**envp;
+}	t_pipex_res;
+
 //	src/parse.c
 t_list	*parse(char *original_str);
+//	src/env.c
+char	**copy_env(char **old_envp);
+int		is_exist_in_env(char **envp, char *str);
+int		is_valid_envname(char *str);
+void	copy_env_without_param(t_env_param *env_p, t_cmd_param *cmd_p, int num_node_ver);
 //	src/cmd/pipex.c
-int		pipex(t_list *list, char *envp[]);
+t_pipex_res	*pipex(t_list *list, char *envp[]);
 //	src/cmd/cmds.c
 int		exec_basedon_cmdtype(t_cmd_param *cmd_p, t_env_param *env_p, int num_node_ver, int num_node_hor, int i);
 //	src/cmd/check_cmd.c
@@ -40,8 +51,8 @@ char	*get_value_of_pathenv(char **envp);
 char	*is_cmd_exist_and_executable(char *path_env, char *cmd);
 //	src/cmd/list.c
 int		list_iter(t_list *list, t_env_param *env_p, int num_node_hor, int (*f)(t_list *list, t_env_param *env_p, int i, int num_node_hor));
-int		count_next(t_list *list);
-int		count_extra(t_list *list);
+int		count_next_node(t_list *list);
+int		count_extra_node(t_list *list);
 //	src/cmd/stderr.c
 void	cust_perror(char *str, int status);
 void	cust_write(char *str, int status);

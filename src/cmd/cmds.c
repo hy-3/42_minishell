@@ -22,7 +22,6 @@ void	exec_pwd()
 	printf("%s\n", path);
 }
 
-//TODO: implement
 void	exec_export(t_cmd_param *cmd_p, t_env_param *env_p, int num_node_ver)
 {
 	int	i;
@@ -31,11 +30,9 @@ void	exec_export(t_cmd_param *cmd_p, t_env_param *env_p, int num_node_ver)
 	i = 0;
 	if (num_node_ver == 1)
 	{
+		printf(">>>>> %p\n", env_p->envp); //TODO: delete later
 		while (env_p->envp[i] != NULL)
-		{
-			printf("%s%s\n", env_p->envp[i], getenv(env_p->envp[i])); //TODO: add 'declare x'
-			i++;
-		}
+			printf("declare -x %s\n", env_p->envp[i++]); //TODO: check if I need to add "" for values.
 	}
 	else
 	{
@@ -45,16 +42,38 @@ void	exec_export(t_cmd_param *cmd_p, t_env_param *env_p, int num_node_ver)
 		i = 1;
 		while (cmd_p->exec_args[i] != NULL)
 		{
-			env_p->envp[k++] = cmd_p->exec_args[i++];
-			env_p->envp[k] = NULL;
+			if (is_valid_envname(cmd_p->exec_args[i]) == 0)
+			{
+				printf("export: %s:not a valid identifier\n", cmd_p->exec_args[i]); //TODO: error handle
+				i++;
+				continue ;
+			}
+			if (is_exist_in_env(env_p->envp, cmd_p->exec_args[i]) == 0)
+			{
+				env_p->envp[k++] = ft_strdup(cmd_p->exec_args[i]);
+				env_p->envp[k] = NULL;
+			}
+			i++;
 		}
 	}
 }
 
 //TODO: implement
-void	exec_unset()
+void	exec_unset(t_cmd_param *cmd_p, t_env_param *env_p, int num_node_ver)
 {
-	printf("TEMP:unset\n");
+	if (num_node_ver == 1)
+		return ;
+	else
+		copy_env_without_param(env_p, cmd_p, num_node_ver);
+	// printf("!!!!!!\n");
+	// exec_export(cmd_p, env_p, num_node_ver);
+}
+
+//TODO: implement
+//TODO: differenciate from export cmd. don't print added env
+void	exec_env()
+{
+
 }
 
 void	child(int *p1, int *p2, t_cmd_param *cmd_p, t_env_param *env_p, int i, int num_node_hor)
@@ -89,13 +108,6 @@ void	child(int *p1, int *p2, t_cmd_param *cmd_p, t_env_param *env_p, int i, int 
 		cust_write("command not found\n", 127);
 }
 
-//TODO: implement
-//TODO: differenciate from export cmd. don't print added env
-void	exec_env()
-{
-
-}
-
 void	exec_other_cmd(t_cmd_param *cmd_p, t_env_param *env_p, int num_node_hor, int i)
 {
 	int	p[100][2]; //TODO: p[ARG_MAX][2];
@@ -114,7 +126,7 @@ void	exec_other_cmd(t_cmd_param *cmd_p, t_env_param *env_p, int num_node_hor, in
 
 int	exec_basedon_cmdtype(t_cmd_param *cmd_p, t_env_param *env_p, int num_node_ver, int num_node_hor, int i)
 {
-	int			num_of_child;
+	int	num_of_child;
 
 	num_of_child = 0;
 	if (ft_strlen(cmd_p->exec_args[0]) == 4 && ft_strncmp(cmd_p->exec_args[0], "exit", 4) == 0)
@@ -128,7 +140,7 @@ int	exec_basedon_cmdtype(t_cmd_param *cmd_p, t_env_param *env_p, int num_node_ve
 	else if (ft_strlen(cmd_p->exec_args[0]) == 6 && ft_strncmp(cmd_p->exec_args[0], "export", 6) == 0)
 		exec_export(cmd_p, env_p, num_node_ver);
 	else if (ft_strlen(cmd_p->exec_args[0]) == 5 && ft_strncmp(cmd_p->exec_args[0], "unset", 5) == 0)
-		exec_unset();
+		exec_unset(cmd_p, env_p, num_node_ver);
 	else
 	{
 		exec_other_cmd(cmd_p, env_p, num_node_hor, i);
