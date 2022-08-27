@@ -25,48 +25,25 @@ void	exec_pwd()
 void	exec_export(t_cmd_param *cmd_p, t_env_param *env_p, int num_node_ver)
 {
 	int	i;
-	int	k;
 
 	i = 0;
 	if (num_node_ver == 1)
-	{
-		printf(">>>>> %p\n", env_p->envp); //TODO: delete later
 		while (env_p->envp[i] != NULL)
 			printf("declare -x %s\n", env_p->envp[i++]); //TODO: check if I need to add "" for values.
-	}
 	else
 	{
-		k = 0;
-		while (env_p->envp[k] != NULL)
-			k++;
 		i = 1;
 		while (cmd_p->exec_args[i] != NULL)
-		{
-			if (is_valid_envname(cmd_p->exec_args[i]) == 0)
-			{
-				printf("export: %s:not a valid identifier\n", cmd_p->exec_args[i]); //TODO: error handle
-				i++;
-				continue ;
-			}
-			if (is_exist_in_env(env_p->envp, cmd_p->exec_args[i]) == 0)
-			{
-				env_p->envp[k++] = ft_strdup(cmd_p->exec_args[i]);
-				env_p->envp[k] = NULL;
-			}
-			i++;
-		}
+			env_p->envp = create_new_env_with_str(env_p->envp, cmd_p->exec_args[i++]);
 	}
 }
 
-//TODO: implement
 void	exec_unset(t_cmd_param *cmd_p, t_env_param *env_p, int num_node_ver)
 {
 	if (num_node_ver == 1)
 		return ;
 	else
-		copy_env_without_param(env_p, cmd_p, num_node_ver);
-	// printf("!!!!!!\n");
-	// exec_export(cmd_p, env_p, num_node_ver);
+		env_p->envp = upd_to_new_env(env_p, cmd_p);
 }
 
 //TODO: implement

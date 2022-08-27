@@ -41,7 +41,8 @@ t_list	*parse(char *original_str);
 char	**copy_env(char **old_envp);
 int		is_exist_in_env(char **envp, char *str);
 int		is_valid_envname(char *str);
-void	copy_env_without_param(t_env_param *env_p, t_cmd_param *cmd_p, int num_node_ver);
+char	**create_new_env_with_str(char **old_envp, char *str);
+char	**upd_to_new_env(t_env_param *env_p, t_cmd_param *cmd_p);
 //	src/cmd/pipex.c
 t_pipex_res	*pipex(t_list *list, char *envp[]);
 //	src/cmd/cmds.c

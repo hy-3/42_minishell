@@ -60,53 +60,74 @@ int	is_valid_envname(char *str)
 	return (1);
 }
 
-void	copy_env_without_param(t_env_param *env_p, t_cmd_param *cmd_p, int num_node_ver)
+char	**create_new_env_with_str(char **old_envp, char *str)
 {
 	char	**new_envp;
-	char	**old_envp;
-	char	**tmp_envp;
-	int		i;
 	int		k;
 	int		l;
 
-	i = 1;
-	while (cmd_p->exec_args[i] != NULL)
+	if (is_valid_envname(str) == 0)
 	{
-		new_envp = (char **) malloc(calc_envp_size(env_p->envp) * sizeof(char *));
-		if (i == 1)
-			old_envp = env_p->envp;
-		else
-			old_envp = tmp_envp;
+		printf("export: %s:not a valid identifier\n", str); //TODO: error handle
+		return (old_envp);
+	}
+	if (is_exist_in_env(old_envp, str) == 0)
+	{
+		new_envp = (char **) malloc((calc_envp_size(old_envp) + 1) * sizeof(char *));
 		k = 0;
 		l = 0;
 		while (old_envp[k] != NULL)
 		{
-			if (count_till_equal(old_envp[k]) == count_till_equal(cmd_p->exec_args[i]))
+			new_envp[l++] = ft_strdup(old_envp[k]);
+			free(old_envp[k++]);
+		}
+		new_envp[l++] = ft_strdup(str);
+		new_envp[l] = NULL;
+		return (new_envp);
+	}
+	return (old_envp);
+}
+
+char	**create_new_env_without_str(char **old_envp, char *str)
+{
+	char	**new_envp;
+	int		k;
+	int		l;
+
+	new_envp = (char **) malloc(calc_envp_size(old_envp) * sizeof(char *));
+	k = 0;
+	l = 0;
+	while (old_envp[k] != NULL)
+	{
+		if (count_till_equal(old_envp[k]) == count_till_equal(str))
+		{
+			if (ft_strncmp(old_envp[k], str, count_till_equal(str)) == 0)
 			{
-				if (ft_strncmp(old_envp[k], cmd_p->exec_args[i], count_till_equal(cmd_p->exec_args[i])) == 0)
-				{
-					free(old_envp[k]);
-					k++;
-				}
-				else
-				{
-					new_envp[l] = ft_strdup(old_envp[k]);
-					free(old_envp[k]);
-					k++;
-					l++;
-				}
-			}
-			else
-			{
-				new_envp[l] = ft_strdup(old_envp[k]);
-				free(old_envp[k]);
-				k++;
-				l++;
+				free(old_envp[k++]);
+				continue ;
 			}
 		}
-		new_envp[l] = NULL;
-		tmp_envp = new_envp;
+		new_envp[l++] = ft_strdup(old_envp[k]);
+		free(old_envp[k++]);
+	}
+	new_envp[l] = NULL;
+	return (new_envp);
+}
+
+char	**upd_to_new_env(t_env_param *env_p, t_cmd_param *cmd_p)
+{
+	char	**new_envp;
+	char	**old_envp;
+	int		i;
+
+	i = 1;
+	while (cmd_p->exec_args[i] != NULL)
+	{
+		if (i == 1)
+			new_envp = create_new_env_without_str(env_p->envp, cmd_p->exec_args[i]);
+		else
+			new_envp = create_new_env_without_str(new_envp, cmd_p->exec_args[i]);
 		i++;
 	}
-	env_p->envp = new_envp;
+	return (new_envp);
 }
