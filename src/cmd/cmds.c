@@ -1,9 +1,17 @@
 #include "../minishell.h"
 
-//TODO: implement
-void	exec_echo()
+//TODO: have to change parse for echo.
+void	exec_echo(t_cmd_param *cmd_p, int num_node_ver)
 {
-
+	if (num_node_ver == 1)
+		printf("\n");
+	else
+	{
+		if (ft_strlen(cmd_p->exec_args[1]) == 2 && ft_strncmp(cmd_p->exec_args[1], "-n", 2) == 0)
+			printf("%s",cmd_p->exec_args[2]);
+		else
+			printf("%s\n",cmd_p->exec_args[1]);
+	}
 }
 
 void	exec_cd(t_cmd_param *cmd_p, int num_node_ver)
@@ -118,6 +126,8 @@ int	exec_basedon_cmdtype(t_cmd_param *cmd_p, t_env_param *env_p, int num_node_ve
 		exec_export(cmd_p, env_p, num_node_ver);
 	else if (ft_strlen(cmd_p->exec_args[0]) == 5 && ft_strncmp(cmd_p->exec_args[0], "unset", 5) == 0)
 		exec_unset(cmd_p, env_p, num_node_ver);
+	else if (ft_strlen(cmd_p->exec_args[0]) == 3 && ft_strncmp(cmd_p->exec_args[0], "env", 3) == 0)
+		exec_env();
 	else
 	{
 		exec_other_cmd(cmd_p, env_p, num_node_hor, i);
