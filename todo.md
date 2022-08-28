@@ -8,20 +8,18 @@ TODO:
 
 x [Hiro] Show a prompt when waiting for a new command.
 
-[Edu] Have a working History.
-- Change to allowed methods.
+x [Edu] Have a working History.
+- Merge & check
 
 x [Hiro] Search and launch the right executable (based on the PATH variable or by using relative or absolute path)
 
-[Hiro] It must implement the builtins:
-    [Hiro] echo with option -n
-    -> change to builtin
+x [Hiro] It must implement the builtins:
+    x [Hiro] echo with option -n
     x [Hiro] cd with only a relative or absolute path
     x [Hiro] pwd with no options
-    [Hiro] export with no options
-    [Hiro] unset with no options
-    [Hiro] env with no options or arguments
-    -> change to builtin
+    x [Hiro] export with no options
+    x [Hiro] unset with no options
+    x [Hiro] env with no options or arguments
     x [Hiro] exit with no options
 
 x [Hiro] ’ inhibit all interpretation of a sequence of characters.

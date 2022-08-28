@@ -73,6 +73,7 @@ int	main(int argc, char *argv[], char *envp[])
 			//TODO: Implement check contents of list. ex) ls | | wc -> gives error
 			env_p.pathenv = get_value_of_pathenv(env_p.current_envp);
 			pipex(list, &env_p);
+			//TODO: Free env_p(first_envp, current_envp, pathenv)
 		}
 		else
 			deal_non_cmd(condition, list); //TODO: implement

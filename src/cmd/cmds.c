@@ -1,16 +1,36 @@
 #include "../minishell.h"
 
-//TODO: have to change parse for echo.
 void	exec_echo(t_cmd_param *cmd_p, int num_node_ver)
 {
+	int	i;
+
 	if (num_node_ver == 1)
 		printf("\n");
 	else
 	{
 		if (ft_strlen(cmd_p->exec_args[1]) == 2 && ft_strncmp(cmd_p->exec_args[1], "-n", 2) == 0)
-			printf("%s",cmd_p->exec_args[2]);
+		{
+			i = 2;
+			while (cmd_p->exec_args[i])
+			{
+				printf("%s",cmd_p->exec_args[i]);
+				if ((i + 1) != num_node_ver)
+					printf(" ");
+				i++;
+			}
+		}
 		else
-			printf("%s\n",cmd_p->exec_args[1]);
+		{
+			i = 1;
+			while (cmd_p->exec_args[i])
+			{
+				printf("%s",cmd_p->exec_args[i]);
+				if ((i + 1) != num_node_ver)
+					printf(" ");
+				i++;
+			}
+			printf("\n");
+		}
 	}
 }
 
