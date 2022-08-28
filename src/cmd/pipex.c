@@ -28,21 +28,16 @@ int	exec_cmd(t_list *list, t_env_param *env_p, int i, int num_node_hor)
 	return (exec_basedon_cmdtype(&cmd_p, env_p, num_node_ver, num_node_hor, i));
 }
 
-t_pipex_res	*pipex(t_list *list, char *envp[])
+int	pipex(t_list *list, t_env_param *env_p)
 {
-	t_env_param	env_p;
 	int			status_code; //TODO: get from last exec cmd.
 	char		*pathenv;
 	int			num_node_hor;
 	int			num_of_child;
-	t_pipex_res	*res;
 
-	res->status_code = 0;
-	env_p.envp = envp;
-	env_p.pathenv = get_value_of_pathenv(envp);
+	status_code = 0;
 	num_node_hor = count_next_node(list);
-	num_of_child = list_iter(list, &env_p, num_node_hor, exec_cmd);
+	num_of_child = list_iter(list, env_p, num_node_hor, exec_cmd);
 	cust_waitpid(num_of_child);
-	res->envp = env_p.envp;
-	return (res);
+	return (status_code);
 }

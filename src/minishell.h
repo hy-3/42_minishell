@@ -18,7 +18,8 @@ typedef struct s_list
 
 typedef struct s_env_param
 {
-	char	**envp;
+	char	**first_envp;
+	char	**current_envp;
 	char	*pathenv;
 }	t_env_param;
 
@@ -29,12 +30,6 @@ typedef struct s_cmd_param
 	int		status; //TODO: implement
 }	t_cmd_param;
 
-typedef struct s_pipex_res
-{
-	int		status_code;
-	char	**envp;
-}	t_pipex_res;
-
 //	src/parse.c
 t_list	*parse(char *original_str);
 //	src/env.c
@@ -44,7 +39,7 @@ int		is_valid_envname(char *str);
 char	**create_new_env_with_str(char **old_envp, char *str);
 char	**upd_to_new_env(t_env_param *env_p, t_cmd_param *cmd_p);
 //	src/cmd/pipex.c
-t_pipex_res	*pipex(t_list *list, char *envp[]);
+int		pipex(t_list *list, t_env_param *env_p);
 //	src/cmd/cmds.c
 int		exec_basedon_cmdtype(t_cmd_param *cmd_p, t_env_param *env_p, int num_node_ver, int num_node_hor, int i);
 //	src/cmd/check_cmd.c

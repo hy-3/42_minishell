@@ -124,7 +124,7 @@ char	**upd_to_new_env(t_env_param *env_p, t_cmd_param *cmd_p)
 	while (cmd_p->exec_args[i] != NULL)
 	{
 		if (i == 1)
-			new_envp = create_new_env_without_str(env_p->envp, cmd_p->exec_args[i]);
+			new_envp = create_new_env_without_str(env_p->current_envp, cmd_p->exec_args[i]);
 		else
 			new_envp = create_new_env_without_str(new_envp, cmd_p->exec_args[i]);
 		i++;

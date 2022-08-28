@@ -36,13 +36,13 @@ void	exec_export(t_cmd_param *cmd_p, t_env_param *env_p, int num_node_ver)
 
 	i = 0;
 	if (num_node_ver == 1)
-		while (env_p->envp[i] != NULL)
-			printf("declare -x %s\n", env_p->envp[i++]); //TODO: check if I need to add "" for values.
+		while (env_p->current_envp[i] != NULL)
+			printf("declare -x %s\n", env_p->current_envp[i++]); //TODO: check if I need to add "" for values.
 	else
 	{
 		i = 1;
 		while (cmd_p->exec_args[i] != NULL)
-			env_p->envp = create_new_env_with_str(env_p->envp, cmd_p->exec_args[i++]);
+			env_p->current_envp = create_new_env_with_str(env_p->current_envp, cmd_p->exec_args[i++]);
 	}
 }
 
@@ -51,14 +51,25 @@ void	exec_unset(t_cmd_param *cmd_p, t_env_param *env_p, int num_node_ver)
 	if (num_node_ver == 1)
 		return ;
 	else
-		env_p->envp = upd_to_new_env(env_p, cmd_p);
+		env_p->current_envp = upd_to_new_env(env_p, cmd_p);
 }
 
-//TODO: implement
-//TODO: differenciate from export cmd. don't print added env
-void	exec_env()
+void	exec_env(t_cmd_param *cmd_p, t_env_param *env_p, int num_node_ver)
 {
+	int	i;
 
+	if (num_node_ver == 1)
+	{
+		i = 0;
+		while (env_p->current_envp[i] != NULL)
+		{
+			if (is_exist_in_env(env_p->first_envp, env_p->current_envp[i]) == 1)
+				printf("%s\n", env_p->current_envp[i]);
+			i++;
+		}
+	}
+	else
+		printf("tmp\n"); //TODO: check what should I implement when 'env' has args.
 }
 
 void	child(int *p1, int *p2, t_cmd_param *cmd_p, t_env_param *env_p, int i, int num_node_hor)
@@ -89,7 +100,7 @@ void	child(int *p1, int *p2, t_cmd_param *cmd_p, t_env_param *env_p, int i, int 
 			cust_perror("Error(last_child: dup2 p1[0])", 1);
 	}
 	cmd_path = is_cmd_exist_and_executable(env_p->pathenv, cmd_p->exec_args[0]);
-	if (execve(cmd_path, cmd_p->exec_args, env_p->envp) == -1)
+	if (execve(cmd_path, cmd_p->exec_args, env_p->current_envp) == -1)
 		cust_write("command not found\n", 127);
 }
 
@@ -127,7 +138,7 @@ int	exec_basedon_cmdtype(t_cmd_param *cmd_p, t_env_param *env_p, int num_node_ve
 	else if (ft_strlen(cmd_p->exec_args[0]) == 5 && ft_strncmp(cmd_p->exec_args[0], "unset", 5) == 0)
 		exec_unset(cmd_p, env_p, num_node_ver);
 	else if (ft_strlen(cmd_p->exec_args[0]) == 3 && ft_strncmp(cmd_p->exec_args[0], "env", 3) == 0)
-		exec_env();
+		exec_env(cmd_p, env_p, num_node_ver);
 	else
 	{
 		exec_other_cmd(cmd_p, env_p, num_node_hor, i);
