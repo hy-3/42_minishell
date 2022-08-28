@@ -5,6 +5,7 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
+# include <fcntl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../lib/libft/libft.h"
@@ -26,9 +27,17 @@ typedef struct s_env_param
 typedef struct s_cmd_param
 {
 	char	*exec_args[100]; //TODO: *exec_args[ARG_MAX];
+	int		input_fd;
+	int		output_fd;
 	int		pid;
 	int		status_code; //TODO: implement
 }	t_cmd_param;
+
+typedef struct s_res_arrow
+{
+	int		start;
+	t_list	*list;
+}	t_res_arrow;
 
 //	src/parse.c
 t_list	*parse(char *original_str);

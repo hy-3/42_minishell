@@ -33,13 +33,40 @@ t_list *create_extra_node(t_list *list)
 	return (list);
 }
 
+void	fill_str_allows(t_res_arrow *res, t_list *list, char *original_str, int start)
+{
+	int		i;
+	char	*tmp_str;
+	char	arrow;
+	
+	i = 0;
+	arrow = original_str[start];
+	while (original_str[start] == '>' || original_str[start] == '<')
+	{
+		start++;
+		i++;
+	}
+	if (i > 2)
+		printf("syntax error near unexpected token\n"); //TODO: shoudln't continue and go back prompt. error handle. bash >>> doesn't give error
+	tmp_str = (char *) malloc((i + 1) * sizeof(char));
+	tmp_str[0] = arrow;
+	if (i == 2)
+		tmp_str[1] = arrow;
+	tmp_str[i] = '\0';
+	list = create_extra_node(list);
+	list->str = ft_strdup(tmp_str);
+	free(tmp_str);
+	res->start = start;
+	res->list = list;
+}
+
 void	fill_str(char *original_str, t_list *list, int start, int i)
 {
-	int		k;
-	char	tmp_quote;
-	char	*tmp_str;
-	int		count;
-	t_list	*extra;
+	int			k;
+	char		tmp_quote;
+	char		*tmp_str;
+	int			count;
+	t_res_arrow	res;
 
 	count = 0;
 	while ((i - start) > 0)
@@ -49,32 +76,41 @@ void	fill_str(char *original_str, t_list *list, int start, int i)
 			start++;
 		if (original_str[start] == '|' || original_str[start] == '\0')
 			break ;
-		tmp_str = (char *) malloc((i - start + 1) * sizeof(char));
-		if (tmp_str == NULL)
-			printf("malloc failed\n"); //TODO: error handle
-		while (original_str[start] != ' ' && original_str[start] != '\0')
+		if (!(original_str[start] == '<' || original_str[start] == '>'))
 		{
-			if (original_str[start] == '|')
-				break ;
-			if (original_str[start] == 34 || original_str[start] == 39)
+			tmp_str = (char *) malloc((i - start + 1) * sizeof(char));
+			if (tmp_str == NULL)
+				printf("malloc failed\n"); //TODO: error handle
+			while (original_str[start] != ' ' && original_str[start] != '\0' && original_str[start] != '>' && original_str[start] != '<')
 			{
-				tmp_quote = original_str[start];
-				while (original_str[++start] != tmp_quote)
+				if (original_str[start] == '|')
+					break ;
+				if (original_str[start] == 34 || original_str[start] == 39)
 				{
-					if (original_str[start] == '\0')
-						cust_write("ERROR: quote is not closed.\n", 1); //TODO: error handling(check exit code.)
-					tmp_str[k++] = original_str[start];
+					tmp_quote = original_str[start];
+					while (original_str[++start] != tmp_quote)
+					{
+						if (original_str[start] == '\0')
+							cust_write("ERROR: quote is not closed.\n", 1); //TODO: error handling(check exit code.)
+						tmp_str[k++] = original_str[start];
+					}
+					start++;
+					continue ;
 				}
-				start++;
-				continue ;
+				tmp_str[k++] = original_str[start++];
 			}
-			tmp_str[k++] = original_str[start++];
+			tmp_str[k] = '\0';
+			if (count != 0)
+				list = create_extra_node(list);
+			list->str = ft_strdup(tmp_str);
+			free(tmp_str);
 		}
-		tmp_str[k] = '\0';
-		if (count != 0)
-			list = create_extra_node(list);
-		list->str = ft_strdup(tmp_str);
-		free(tmp_str);
+		if (original_str[start] == '>' || original_str[start] == '<')
+		{
+			fill_str_allows(&res, list, original_str, start);
+			start = res.start;
+			list = res.list;
+		}
 		count++;
 	}
 }
