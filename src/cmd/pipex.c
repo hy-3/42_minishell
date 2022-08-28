@@ -16,9 +16,7 @@ int	exec_cmd(t_list *list, t_env_param *env_p, int i, int num_node_hor)
 	int			num_node_ver;
 
 	k = 0;
-	cmd_p.exec_args[k++] = list->str;
 	num_node_ver = count_extra_node(list);
-	list = list->extra;
 	while (list != NULL)
 	{
 		cmd_p.exec_args[k++] = list->str;

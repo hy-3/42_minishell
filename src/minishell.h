@@ -27,7 +27,7 @@ typedef struct s_cmd_param
 {
 	char	*exec_args[100]; //TODO: *exec_args[ARG_MAX];
 	int		pid;
-	int		status; //TODO: implement
+	int		status_code; //TODO: implement
 }	t_cmd_param;
 
 //	src/parse.c
