@@ -27,12 +27,10 @@ x [Hiro] ’ inhibit all interpretation of a sequence of characters.
 [Hiro] " inhibit all interpretation of a sequence of characters except for $.
 
 [Hiro] Redirections:
-    [Hiro] < should redirect input.
-    [Hiro] > should redirect output.
+    x [Hiro] < should redirect input.
+    x [Hiro] > should redirect output.
     [Hiro] “<<” read input from the current source until a line containing only the delimiter is seen. it doesn’t need to update history!
-    [Hiro] “>>” should redirect output with append mode.
-- Implement methods when arrows included after the parse.
-- Implement heredoc.
+    x [Hiro] “>>” should redirect output with append mode.
 - Make sure << doesn't update history.
 
 x [Hiro] Pipes | The output of each command in the pipeline is connected via a pipe to the input of the next command.

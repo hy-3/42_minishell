@@ -38,9 +38,11 @@ void	fill_str_allows(t_res_arrow *res, t_list *list, char *original_str, int sta
 	int		i;
 	char	*tmp_str;
 	char	arrow;
-	
+
 	i = 0;
 	arrow = original_str[start];
+	if (start != 0)
+		list = create_extra_node(list);
 	while (original_str[start] == '>' || original_str[start] == '<')
 	{
 		start++;
@@ -53,7 +55,6 @@ void	fill_str_allows(t_res_arrow *res, t_list *list, char *original_str, int sta
 	if (i == 2)
 		tmp_str[1] = arrow;
 	tmp_str[i] = '\0';
-	list = create_extra_node(list);
 	list->str = ft_strdup(tmp_str);
 	free(tmp_str);
 	res->start = start;

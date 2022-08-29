@@ -15,10 +15,12 @@ t_list	*check_arrows(t_list *list, t_cmd_param *cmd_p)
 	{
 		list = list->extra;
 		if (list == NULL)
-			printf("syntax error newar unexpected token `newline'\n"); //TODO: error handle.
+			printf("syntax error newar unexpected token `newline'\n"); //TODO: bring back to prompt. free if it's necessary.
 		else
 		{
 			cmd_p->output_fd = open(list->str, O_CREAT | O_TRUNC | O_WRONLY, 0777);
+			if (cmd_p->output_fd == -1)
+				cust_write("file open failed\n", 1); //TODO: error handle
 			list = list->extra;
 		}
 	}
@@ -26,16 +28,27 @@ t_list	*check_arrows(t_list *list, t_cmd_param *cmd_p)
 	{
 		list = list->extra;
 		if (list == NULL)
-			printf("syntax error newar unexpected token `newline'\n"); //TODO: error handle.
+			printf("syntax error newar unexpected token `newline'\n"); //TODO: bring back to prompt. free if it's necessary.
 		else
 		{
 			cmd_p->output_fd = open(list->str, O_CREAT | O_APPEND | O_WRONLY, 0777);
+			if (cmd_p->output_fd == -1)
+				cust_write("file open failed\n", 1); //TODO: error handle
 			list = list->extra;
 		}
 	}
-	else if (ft_strchr(list->str, '<') != NULL)
+	else if (ft_strlen(list->str) == 1 && ft_strchr(list->str, '<') != NULL)
 	{
-
+		list = list->extra;
+		if (list == NULL)
+			printf("syntax error newar unexpected token `newline'\n"); //TODO: bring back to prompt. free if it's necessary.
+		else
+		{
+			cmd_p->input_fd = open(list->str, O_RDONLY);
+			if (cmd_p->input_fd == -1)
+				printf("%s: No such file or directory\n", list->str); //TODO: bring back to prompt. free if it's necessary.
+			list = list->extra;
+		}
 	}
 	else if (ft_strnstr(list->str, "<<", ft_strlen(list->str)) != NULL)
 	{
@@ -46,26 +59,27 @@ t_list	*check_arrows(t_list *list, t_cmd_param *cmd_p)
 
 int	exec_cmd(t_list *list, t_env_param *env_p, int i, int num_node_hor)
 {
-	t_cmd_param	cmd_p;
+	t_cmd_param	*cmd_p;
 	int			k;
 	int			num_node_ver;
 
-	cmd_p.input_fd = 0;
-	cmd_p.output_fd = 1;
+	cmd_p = (t_cmd_param *) malloc(sizeof(t_cmd_param));
+	cmd_p->input_fd = 0;
+	cmd_p->output_fd = 1;
 	k = 0;
 	num_node_ver = count_extra_node(list);
 	while (list != NULL)
 	{
-		list = check_arrows(list, &cmd_p);
+		list = check_arrows(list, cmd_p);
 		if (list == NULL)
 			break;
-		cmd_p.exec_args[k++] = list->str;
+		cmd_p->exec_args[k++] = list->str;
 		list = list->extra;
 	}
 	if (k == 0)
 		return (0);
-	cmd_p.exec_args[num_node_ver] = NULL;
-	return (exec_basedon_cmdtype(&cmd_p, env_p, num_node_ver, num_node_hor, i));
+	cmd_p->exec_args[k] = NULL;
+	return (exec_basedon_cmdtype(cmd_p, env_p, num_node_ver, num_node_hor, i));
 }
 
 int	pipex(t_list *list, t_env_param *env_p)
