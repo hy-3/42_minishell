@@ -11,7 +11,7 @@ void	cust_waitpid(int num_of_executed_cmd)
 
 t_list	*check_arrows(t_list *list, t_cmd_param *cmd_p)
 {
-	if (ft_strchr(list->str, '>') != NULL)
+	if (ft_strlen(list->str) == 1 && ft_strchr(list->str, '>') != NULL)
 	{
 		list = list->extra;
 		if (list == NULL)
@@ -22,7 +22,7 @@ t_list	*check_arrows(t_list *list, t_cmd_param *cmd_p)
 			list = list->extra;
 		}
 	}
-	else if (ft_strnstr(list->str, ">>", ft_strlen(list->str)) != NULL)
+	else if (ft_strlen(list->str) == 2 && ft_strnstr(list->str, ">>", ft_strlen(list->str)) != NULL)
 	{
 		list = list->extra;
 		if (list == NULL)
