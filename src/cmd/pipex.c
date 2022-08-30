@@ -122,8 +122,6 @@ int	pipex(t_list *list, t_env_param *env_p)
 		list = list->next;
 		i++;
 	}
-	printf("before\n");
 	cust_waitpid(cmd_p->num_of_child);
-	printf("after\n");
 	return (status_code);
 }

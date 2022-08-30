@@ -13,6 +13,12 @@ SRC = src/main.c \
 	  src/cmd/check_cmd.c \
 	  src/cmd/list.c \
 	  src/cmd/cmds.c \
+	  src/builtin/cd.c \
+	  src/builtin/echo.c \
+	  src/builtin/env.c \
+	  src/builtin/export.c \
+	  src/builtin/pwd.c \
+	  src/builtin/unset.c \
 	  lib/get_next_line/get_next_line.c \
 	  lib/get_next_line/get_next_line_utils.c
 

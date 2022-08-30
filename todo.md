@@ -90,3 +90,11 @@ $ echo "'"$USER"'"
 'hiyamamo'
 $ echo '"'"$USER"'"'
 "hiyamamo"
+
+
+
+
+- fix num_node_ver & num_node_hor
+- builtin
+- return to prompt when error happens
+- implement heredoc to other cmd (middle & last)

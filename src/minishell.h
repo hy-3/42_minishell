@@ -72,6 +72,13 @@ void	cust_write(char *str, int status);
 char	**split_to_str(char const *s, char c);
 int		count_num_of_str(char const *s, char c);
 void	cust_free(char **res);
+//	src/builtin/*.c
+void	exec_cd(t_cmd_param *cmd_p, int num_node_ver);
+void	exec_echo(t_cmd_param *cmd_p, int num_node_ver, int num_node_hor, int i);
+void	exec_env(t_cmd_param *cmd_p, t_env_param *env_p, int num_node_ver);
+void	exec_export(t_cmd_param *cmd_p, t_env_param *env_p, int num_node_ver);
+void	exec_pwd();
+void	exec_unset(t_cmd_param *cmd_p, t_env_param *env_p, int num_node_ver);
 //	lib/get_next_line/get_next_line.c
 char	*get_next_line(int fd);
 
