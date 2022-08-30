@@ -9,7 +9,7 @@ void	cust_waitpid(int num_of_executed_cmd)
 	}
 }
 
-t_list	*check_arrows(t_list *list, t_cmd_param *cmd_p)
+t_list	*check_arrows(t_list *list, t_cmd_param *cmd_p, int i)
 {
 	char	*str;
 	char	*limit_str;
@@ -64,39 +64,38 @@ t_list	*check_arrows(t_list *list, t_cmd_param *cmd_p)
 			while (1)
 			{
 				str = get_next_line(0);
-				if (ft_strncmp(str, limit_str, ft_strlen(list->str) + 1) == 0)
+				if (ft_strncmp(str, limit_str, ft_strlen(limit_str)) == 0)
 					break ;
-				// write(p1[1], str, ft_strlen(str));
+				write(cmd_p->p[i][1], str, ft_strlen(str));
 				free(str);
 			}
+			free(limit_str);
+			cmd_p->is_heredoc = 1;
+			list = list->extra;
 		}
 	}
 	return (list);
 }
 
-int	exec_cmd(t_list *list, t_env_param *env_p, int i, int num_node_hor)
+void	exec_cmd(t_list *list, t_cmd_param *cmd_p, t_env_param *env_p, int i, int num_node_hor)
 {
-	t_cmd_param	*cmd_p;
 	int			k;
 	int			num_node_ver;
 
-	cmd_p = (t_cmd_param *) malloc(sizeof(t_cmd_param));
-	cmd_p->input_fd = 0;
-	cmd_p->output_fd = 1;
 	k = 0;
 	num_node_ver = count_extra_node(list);
 	while (list != NULL)
 	{
-		list = check_arrows(list, cmd_p);
+		list = check_arrows(list, cmd_p, i);
 		if (list == NULL)
 			break;
 		cmd_p->exec_args[k++] = list->str;
 		list = list->extra;
 	}
 	if (k == 0)
-		return (0);
+		return ;
 	cmd_p->exec_args[k] = NULL;
-	return (exec_basedon_cmdtype(cmd_p, env_p, num_node_ver, num_node_hor, i));
+	exec_basedon_cmdtype(cmd_p, env_p, num_node_ver, num_node_hor, i);
 }
 
 int	pipex(t_list *list, t_env_param *env_p)
@@ -104,11 +103,27 @@ int	pipex(t_list *list, t_env_param *env_p)
 	int			status_code; //TODO: get from last exec cmd.
 	char		*pathenv;
 	int			num_node_hor;
-	int			num_of_child;
+	t_cmd_param	*cmd_p;
+	int	i;
 
+	cmd_p = (t_cmd_param *) malloc(sizeof(t_cmd_param));
+
+	cmd_p->num_of_child = 0;
 	status_code = 0;
 	num_node_hor = count_next_node(list);
-	num_of_child = list_iter(list, env_p, num_node_hor, exec_cmd);
-	cust_waitpid(num_of_child);
+	i = 0;
+	while (list != NULL)
+	{
+		pipe(cmd_p->p[i]);
+		cmd_p->input_fd = 0;
+		cmd_p->output_fd = 1;
+		cmd_p->is_heredoc = 0;
+		exec_cmd(list, cmd_p, env_p, i, num_node_hor);
+		list = list->next;
+		i++;
+	}
+	printf("before\n");
+	cust_waitpid(cmd_p->num_of_child);
+	printf("after\n");
 	return (status_code);
 }

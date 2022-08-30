@@ -22,6 +22,7 @@ int	main(int argc, char *argv[], char *envp[])
 		env_p.pathenv = get_value_of_pathenv(env_p.current_envp);
 		pipex(list, &env_p);
 		//TODO: Free env_p(first_envp, current_envp, pathenv)
+		//TODO: clear gnl global var?
 
 		/* --- to check args --- */
 		t_list *ex;

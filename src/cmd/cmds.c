@@ -1,6 +1,7 @@
 #include "../minishell.h"
 
-//TODO: change structure to make builtins work with redirections.
+//TODO: check every builtins to work with output fd
+//TODO: change to work together with pipe (with external executable)
 void	exec_echo(t_cmd_param *cmd_p, int num_node_ver)
 {
 	int	i;
@@ -23,14 +24,29 @@ void	exec_echo(t_cmd_param *cmd_p, int num_node_ver)
 		else
 		{
 			i = 1;
-			while (cmd_p->exec_args[i])
+			if (cmd_p->output_fd != 1)
 			{
-				printf("%s",cmd_p->exec_args[i]);
-				if ((i + 1) != num_node_ver)
-					printf(" ");
-				i++;
+				while (cmd_p->exec_args[i])
+				{
+					write(cmd_p->output_fd, cmd_p->exec_args[i], ft_strlen(cmd_p->exec_args[i]));
+					if ((i + 1) != num_node_ver)
+						write(cmd_p->output_fd, " ", 1);
+					i++;
+				}
+				write(cmd_p->output_fd, "\n", 2);
 			}
-			printf("\n");
+			else
+			{
+				dup2(cmd_p->p[0][1], 1); //TODO: think about how to pass builtin output to external executable
+				while (cmd_p->exec_args[i])
+				{
+					printf("%s",cmd_p->exec_args[i]);
+					if ((i + 1) != num_node_ver)
+						printf(" ");
+					i++;
+				}
+				printf("\n");
+			}
 		}
 	}
 }
@@ -93,9 +109,8 @@ void	exec_env(t_cmd_param *cmd_p, t_env_param *env_p, int num_node_ver)
 		printf("tmp\n"); //TODO: check what should I implement when 'env' has args.
 }
 
-void	child(int *p1, int *p2, t_cmd_param *cmd_p, t_env_param *env_p, int i, int num_node_hor)
+void	organize_stdinout(t_cmd_param *cmd_p, int i, int num_node_hor)
 {
-	char	*cmd_path;
 	if (i == 0) //first cmd
 	{
 		if (cmd_p->input_fd != 0)
@@ -103,22 +118,29 @@ void	child(int *p1, int *p2, t_cmd_param *cmd_p, t_env_param *env_p, int i, int 
 			if (dup2(cmd_p->input_fd, 0) == -1)
 				cust_perror("Error(first_child: dup2 input_fd)", 1);
 		}
+		else if (cmd_p->is_heredoc == 1) //TODO: fix heredoc
+		{
+			if (dup2(cmd_p->p[i][0], 0) == -1)
+				cust_perror("Error(first_child: dup2 p[i][0])", 1);
+		}
 		if (cmd_p->output_fd != 1)
 		{
 			if (dup2(cmd_p->output_fd, 1) == -1)
 				cust_perror("Error(first_child: dup2 output_fd)", 1);
+			if (close(cmd_p->output_fd) == -1) //TODO: check if it's necessary
+				cust_perror("TEMP",1);
 		}
 		else if (num_node_hor > 1)
 		{
-			if (dup2(p2[1], 1) == -1)
+			if (dup2(cmd_p->p[i][1], 1) == -1)
 				cust_perror("Error(first_child: dup2 p2[1])", 1);
 		}
 	}
 	else if (0 < i && i < num_node_hor - 1) //middle cmd
 	{
-		if (close(p1[1]) == -1)
+		if (close(cmd_p->p[i-1][1]) == -1)
 			cust_perror("Error(middle_child: close p1[1])", 1);
-		if (close(p2[0]) == -1)
+		if (close(cmd_p->p[i][0]) == -1)
 			cust_perror("Error(middle_child: close p2[0])", 1);
 		if (cmd_p->input_fd != 0)
 		{
@@ -127,7 +149,7 @@ void	child(int *p1, int *p2, t_cmd_param *cmd_p, t_env_param *env_p, int i, int 
 		}
 		else
 		{
-			if (dup2(p1[0], 0) == -1)
+			if (dup2(cmd_p->p[i-1][0], 0) == -1)
 				cust_perror("Error(middle_child: dup2 p1[0])", 1);
 		}
 		if (cmd_p->output_fd != 1)
@@ -137,17 +159,19 @@ void	child(int *p1, int *p2, t_cmd_param *cmd_p, t_env_param *env_p, int i, int 
 		}
 		else
 		{
-			if (dup2(p2[1], 1) == -1)
+			if (dup2(cmd_p->p[i][1], 1) == -1)
 				cust_perror("Error(middle_child: dup2 p2[1])", 1);
 		}
 	}
 	else if (0 < i && i == num_node_hor - 1) //last cmd
 	{
-		if (close(p1[1]) == -1)
+		if (close(cmd_p->p[i-1][1]) == -1)
 			cust_perror("Error(last_child: close p1[1])", 1);
 		if (cmd_p->output_fd != 1)
+		{
 			if (dup2(cmd_p->output_fd, 1) == -1)
 				cust_perror("Error(last_child: dup2 output_fd)", 1);
+		}
 		if (cmd_p->input_fd != 0)
 		{
 			if (dup2(cmd_p->input_fd, 0) == -1)
@@ -155,37 +179,24 @@ void	child(int *p1, int *p2, t_cmd_param *cmd_p, t_env_param *env_p, int i, int 
 		}
 		else
 		{
-			if (dup2(p1[0], 0) == -1)
+			if (dup2(cmd_p->p[i-1][0], 0) == -1)
 				cust_perror("Error(last_child: dup2 p1[0])", 1);
 		}
 	}
+}
+
+void	exec_external_executable(t_cmd_param *cmd_p, t_env_param *env_p)
+{
+	char	*cmd_path;
+
 	cmd_path = is_cmd_exist_and_executable(env_p->pathenv, cmd_p->exec_args[0]);
 	if (execve(cmd_path, cmd_p->exec_args, env_p->current_envp) == -1)
 		cust_write("command not found\n", 127);
 }
 
-void	exec_other_cmd(t_cmd_param *cmd_p, t_env_param *env_p, int num_node_hor, int i)
+void	exec_basedon_cmdtype(t_cmd_param *cmd_p, t_env_param *env_p, int num_node_ver, int num_node_hor, int i)
 {
-	int	p[100][2]; //TODO: p[ARG_MAX][2];
-
-	if (pipe(p[i + 1]) < 0) //TODO: now, not using p[0] so wasting it is not ideal
-		cust_perror("Error(main: pipe p[i]", 1);
-	cmd_p->pid = fork();
-	if (cmd_p->pid < 0)
-		cust_perror("Error(exec_cmd: fork)", 1);
-	if (cmd_p->pid == 0)
-		child(p[i], p[i + 1], cmd_p, env_p, i, num_node_hor);
-	if (i > 0)
-		if (!((close(p[i][0]) == 0) && (close(p[i][1]) == 0)))
-			cust_perror("Error(cmd: close p[i][0] or p[i][1])", 1);
-}
-
-int	exec_basedon_cmdtype(t_cmd_param *cmd_p, t_env_param *env_p, int num_node_ver, int num_node_hor, int i)
-{
-	int	num_of_child;
-
-	num_of_child = 0;
-	if (ft_strlen(cmd_p->exec_args[0]) == 4 && ft_strncmp(cmd_p->exec_args[0], "exit", 4) == 0)
+	if (ft_strlen(cmd_p->exec_args[0]) == 4 && ft_strncmp(cmd_p->exec_args[0], "exit", 4) == 0) //TODO: consider ft_strncmp
 		exit(0); //TODO: check which status code I should return.
 	if (ft_strlen(cmd_p->exec_args[0]) == 4 && ft_strncmp(cmd_p->exec_args[0], "echo", 4) == 0)
 		exec_echo(cmd_p, num_node_ver);
@@ -201,8 +212,17 @@ int	exec_basedon_cmdtype(t_cmd_param *cmd_p, t_env_param *env_p, int num_node_ve
 		exec_env(cmd_p, env_p, num_node_ver);
 	else
 	{
-		exec_other_cmd(cmd_p, env_p, num_node_hor, i);
-		num_of_child = 1;
+		cmd_p->pid = fork();
+		if (cmd_p->pid < 0)
+			cust_perror("Error(exec_cmd: fork)", 1);
+		if (cmd_p->pid == 0)
+		{
+			organize_stdinout(cmd_p, i, num_node_hor);
+			exec_external_executable(cmd_p, env_p);
+		}
+		if (i > 0)
+			if (!((close(cmd_p->p[i-1][0]) == 0) && (close(cmd_p->p[i-1][1]) == 0)))
+				cust_perror("Error(cmd: close cmd_p->p[i][0] or cmd_p->p[i][1])", 1);
+		cmd_p->num_of_child += 1;
 	}
-	return (num_of_child);
 }
