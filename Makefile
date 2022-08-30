@@ -12,7 +12,9 @@ SRC = src/main.c \
 	  src/cmd/pipex.c \
 	  src/cmd/check_cmd.c \
 	  src/cmd/list.c \
-	  src/cmd/cmds.c
+	  src/cmd/cmds.c \
+	  lib/get_next_line/get_next_line.c \
+	  lib/get_next_line/get_next_line_utils.c
 
 OBJ = $(SRC:%.c=%.o)
 

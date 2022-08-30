@@ -9,6 +9,10 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../lib/libft/libft.h"
+# include <sys/uio.h>
+# include <stddef.h>
+
+# define BUFFER_SIZE 10
 
 typedef struct s_list
 {
@@ -65,5 +69,7 @@ void	cust_write(char *str, int status);
 char	**split_to_str(char const *s, char c);
 int		count_num_of_str(char const *s, char c);
 void	cust_free(char **res);
+//	lib/get_next_line/get_next_line.c
+char	*get_next_line(int fd);
 
 #endif

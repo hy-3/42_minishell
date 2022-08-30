@@ -1,5 +1,6 @@
 #include "../minishell.h"
 
+//TODO: change structure to make builtins work with redirections.
 void	exec_echo(t_cmd_param *cmd_p, int num_node_ver)
 {
 	int	i;

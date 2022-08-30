@@ -11,6 +11,9 @@ void	cust_waitpid(int num_of_executed_cmd)
 
 t_list	*check_arrows(t_list *list, t_cmd_param *cmd_p)
 {
+	char	*str;
+	char	*limit_str;
+
 	if (ft_strlen(list->str) == 1 && ft_strchr(list->str, '>') != NULL)
 	{
 		list = list->extra;
@@ -50,9 +53,23 @@ t_list	*check_arrows(t_list *list, t_cmd_param *cmd_p)
 			list = list->extra;
 		}
 	}
-	else if (ft_strnstr(list->str, "<<", ft_strlen(list->str)) != NULL)
+	else if (ft_strlen(list->str) == 2 && ft_strnstr(list->str, "<<", ft_strlen(list->str)) != NULL)
 	{
-
+		list = list->extra;
+		if (list == NULL)
+			printf("syntax error newar unexpected token `newline'\n"); //TODO: bring back to prompt. free if it's necessary.
+		else
+		{
+			limit_str = ft_strjoin(list->str, "\n");
+			while (1)
+			{
+				str = get_next_line(0);
+				if (ft_strncmp(str, limit_str, ft_strlen(list->str) + 1) == 0)
+					break ;
+				// write(p1[1], str, ft_strlen(str));
+				free(str);
+			}
+		}
 	}
 	return (list);
 }
