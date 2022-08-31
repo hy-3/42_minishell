@@ -51,6 +51,7 @@ typedef struct s_res_arrow
 // src
 //	- parse.c
 t_list	*parse(char *original_str);
+
 // src/env
 //	- env.c
 char	**copy_env(char **old_envp);
@@ -59,6 +60,7 @@ int		is_valid_envname(char *str);
 char	**create_new_env_with_str(char **old_envp, char *str);
 char	**upd_to_new_env(t_env_param *env_p, t_cmd_param *cmd_p);
 char	*get_value_of_pathenv(char **envp);
+
 // src/cmd
 //	- pipex.c
 int		pipex(t_list *list, t_env_param *env_p);
@@ -66,6 +68,7 @@ int		pipex(t_list *list, t_env_param *env_p);
 char	*is_cmd_exist_and_executable(char *path_env, char *cmd);
 //	- external_cmd.c
 void	exec_external_cmd(t_cmd_param *cmd_p, t_env_param *env_p, int i);
+
 // src/cmd/builtin
 //	- *.c
 void	exec_cd(t_cmd_param *cmd_p, t_env_param *env_p, int i);
@@ -74,11 +77,15 @@ void	exec_env(t_cmd_param *cmd_p, t_env_param *env_p, int i);
 void	exec_export(t_cmd_param *cmd_p, t_env_param *env_p, int i);
 void	exec_pwd(t_cmd_param *cmd_p, t_env_param *env_p, int i);
 void	exec_unset(t_cmd_param *cmd_p, t_env_param *env_p, int i);
-// - output_fd.c
-int		get_output_fd(t_cmd_param *cmd_p, t_env_param *env_p, int i);
+
 // redirection
 //	- redirect.c
 t_list	*check_arrows(t_list *list, t_cmd_param *cmd_p, int i);
+//	- bultin_output_fd.c
+int		get_output_fd(t_cmd_param *cmd_p, t_env_param *env_p, int i);
+//	- external_cmd_inoutput_fd.c
+void	organize_fd(t_cmd_param *cmd_p, t_env_param *env_p, int i);
+
 // src/util
 //	- list.c
 int		count_next_node(t_list *list);
@@ -89,6 +96,7 @@ void	cust_free(char **res);
 //	- stderr.c
 void	cust_perror(char *str, int status);
 void	cust_write(char *str, int status);
+
 // lib/get_next_line
 //	- get_next_line.c
 char	*get_next_line(int fd);

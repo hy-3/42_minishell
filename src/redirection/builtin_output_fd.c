@@ -1,4 +1,4 @@
-#include "../../minishell.h"
+#include "../minishell.h"
 
 int	get_output_fd(t_cmd_param *cmd_p, t_env_param *env_p, int i)
 {
