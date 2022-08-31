@@ -1,24 +1,5 @@
 #include "../minishell.h"
 
-char	*get_value_of_pathenv(char **envp)
-{
-	char	*res;
-	int		i;
-
-	res = NULL;
-	i = 0;
-	while (envp[i])
-	{
-		res = ft_strnstr(envp[i++], "PATH=", 5);
-		if (res != NULL)
-		{
-			res += 5;
-			break ;
-		}
-	}
-	return (res);
-}
-
 char	*create_cmd_path(char *each_path, char *cmd)
 {
 	char	*tmp;

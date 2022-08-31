@@ -26,10 +26,10 @@ x [Hiro] ’ inhibit all interpretation of a sequence of characters.
 
 [Hiro] " inhibit all interpretation of a sequence of characters except for $.
 
-[Hiro] Redirections:
+x [Hiro] Redirections:
     x [Hiro] < should redirect input.
     x [Hiro] > should redirect output.
-    [Hiro] “<<” read input from the current source until a line containing only the delimiter is seen. it doesn’t need to update history!
+    x [Hiro] “<<” read input from the current source until a line containing only the delimiter is seen. it doesn’t need to update history!
     x [Hiro] “>>” should redirect output with append mode.
 - Make sure << doesn't update history.
 
@@ -93,8 +93,6 @@ $ echo '"'"$USER"'"'
 
 
 
-
-- fix num_node_ver & num_node_hor
 - builtin
-- return to prompt when error happens
 - implement heredoc to other cmd (middle & last)
+- return to prompt when error happens

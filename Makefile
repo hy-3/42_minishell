@@ -6,19 +6,20 @@ LIBFT_PATH = lib/libft/
 LIBFT = lib/libft/libft.a
 SRC = src/main.c \
 	  src/parse.c \
-	  src/env.c \
-	  src/cmd/split_to_str.c \
-	  src/cmd/stderr.c \
-	  src/cmd/pipex.c \
 	  src/cmd/check_cmd.c \
-	  src/cmd/list.c \
-	  src/cmd/cmds.c \
-	  src/builtin/cd.c \
-	  src/builtin/echo.c \
-	  src/builtin/env.c \
-	  src/builtin/export.c \
-	  src/builtin/pwd.c \
-	  src/builtin/unset.c \
+	  src/cmd/external_cmd.c \
+	  src/cmd/pipex.c \
+	  src/cmd/builtin/cd.c \
+	  src/cmd/builtin/echo.c \
+	  src/cmd/builtin/env.c \
+	  src/cmd/builtin/export.c \
+	  src/cmd/builtin/pwd.c \
+	  src/cmd/builtin/unset.c \
+	  src/env/env.c \
+	  src/redirection/redirect.c \
+	  src/util/list.c \
+	  src/util/split_to_str.c \
+	  src/util/stderr.c \
 	  lib/get_next_line/get_next_line.c \
 	  lib/get_next_line/get_next_line_utils.c
 

@@ -1,4 +1,4 @@
-#include "../minishell.h"
+#include "../../minishell.h"
 
 //TODO: check every builtins to work with output fd
 //TODO: change to work together with pipe (with external executable)

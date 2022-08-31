@@ -9,81 +9,31 @@ void	cust_waitpid(int num_of_executed_cmd)
 	}
 }
 
-t_list	*check_arrows(t_list *list, t_cmd_param *cmd_p, int i)
+void	exec_cmd(t_cmd_param *cmd_p, t_env_param *env_p, int i)
 {
-	char	*str;
-	char	*limit_str;
-
-	if (ft_strlen(list->str) == 1 && ft_strchr(list->str, '>') != NULL)
-	{
-		list = list->extra;
-		if (list == NULL)
-			printf("syntax error newar unexpected token `newline'\n"); //TODO: bring back to prompt. free if it's necessary.
-		else
-		{
-			cmd_p->output_fd = open(list->str, O_CREAT | O_TRUNC | O_WRONLY, 0777);
-			if (cmd_p->output_fd == -1)
-				cust_write("file open failed\n", 1); //TODO: error handle
-			list = list->extra;
-		}
-	}
-	else if (ft_strlen(list->str) == 2 && ft_strnstr(list->str, ">>", ft_strlen(list->str)) != NULL)
-	{
-		list = list->extra;
-		if (list == NULL)
-			printf("syntax error newar unexpected token `newline'\n"); //TODO: bring back to prompt. free if it's necessary.
-		else
-		{
-			cmd_p->output_fd = open(list->str, O_CREAT | O_APPEND | O_WRONLY, 0777);
-			if (cmd_p->output_fd == -1)
-				cust_write("file open failed\n", 1); //TODO: error handle
-			list = list->extra;
-		}
-	}
-	else if (ft_strlen(list->str) == 1 && ft_strchr(list->str, '<') != NULL)
-	{
-		list = list->extra;
-		if (list == NULL)
-			printf("syntax error newar unexpected token `newline'\n"); //TODO: bring back to prompt. free if it's necessary.
-		else
-		{
-			cmd_p->input_fd = open(list->str, O_RDONLY);
-			if (cmd_p->input_fd == -1)
-				printf("%s: No such file or directory\n", list->str); //TODO: bring back to prompt. free if it's necessary.
-			list = list->extra;
-		}
-	}
-	else if (ft_strlen(list->str) == 2 && ft_strnstr(list->str, "<<", ft_strlen(list->str)) != NULL)
-	{
-		list = list->extra;
-		if (list == NULL)
-			printf("syntax error newar unexpected token `newline'\n"); //TODO: bring back to prompt. free if it's necessary.
-		else
-		{
-			limit_str = ft_strjoin(list->str, "\n");
-			while (1)
-			{
-				str = get_next_line(0);
-				if (ft_strncmp(str, limit_str, ft_strlen(limit_str)) == 0)
-					break ;
-				write(cmd_p->p[i][1], str, ft_strlen(str));
-				free(str);
-			}
-			free(limit_str);
-			cmd_p->is_heredoc = 1;
-			list = list->extra;
-		}
-	}
-	return (list);
+	if (ft_strlen(cmd_p->exec_args[0]) == 4 && ft_strncmp(cmd_p->exec_args[0], "exit", 4) == 0) //TODO: consider ft_strncmp
+		exit(0); //TODO: check which status code I should return.
+	if (ft_strlen(cmd_p->exec_args[0]) == 4 && ft_strncmp(cmd_p->exec_args[0], "echo", 4) == 0)
+		exec_echo(cmd_p, env_p, i);
+	else if (ft_strlen(cmd_p->exec_args[0]) == 2 && ft_strncmp(cmd_p->exec_args[0], "cd", 2) == 0)
+		exec_cd(cmd_p);
+	else if (ft_strlen(cmd_p->exec_args[0]) == 3 && ft_strncmp(cmd_p->exec_args[0], "pwd", 3) == 0)
+		exec_pwd();
+	else if (ft_strlen(cmd_p->exec_args[0]) == 6 && ft_strncmp(cmd_p->exec_args[0], "export", 6) == 0)
+		exec_export(cmd_p, env_p);
+	else if (ft_strlen(cmd_p->exec_args[0]) == 5 && ft_strncmp(cmd_p->exec_args[0], "unset", 5) == 0)
+		exec_unset(cmd_p, env_p);
+	else if (ft_strlen(cmd_p->exec_args[0]) == 3 && ft_strncmp(cmd_p->exec_args[0], "env", 3) == 0)
+		exec_env(cmd_p, env_p);
+	else
+		exec_external_cmd(cmd_p, env_p, i);
 }
 
-void	exec_cmd(t_list *list, t_cmd_param *cmd_p, t_env_param *env_p, int i, int num_node_hor)
+void	config_execargs(t_list *list, t_cmd_param *cmd_p, t_env_param *env_p, int i)
 {
-	int			k;
-	int			num_node_ver;
+	int	k;
 
 	k = 0;
-	num_node_ver = count_extra_node(list);
 	while (list != NULL)
 	{
 		list = check_arrows(list, cmd_p, i);
@@ -95,22 +45,19 @@ void	exec_cmd(t_list *list, t_cmd_param *cmd_p, t_env_param *env_p, int i, int n
 	if (k == 0)
 		return ;
 	cmd_p->exec_args[k] = NULL;
-	exec_basedon_cmdtype(cmd_p, env_p, num_node_ver, num_node_hor, i);
+	cmd_p->num_of_args = k;
+	exec_cmd(cmd_p, env_p, i);
 }
 
 int	pipex(t_list *list, t_env_param *env_p)
 {
+	t_cmd_param	*cmd_p;
 	int			status_code; //TODO: get from last exec cmd.
 	char		*pathenv;
-	int			num_node_hor;
-	t_cmd_param	*cmd_p;
-	int	i;
+	int			i;
 
 	cmd_p = (t_cmd_param *) malloc(sizeof(t_cmd_param));
-
-	cmd_p->num_of_child = 0;
-	status_code = 0;
-	num_node_hor = count_next_node(list);
+	cmd_p->status_code = 0;
 	i = 0;
 	while (list != NULL)
 	{
@@ -118,10 +65,10 @@ int	pipex(t_list *list, t_env_param *env_p)
 		cmd_p->input_fd = 0;
 		cmd_p->output_fd = 1;
 		cmd_p->is_heredoc = 0;
-		exec_cmd(list, cmd_p, env_p, i, num_node_hor);
+		config_execargs(list, cmd_p, env_p, i);
 		list = list->next;
 		i++;
 	}
-	cust_waitpid(cmd_p->num_of_child);
+	cust_waitpid(env_p->num_of_child);
 	return (status_code);
 }
