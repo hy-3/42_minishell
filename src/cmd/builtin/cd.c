@@ -1,12 +1,21 @@
-
 #include "../../minishell.h"
-//TODO: check every builtins to work with output fd
-//TODO: change to work together with pipe (with external executable)
 
-void	exec_cd(t_cmd_param *cmd_p)
+void	exec_cd(t_cmd_param *cmd_p, t_env_param *env_p, int i)
 {
-	if (cmd_p->num_of_args == 2)
-		chdir(cmd_p->exec_args[1]); //TODO: throw error if directory is not found.
-	else
-		cust_write("ERROR: Specify relative or absolute path\n", 1); //TODO: error handle
+	char	*var;
+
+	if (env_p->num_of_next_node == (i + 1))
+	{
+		if (cmd_p->num_of_args == 1)
+		{
+			var = getenv("HOME");
+			if (chdir(var) == -1)
+				printf("%s: No such file or directory\n", cmd_p->exec_args[1]);
+		}
+		else
+		{
+			if (chdir(cmd_p->exec_args[1]) == -1)
+				printf("%s: No such file or directory\n", cmd_p->exec_args[1]);
+		}
+	}
 }

@@ -1,12 +1,12 @@
 #include "../../minishell.h"
 
-//TODO: check every builtins to work with output fd
-//TODO: change to work together with pipe (with external executable)
-
-void	exec_pwd()
+void	exec_pwd(t_cmd_param *cmd_p, t_env_param *env_p, int i)
 {
 	char	path[PATH_MAX];
+	char	*new_path;
 
 	getcwd(path, PATH_MAX);
-	printf("%s\n", path);
+	new_path = ft_strjoin(path, "\n");
+	write(get_output_fd(cmd_p, env_p, i), new_path, ft_strlen(new_path));
+	free(new_path);
 }

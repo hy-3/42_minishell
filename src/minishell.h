@@ -68,12 +68,14 @@ char	*is_cmd_exist_and_executable(char *path_env, char *cmd);
 void	exec_external_cmd(t_cmd_param *cmd_p, t_env_param *env_p, int i);
 // src/cmd/builtin
 //	- *.c
-void	exec_cd(t_cmd_param *cmd_p);
+void	exec_cd(t_cmd_param *cmd_p, t_env_param *env_p, int i);
 void	exec_echo(t_cmd_param *cmd_p, t_env_param *env_p, int i);
-void	exec_env(t_cmd_param *cmd_p, t_env_param *env_p);
-void	exec_export(t_cmd_param *cmd_p, t_env_param *env_p);
-void	exec_pwd();
-void	exec_unset(t_cmd_param *cmd_p, t_env_param *env_p);
+void	exec_env(t_cmd_param *cmd_p, t_env_param *env_p, int i);
+void	exec_export(t_cmd_param *cmd_p, t_env_param *env_p, int i);
+void	exec_pwd(t_cmd_param *cmd_p, t_env_param *env_p, int i);
+void	exec_unset(t_cmd_param *cmd_p, t_env_param *env_p, int i);
+// - output_fd.c
+int		get_output_fd(t_cmd_param *cmd_p, t_env_param *env_p, int i);
 // redirection
 //	- redirect.c
 t_list	*check_arrows(t_list *list, t_cmd_param *cmd_p, int i);

@@ -92,7 +92,5 @@ $ echo '"'"$USER"'"'
 "hiyamamo"
 
 
-
-- builtin
 - implement heredoc to other cmd (middle & last)
 - return to prompt when error happens

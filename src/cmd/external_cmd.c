@@ -1,6 +1,6 @@
 #include "../minishell.h"
 
-void	organize_stdinout(t_cmd_param *cmd_p, t_env_param *env_p, int i)
+void	organize_fd(t_cmd_param *cmd_p, t_env_param *env_p, int i)
 {
 	if (i == 0) //first cmd
 	{
@@ -93,7 +93,7 @@ void	exec_external_cmd(t_cmd_param *cmd_p, t_env_param *env_p, int i)
 		cust_perror("Error(exec_cmd: fork)", 1);
 	if (cmd_p->pid == 0)
 	{
-		organize_stdinout(cmd_p, env_p, i);
+		organize_fd(cmd_p, env_p, i);
 		child(cmd_p, env_p);
 	}
 	if (i == 0 && cmd_p->is_heredoc == 1) //TODO: test heredoc other situation like middle/last cmd.

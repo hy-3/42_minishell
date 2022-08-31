@@ -16,15 +16,15 @@ void	exec_cmd(t_cmd_param *cmd_p, t_env_param *env_p, int i)
 	if (ft_strlen(cmd_p->exec_args[0]) == 4 && ft_strncmp(cmd_p->exec_args[0], "echo", 4) == 0)
 		exec_echo(cmd_p, env_p, i);
 	else if (ft_strlen(cmd_p->exec_args[0]) == 2 && ft_strncmp(cmd_p->exec_args[0], "cd", 2) == 0)
-		exec_cd(cmd_p);
+		exec_cd(cmd_p, env_p, i);
 	else if (ft_strlen(cmd_p->exec_args[0]) == 3 && ft_strncmp(cmd_p->exec_args[0], "pwd", 3) == 0)
-		exec_pwd();
+		exec_pwd(cmd_p, env_p, i);
 	else if (ft_strlen(cmd_p->exec_args[0]) == 6 && ft_strncmp(cmd_p->exec_args[0], "export", 6) == 0)
-		exec_export(cmd_p, env_p);
+		exec_export(cmd_p, env_p, i);
 	else if (ft_strlen(cmd_p->exec_args[0]) == 5 && ft_strncmp(cmd_p->exec_args[0], "unset", 5) == 0)
-		exec_unset(cmd_p, env_p);
+		exec_unset(cmd_p, env_p, i);
 	else if (ft_strlen(cmd_p->exec_args[0]) == 3 && ft_strncmp(cmd_p->exec_args[0], "env", 3) == 0)
-		exec_env(cmd_p, env_p);
+		exec_env(cmd_p, env_p, i);
 	else
 		exec_external_cmd(cmd_p, env_p, i);
 }
@@ -46,7 +46,6 @@ void	config_execargs(t_list *list, t_cmd_param *cmd_p, t_env_param *env_p, int i
 		return ;
 	cmd_p->exec_args[k] = NULL;
 	cmd_p->num_of_args = k;
-	exec_cmd(cmd_p, env_p, i);
 }
 
 int	pipex(t_list *list, t_env_param *env_p)
@@ -66,6 +65,7 @@ int	pipex(t_list *list, t_env_param *env_p)
 		cmd_p->output_fd = 1;
 		cmd_p->is_heredoc = 0;
 		config_execargs(list, cmd_p, env_p, i);
+		exec_cmd(cmd_p, env_p, i);
 		list = list->next;
 		i++;
 	}

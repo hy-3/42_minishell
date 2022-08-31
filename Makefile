@@ -15,6 +15,7 @@ SRC = src/main.c \
 	  src/cmd/builtin/export.c \
 	  src/cmd/builtin/pwd.c \
 	  src/cmd/builtin/unset.c \
+	  src/cmd/builtin/output_fd.c \
 	  src/env/env.c \
 	  src/redirection/redirect.c \
 	  src/util/list.c \

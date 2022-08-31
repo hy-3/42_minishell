@@ -1,16 +1,27 @@
 #include "../../minishell.h"
 
-//TODO: check every builtins to work with output fd
-//TODO: change to work together with pipe (with external executable)
+void	export(t_cmd_param *cmd_p, t_env_param *env_p, int fd)
+{
+	int		k;
+	char	*new_str;
 
-void	exec_export(t_cmd_param *cmd_p, t_env_param *env_p)
+	k = 0;
+	while (env_p->current_envp[k] != NULL)
+	{
+		new_str = ft_strjoin("declare -x ", env_p->current_envp[k]);
+		write(fd, new_str, ft_strlen(new_str)); //TODO: check if I need to add "" for values.
+		write(fd, "\n", 1);
+		free(new_str);
+		k++;
+	}
+}
+
+void	exec_export(t_cmd_param *cmd_p, t_env_param *env_p, int i)
 {
 	int	k;
 
-	k = 0;
 	if (cmd_p->num_of_args == 1)
-		while (env_p->current_envp[k] != NULL)
-			printf("declare -x %s\n", env_p->current_envp[k++]); //TODO: check if I need to add "" for values.
+		export(cmd_p, env_p, get_output_fd(cmd_p, env_p, i));
 	else
 	{
 		k = 1;
