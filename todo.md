@@ -31,7 +31,6 @@ x [Hiro] Redirections:
     x [Hiro] > should redirect output.
     x [Hiro] “<<” read input from the current source until a line containing only the delimiter is seen. it doesn’t need to update history!
     x [Hiro] “>>” should redirect output with append mode.
-- Make sure << doesn't update history.
 
 x [Hiro] Pipes | The output of each command in the pipeline is connected via a pipe to the input of the next command.
 
@@ -46,7 +45,11 @@ x [Hiro] Pipes | The output of each command in the pipeline is connected via a p
       [Edu] ctrl-D exit the shell.
       [Edu] ctrl-\ do nothing.
 
-
+# Other TODO
+- return to prompt when error happens
+- status code
+- free things
+- check if << updates history.
 
 
 # Possible imputs (to think how we parse from readline imput)
@@ -90,7 +93,3 @@ $ echo "'"$USER"'"
 'hiyamamo'
 $ echo '"'"$USER"'"'
 "hiyamamo"
-
-
-- implement heredoc to other cmd (middle & last)
-- return to prompt when error happens

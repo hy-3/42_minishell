@@ -28,16 +28,17 @@ typedef struct s_env_param
 	char	*pathenv;
 	int		num_of_next_node;
 	int		num_of_child;
+	int		p[100][2]; //TODO: p[ARG_MAX][2];
 }	t_env_param;
 
 typedef struct s_cmd_param
 {
 	char	*exec_args[100]; //TODO: *exec_args[ARG_MAX];
+	int		pid;
 	int		input_fd;
 	int		output_fd;
 	int		is_heredoc;
-	int		p[100][2]; //TODO: p[ARG_MAX][2];
-	int		pid;
+	int		heredoc_p[2];
 	int		num_of_args;
 	int		status_code; //TODO: implement
 }	t_cmd_param;
@@ -80,7 +81,7 @@ void	exec_unset(t_cmd_param *cmd_p, t_env_param *env_p, int i);
 
 // redirection
 //	- redirect.c
-t_list	*check_arrows(t_list *list, t_cmd_param *cmd_p, int i);
+t_list	*check_arrows(t_list *list, t_cmd_param *cmd_p, t_env_param *env_p,int i);
 //	- bultin_output_fd.c
 int		get_output_fd(t_cmd_param *cmd_p, t_env_param *env_p, int i);
 //	- external_cmd_inoutput_fd.c

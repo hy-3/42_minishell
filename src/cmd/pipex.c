@@ -36,14 +36,12 @@ void	config_execargs(t_list *list, t_cmd_param *cmd_p, t_env_param *env_p, int i
 	k = 0;
 	while (list != NULL)
 	{
-		list = check_arrows(list, cmd_p, i);
+		list = check_arrows(list, cmd_p, env_p, i);
 		if (list == NULL)
 			break;
 		cmd_p->exec_args[k++] = list->str;
 		list = list->extra;
 	}
-	if (k == 0)
-		return ;
 	cmd_p->exec_args[k] = NULL;
 	cmd_p->num_of_args = k;
 }
@@ -60,12 +58,13 @@ int	pipex(t_list *list, t_env_param *env_p)
 	i = 0;
 	while (list != NULL)
 	{
-		pipe(cmd_p->p[i]);
+		pipe(env_p->p[i]);
 		cmd_p->input_fd = 0;
 		cmd_p->output_fd = 1;
 		cmd_p->is_heredoc = 0;
 		config_execargs(list, cmd_p, env_p, i);
-		exec_cmd(cmd_p, env_p, i);
+		if (cmd_p->num_of_args != 0)
+			exec_cmd(cmd_p, env_p, i);
 		list = list->next;
 		i++;
 	}

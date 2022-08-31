@@ -19,10 +19,13 @@ void	exec_external_cmd(t_cmd_param *cmd_p, t_env_param *env_p, int i)
 		organize_fd(cmd_p, env_p, i);
 		child(cmd_p, env_p);
 	}
-	if (i == 0 && cmd_p->is_heredoc == 1) //TODO: test heredoc other situation like middle/last cmd.
-		close(cmd_p->p[i][1]);
+	if (cmd_p->is_heredoc == 1)
+	{
+		close(cmd_p->heredoc_p[0]);
+		close(cmd_p->heredoc_p[1]);
+	}
 	if (i > 0)
-		if (!((close(cmd_p->p[i-1][0]) == 0) && (close(cmd_p->p[i-1][1]) == 0)))
+		if (!((close(env_p->p[i - 1][0]) == 0) && (close(env_p->p[i - 1][1]) == 0)))
 			cust_perror("Error(cmd: close cmd_p->p[i][0] or cmd_p->p[i][1])", 1);
 	env_p->num_of_child += 1;
 }
