@@ -21,5 +21,5 @@ void	exec_env(t_cmd_param *cmd_p, t_env_param *env_p, int i)
 	if (cmd_p->num_of_args == 1)
 		env(cmd_p, env_p, get_output_fd(cmd_p, env_p, i));
 	else
-		printf("No option nor arguments acceptable.\n");
+		printf("Option and argument are not acceptable.\n"); //TODO: or do nothing and just return to prompt
 }

@@ -67,7 +67,7 @@ void	fill_str(char *original_str, t_list *list, int start, int i)
 					while (original_str[++start] != tmp_quote)
 					{
 						if (original_str[start] == '\0')
-							cust_write("ERROR: quote is not closed.\n", 1); //TODO: error handling(check exit code.)
+							cust_write("ERROR: quote is not closed.\n", 1); //TODO: return to prompt.
 						tmp_str[k++] = original_str[start];
 					}
 					end_of_dollar = k;

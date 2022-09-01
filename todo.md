@@ -1,10 +1,7 @@
 [Hiro] Not interpret unclosed quotes or unspecified special characters like \ or ;.
-Implemented: 
- - throw error when quote is unclosed
-TODO:
- - throw error when pipe is unclosed (now segfault will happen)
+- when quote is not closed: change from error to giving back prompt
 
-[Check_at_the_end] Not use more than one global variable, think about it and be ready to explain why you do it.
+x [only_gnl] Not use more than one global variable, think about it and be ready to explain why you do it.
 
 x [Hiro] Show a prompt when waiting for a new command.
 
@@ -45,42 +42,12 @@ x [Hiro] Environment variables ($ followed by characters) should expand to their
       [Edu] ctrl-D exit the shell.
       [Edu] ctrl-\ do nothing.
 
-# Other TODO
-- work with $ & ''
+# TODO
 - return to prompt when error happens
 - status code
 - free things
 - add history
 - check if << updates history.
-
-
-# Possible imputs (to think how we parse from readline imput)
-    $ cmd
-    $ cmd option
-    $ cmd file
-    $ cmd | cmd
-    $ > file    -> [Override] you can write to mentioned file without prompt (you can end imput with ctl+C)
-    $ >> file   -> [Add] you can write to mentioned file without prompt (you can end imput with ctl+C)
-    $ < input_file | cmd > output_file h
-        - if begin is < & one arg & file exists: < a(if file named a exists)    -> cat file & show (END)
-    $ << TERMINATE_WORD
-        ex) << TERMINATE_WORD    -> heredoc>
-                                    (Work as 'echo' with new line after putting TERMINATE_WORD)
-    $ cmd << TERMINATE_WORD | cmd
-        ex) cat << | wc -l       -> pipe heredoc>
-    $ $<ENV>
-     $ "consider as one command" or 'consider as one command'
-        ex) [echo "\n" or echo '\n'] and [echo \n]    -> different output
-        ex) [" ls" or ' ls']    -> error(command not found)
-
-# Possible flows (After parse)
-- [cmd]
-- [>] or [>>]
-- [<]
-- [<<]
-- [$<ENV>]
-- ["]
-- [']
 
 # Things to be careful with quote
 $ echo "$USER"
@@ -99,3 +66,4 @@ $ echo "$HOME"s
 /Users/hiyamamos
 $ echo "   $HOME "s 
    /Users/hiyamamo s
+-> DONE
