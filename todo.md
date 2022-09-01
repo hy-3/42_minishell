@@ -44,6 +44,8 @@ x [Hiro] Environment variables ($ followed by characters) should expand to their
 
 # TODO
 - return to prompt when error happens
+- add error handle to close/dup2/pipe
+- implement $?
 - status code
 - free things
 - add history

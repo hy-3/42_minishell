@@ -18,7 +18,6 @@ int	main(int argc, char *argv[], char *envp[])
 		free(original_str);
 		if (list == NULL)
 			continue ;
-		//TODO: Implement check contents of list. ex) ls | | wc -> gives error
 		env_p.pathenv = get_value_of_pathenv(env_p.current_envp);
 		env_p.num_of_child = 0;
 		env_p.num_of_next_node = count_next_node(list);
