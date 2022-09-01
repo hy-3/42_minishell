@@ -1,41 +1,5 @@
 #include "minishell.h"
 
-t_list *create_next_node(t_list *list, int count)
-{
-	if (count == 0)
-	{
-		list = (t_list *) malloc(sizeof(t_list));
-		if (list == NULL)
-			printf("malloc failed\n"); //TODO: error handle
-		list->str = NULL;
-		list->extra = NULL;
-		list->next = NULL;
-	}
-	else
-	{
-		list->next = (t_list *) malloc(sizeof(t_list));
-		if (list->next == NULL)
-			printf("malloc failed\n"); //TODO: error handle
-		list = list->next;
-		list->str = NULL;
-		list->extra = NULL;
-		list->next = NULL;
-	}
-	return (list);
-}
-
-t_list *create_extra_node(t_list *list)
-{
-	list->extra = (t_list *) malloc(sizeof(t_list));
-	if (list->extra == NULL)
-		printf("malloc failed\n"); //TODO: error handle
-	list = list->extra;
-	list->str = NULL;
-	list->extra = NULL;
-	list->next = NULL;
-	return (list);
-}
-
 void	fill_str_allows(t_res_arrow *res, t_list *list, char *original_str, int start)
 {
 	int		i;
@@ -71,8 +35,10 @@ void	fill_str(char *original_str, t_list *list, int start, int i)
 	char		*tmp_str;
 	int			count;
 	t_res_arrow	res;
+	char		current_quote;
 
 	count = 0;
+	current_quote = 0;
 	while ((i - start) > 0)
 	{
 		k = 0;
@@ -92,6 +58,11 @@ void	fill_str(char *original_str, t_list *list, int start, int i)
 				if (original_str[start] == 34 || original_str[start] == 39)
 				{
 					tmp_quote = original_str[start];
+					if (current_quote == 0)
+						current_quote = tmp_quote;
+					else
+						if (current_quote == original_str[start])
+							current_quote = 0;
 					while (original_str[++start] != tmp_quote)
 					{
 						if (original_str[start] == '\0')
@@ -106,7 +77,10 @@ void	fill_str(char *original_str, t_list *list, int start, int i)
 			tmp_str[k] = '\0';
 			if (count != 0)
 				list = create_extra_node(list);
-			list->str = ft_strdup(tmp_str);
+			if (is_dollar_exist(tmp_str) == 1 && (current_quote == 0 || current_quote == 34))
+				list->str = convert_str_from_dollar(tmp_str);
+			else
+				list->str = ft_strdup(tmp_str);
 			free(tmp_str);
 		}
 		if (original_str[start] == '>' || original_str[start] == '<')

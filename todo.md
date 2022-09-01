@@ -46,9 +46,11 @@ x [Hiro] Pipes | The output of each command in the pipeline is connected via a p
       [Edu] ctrl-\ do nothing.
 
 # Other TODO
+- work with $ & ''
 - return to prompt when error happens
 - status code
 - free things
+- add history
 - check if << updates history.
 
 
@@ -93,3 +95,5 @@ $ echo "'"$USER"'"
 'hiyamamo'
 $ echo '"'"$USER"'"'
 "hiyamamo"
+$ echo "$HOME"s
+/Users/hiyamamos

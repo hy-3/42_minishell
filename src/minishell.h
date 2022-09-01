@@ -61,6 +61,9 @@ int		is_valid_envname(char *str);
 char	**create_new_env_with_str(char **old_envp, char *str);
 char	**upd_to_new_env(t_env_param *env_p, t_cmd_param *cmd_p);
 char	*get_value_of_pathenv(char **envp);
+//	- dollar.c
+int		is_dollar_exist(char *tmp_str);
+char	*convert_str_from_dollar(char *tmp_str);
 
 // src/cmd
 //	- pipex.c
@@ -90,6 +93,8 @@ void	organize_fd(t_cmd_param *cmd_p, t_env_param *env_p, int i);
 // src/util
 //	- list.c
 int		count_next_node(t_list *list);
+t_list *create_next_node(t_list *list, int count);
+t_list *create_extra_node(t_list *list);
 //	- split_to_str.c
 char	**split_to_str(char const *s, char c);
 int		count_num_of_str(char const *s, char c);
