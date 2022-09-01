@@ -7,6 +7,7 @@ t_list *create_next_node(t_list *list, int count)
 		list = (t_list *) malloc(sizeof(t_list));
 		if (list == NULL)
 			printf("malloc failed\n"); //TODO: error handle
+		list->str = NULL;
 		list->extra = NULL;
 		list->next = NULL;
 	}
@@ -16,6 +17,7 @@ t_list *create_next_node(t_list *list, int count)
 		if (list->next == NULL)
 			printf("malloc failed\n"); //TODO: error handle
 		list = list->next;
+		list->str = NULL;
 		list->extra = NULL;
 		list->next = NULL;
 	}
@@ -28,6 +30,7 @@ t_list *create_extra_node(t_list *list)
 	if (list->extra == NULL)
 		printf("malloc failed\n"); //TODO: error handle
 	list = list->extra;
+	list->str = NULL;
 	list->extra = NULL;
 	list->next = NULL;
 	return (list);
@@ -116,6 +119,23 @@ void	fill_str(char *original_str, t_list *list, int start, int i)
 	}
 }
 
+int	is_nullstr_in_list(t_list *list)
+{
+	t_list	*prev_node;
+	int		list_size;
+
+	list_size = 0;
+	while (list != NULL)
+	{
+		prev_node = list;
+		if (list->str == NULL)
+			return (1);
+		list = list->next;
+		list_size++;
+	}
+	return (0);
+}
+
 t_list	*parse(char *original_str)
 {
 	int		i;
@@ -125,7 +145,8 @@ t_list	*parse(char *original_str)
 	int		num_of_single_quote;
 	int		num_of_double_quote;
 	int		start;
-
+	int		k;
+	int		num_of_continued_pipe;
 
 	i = 0;
 	start = i;
@@ -147,11 +168,23 @@ t_list	*parse(char *original_str)
 		{
 			if (num_of_single_quote % 2 == 0 && num_of_double_quote % 2 == 0)
 			{
+				k = i + 1;
+				num_of_continued_pipe = 0;
+				while (original_str[k] != '\0' && original_str[k] != ' ')
+				{
+					if (original_str[k] == '|')
+						num_of_continued_pipe++;
+					k++;
+				}
+				if (num_of_continued_pipe == 1)
+					break ;
+				if (num_of_continued_pipe > 1)
+					cust_write("syntax error near unexpected token `|'\n", 1); //TODO: error handle
 				list = create_next_node(list, count);
 				if (count++ == 0)
 					first_node = list;
 				if (i == 0)
-					cust_write("syntax error near unexpected token `|'", 1); //TODO: error handle
+					cust_write("syntax error near unexpected token `|'\n", 1); //TODO: error handle
 				fill_str(original_str, list, start, i);
 				i += 1;
 				start = i;
@@ -166,13 +199,7 @@ t_list	*parse(char *original_str)
 	if (count == 0)
 		first_node = list;
 	fill_str(original_str, list, start, i);
+	if (is_nullstr_in_list(first_node) == 1)
+		cust_write("syntax error near unexpected token `|'\n", 1); //TODO: error handle
 	return (first_node);
 }
-
-//TODO: fix
-/*
-ls||wc
-ls || wc
-ls | | wc
--> fix segfault
-*/
