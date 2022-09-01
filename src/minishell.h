@@ -63,7 +63,7 @@ char	**upd_to_new_env(t_env_param *env_p, t_cmd_param *cmd_p);
 char	*get_value_of_pathenv(char **envp);
 //	- dollar.c
 int		is_dollar_exist(char *tmp_str);
-char	*convert_str_from_dollar(char *tmp_str);
+char	*convert_str_from_dollar(char *tmp_str, int current_quote, int end_of_dollar);
 
 // src/cmd
 //	- pipex.c

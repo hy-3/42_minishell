@@ -14,7 +14,7 @@ int	is_dollar_exist(char *tmp_str)
 	return (0);
 }
 
-char	*convert_str_from_dollar(char *tmp_str)
+char	*convert_str_from_dollar(char *tmp_str, int current_quote, int end_of_dollar)
 {
 	int		i;
 	int		k;
@@ -27,12 +27,13 @@ char	*convert_str_from_dollar(char *tmp_str)
 	char	*converted_str;
 	int		size_dollar_part;
 
+	printf("tmpstr: %s, current: %i, end_of_dollar:%i\n", tmp_str, current_quote, end_of_dollar);
 	i = 0;
 	while (tmp_str[i] != '$')
 		i++;
 	start_dollar = i;
 	tmp_start_dollar = start_dollar;
-	while (tmp_str[i] != '\0' && tmp_str[i] != 39 && tmp_str[i] != 34)
+	while (tmp_str[i] != '\0' && tmp_str[i] != 39 && tmp_str[i] != 34 && tmp_str[i] != ' ' && i < end_of_dollar)
 		i++;
 	end_dollar = i;
 	dollar_part = (char *) malloc((end_dollar - start_dollar) * sizeof(char));

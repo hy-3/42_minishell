@@ -24,7 +24,7 @@ x [Hiro] It must implement the builtins:
 
 x [Hiro] ’ inhibit all interpretation of a sequence of characters.
 
-[Hiro] " inhibit all interpretation of a sequence of characters except for $.
+x [Hiro] " inhibit all interpretation of a sequence of characters except for $.
 
 x [Hiro] Redirections:
     x [Hiro] < should redirect input.
@@ -34,7 +34,7 @@ x [Hiro] Redirections:
 
 x [Hiro] Pipes | The output of each command in the pipeline is connected via a pipe to the input of the next command.
 
-[Hiro] Environment variables ($ followed by characters) should expand to their values.
+x [Hiro] Environment variables ($ followed by characters) should expand to their values.
 
 [Check_at_the_end] $? should expand to the exit status of the most recently executed foreground pipeline.
 - Make sure exit status code whenever we handles error.
@@ -97,3 +97,5 @@ $ echo '"'"$USER"'"'
 "hiyamamo"
 $ echo "$HOME"s
 /Users/hiyamamos
+$ echo "   $HOME "s 
+   /Users/hiyamamo s

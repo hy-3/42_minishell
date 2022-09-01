@@ -36,6 +36,7 @@ void	fill_str(char *original_str, t_list *list, int start, int i)
 	int			count;
 	t_res_arrow	res;
 	char		current_quote;
+	int	end_of_dollar;
 
 	count = 0;
 	current_quote = 0;
@@ -69,6 +70,7 @@ void	fill_str(char *original_str, t_list *list, int start, int i)
 							cust_write("ERROR: quote is not closed.\n", 1); //TODO: error handling(check exit code.)
 						tmp_str[k++] = original_str[start];
 					}
+					end_of_dollar = k;
 					start++;
 					continue ;
 				}
@@ -78,7 +80,7 @@ void	fill_str(char *original_str, t_list *list, int start, int i)
 			if (count != 0)
 				list = create_extra_node(list);
 			if (is_dollar_exist(tmp_str) == 1 && (current_quote == 0 || current_quote == 34))
-				list->str = convert_str_from_dollar(tmp_str);
+				list->str = convert_str_from_dollar(tmp_str, current_quote, end_of_dollar);
 			else
 				list->str = ft_strdup(tmp_str);
 			free(tmp_str);
