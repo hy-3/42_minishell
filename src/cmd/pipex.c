@@ -46,15 +46,13 @@ void	config_execargs(t_list *list, t_cmd_param *cmd_p, t_env_param *env_p, int i
 	cmd_p->num_of_args = k;
 }
 
-int	pipex(t_list *list, t_env_param *env_p)
+void	pipex(t_list *list, t_env_param *env_p)
 {
 	t_cmd_param	*cmd_p;
-	int			status_code; //TODO: get from last exec cmd.
 	char		*pathenv;
 	int			i;
 
 	cmd_p = (t_cmd_param *) malloc(sizeof(t_cmd_param));
-	cmd_p->status_code = 0;
 	i = 0;
 	while (list != NULL)
 	{
@@ -69,5 +67,4 @@ int	pipex(t_list *list, t_env_param *env_p)
 		i++;
 	}
 	cust_waitpid(env_p->num_of_child);
-	return (status_code);
 }

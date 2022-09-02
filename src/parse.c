@@ -28,7 +28,7 @@ void	fill_str_allows(t_res_arrow *res, t_list *list, char *original_str, int sta
 	res->list = list;
 }
 
-void	fill_str(char *original_str, t_list *list, int start, int i)
+void	fill_str(char *original_str, t_list *list, int start, int i, t_env_param *env_p)
 {
 	int			k;
 	char		tmp_quote;
@@ -38,6 +38,7 @@ void	fill_str(char *original_str, t_list *list, int start, int i)
 	char		current_quote;
 	int	end_of_dollar;
 
+	end_of_dollar = -1;
 	count = 0;
 	current_quote = 0;
 	while ((i - start) > 0)
@@ -80,7 +81,7 @@ void	fill_str(char *original_str, t_list *list, int start, int i)
 			if (count != 0)
 				list = create_extra_node(list);
 			if (is_dollar_exist(tmp_str) == 1 && (current_quote == 0 || current_quote == 34))
-				list->str = convert_str_from_dollar(tmp_str, current_quote, end_of_dollar);
+				list->str = convert_str_from_dollar(tmp_str, current_quote, end_of_dollar, env_p);
 			else
 				list->str = ft_strdup(tmp_str);
 			free(tmp_str);
@@ -112,7 +113,7 @@ int	is_nullstr_in_list(t_list *list)
 	return (0);
 }
 
-t_list	*parse(char *original_str)
+t_list	*parse(char *original_str, t_env_param *env_p)
 {
 	int		i;
 	int		count;
@@ -161,7 +162,7 @@ t_list	*parse(char *original_str)
 					first_node = list;
 				if (i == 0)
 					cust_write("syntax error near unexpected token `|'\n", 1); //TODO: error handle
-				fill_str(original_str, list, start, i);
+				fill_str(original_str, list, start, i, env_p);
 				i += 1;
 				start = i;
 			}
@@ -174,7 +175,7 @@ t_list	*parse(char *original_str)
 	list = create_next_node(list, count);
 	if (count == 0)
 		first_node = list;
-	fill_str(original_str, list, start, i);
+	fill_str(original_str, list, start, i, env_p);
 	if (is_nullstr_in_list(first_node) == 1)
 		cust_write("syntax error near unexpected token `|'\n", 1); //TODO: error handle
 	return (first_node);

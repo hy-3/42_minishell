@@ -29,6 +29,7 @@ typedef struct s_env_param
 	int		num_of_next_node;
 	int		num_of_child;
 	int		p[100][2]; //TODO: p[ARG_MAX][2];
+	int		status_code; //TODO: implement
 }	t_env_param;
 
 typedef struct s_cmd_param
@@ -40,7 +41,6 @@ typedef struct s_cmd_param
 	int		is_heredoc;
 	int		heredoc_p[2];
 	int		num_of_args;
-	int		status_code; //TODO: implement
 }	t_cmd_param;
 
 typedef struct s_res_arrow
@@ -51,7 +51,7 @@ typedef struct s_res_arrow
 
 // src
 //	- parse.c
-t_list	*parse(char *original_str);
+t_list	*parse(char *original_str, t_env_param *env_p);
 
 // src/env
 //	- env.c
@@ -63,11 +63,11 @@ char	**upd_to_new_env(t_env_param *env_p, t_cmd_param *cmd_p);
 char	*get_value_of_pathenv(char **envp);
 //	- dollar.c
 int		is_dollar_exist(char *tmp_str);
-char	*convert_str_from_dollar(char *tmp_str, int current_quote, int end_of_dollar);
+char	*convert_str_from_dollar(char *tmp_str, int current_quote, int end_of_dollar, t_env_param *env_p);
 
 // src/cmd
 //	- pipex.c
-int		pipex(t_list *list, t_env_param *env_p);
+void	pipex(t_list *list, t_env_param *env_p);
 //	- check_cmd.c
 char	*is_cmd_exist_and_executable(char *path_env, char *cmd);
 //	- external_cmd.c

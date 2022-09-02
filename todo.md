@@ -33,7 +33,7 @@ x [Hiro] Pipes | The output of each command in the pipeline is connected via a p
 
 x [Hiro] Environment variables ($ followed by characters) should expand to their values.
 
-[Check_at_the_end] $? should expand to the exit status of the most recently executed foreground pipeline.
+[Hiro] $? should expand to the exit status of the most recently executed foreground pipeline.
 - Make sure exit status code whenever we handles error.
 
 [Edu] ctrl-C ctrl-D ctrl-\ should work like in bash.∫

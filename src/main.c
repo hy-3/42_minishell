@@ -9,12 +9,13 @@ int	main(int argc, char *argv[], char *envp[])
 
 	env_p.first_envp = copy_env(envp);
 	env_p.current_envp = copy_env(envp);
+	env_p.status_code = 0;
 	prompt = "minishell> ";
 	while (1)
 	{
 		original_str = readline(prompt);
 		//TODO: add history
-		list = parse(original_str);
+		list = parse(original_str, &env_p);
 		free(original_str);
 		if (list == NULL)
 			continue ;

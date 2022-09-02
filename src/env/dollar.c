@@ -1,5 +1,19 @@
 #include "../minishell.h"
 
+int	find_question_position(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] == '?')
+			break;
+		i++;
+	}
+	return (i);
+}
+
 int	is_dollar_exist(char *tmp_str)
 {
 	int	i;
@@ -14,38 +28,44 @@ int	is_dollar_exist(char *tmp_str)
 	return (0);
 }
 
-char	*convert_str_from_dollar(char *tmp_str, int current_quote, int end_of_dollar)
+char	*convert_str_from_dollar(char *tmp_str, int current_quote, int end_of_dollar, t_env_param *env_p)
 {
 	int		i;
 	int		k;
 	int		start_dollar;
 	int		tmp_start_dollar;
 	int		end_dollar;
-	char	*dollar_part;
+	char	*var_name;
 	char	*str_dollar_part;
 	int		total_length;
 	char	*converted_str;
 	int		size_dollar_part;
 
-	printf("tmpstr: %s, current: %i, end_of_dollar:%i\n", tmp_str, current_quote, end_of_dollar);
 	i = 0;
 	while (tmp_str[i] != '$')
 		i++;
 	start_dollar = i;
 	tmp_start_dollar = start_dollar;
-	while (tmp_str[i] != '\0' && tmp_str[i] != 39 && tmp_str[i] != 34 && tmp_str[i] != ' ' && i < end_of_dollar)
-		i++;
+	if (end_of_dollar > 0)
+		while (tmp_str[i] != '\0' && tmp_str[i] != 39 && tmp_str[i] != 34 && tmp_str[i] != ' ' && i < end_of_dollar)
+			i++;
+	else
+		while (tmp_str[i] != '\0' && tmp_str[i] != 39 && tmp_str[i] != 34 && tmp_str[i] != ' ')
+			i++;
 	end_dollar = i;
-	dollar_part = (char *) malloc((end_dollar - start_dollar) * sizeof(char));
+	var_name = (char *) malloc((end_dollar - start_dollar + 1) * sizeof(char));
 	k = 0;
-	while (start_dollar < (end_dollar - 1))
+	while (++start_dollar < end_dollar)
+		var_name[k++] = tmp_str[start_dollar];
+	var_name[k] = '\0';
+	if (var_name[0] == '?')
 	{
-		dollar_part[k] = tmp_str[++start_dollar];
-		k++;
+		str_dollar_part = ft_itoa(env_p->status_code);
+		end_dollar = find_question_position(tmp_str) + 1;
 	}
-	dollar_part[k] = '\0';
-	str_dollar_part = getenv(dollar_part);
-	free(dollar_part);
+	else
+		str_dollar_part = getenv(var_name);
+	free(var_name);
 
 	if (str_dollar_part == NULL)
 		size_dollar_part = 0;
