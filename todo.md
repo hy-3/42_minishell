@@ -36,18 +36,16 @@ x [Hiro] Environment variables ($ followed by characters) should expand to their
 [Hiro] $? should expand to the exit status of the most recently executed foreground pipeline.
 - Make sure exit status code whenever we handles error.
 
-[Edu] ctrl-C ctrl-D ctrl-\ should work like in bash.∫
+[Hiro] ctrl-C ctrl-D ctrl-\ should work like in bash.
     When interactive:
-      [Edu] ctrl-C print a new prompt on a newline.
-      [Edu] ctrl-D exit the shell.
-      [Edu] ctrl-\ do nothing.
+      [Hiro] ctrl-C print a new prompt on a newline.
+      [Hiro] ctrl-D exit the shell.
+      [Hiro] ctrl-\ do nothing.
 
 # TODO
-- return to prompt when error happens
-- add error handle to close/dup2/pipe
-- implement $?
 - status code
 - free things
+- signal
 - add history
 - check if << updates history.
 

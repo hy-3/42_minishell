@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-void	fill_str_allows(t_res_arrow *res, t_list *list, char *original_str, int start)
+int	fill_str_allows(t_res_arrow *res, t_list *list, char *original_str, int start)
 {
 	int		i;
 	char	*tmp_str;
@@ -15,8 +15,17 @@ void	fill_str_allows(t_res_arrow *res, t_list *list, char *original_str, int sta
 		start++;
 		i++;
 	}
-	if (i > 2)
-		printf("syntax error near unexpected token\n"); //TODO: shoudln't continue and go back prompt. error handle. bash >>> doesn't give error
+	if (i > 2) //TODO: check what to do with when three <. ex) wc <<< a
+	{
+		printf("syntax error near unexpected token `"); //TODO: error handle
+		while (i > 2)
+		{
+			printf("%c", arrow);
+			i--;
+		}
+		printf("'\n");
+		return (0);
+	}
 	tmp_str = (char *) malloc((i + 1) * sizeof(char));
 	tmp_str[0] = arrow;
 	if (i == 2)
@@ -26,9 +35,10 @@ void	fill_str_allows(t_res_arrow *res, t_list *list, char *original_str, int sta
 	free(tmp_str);
 	res->start = start;
 	res->list = list;
+	return (1);
 }
 
-void	fill_str(char *original_str, t_list *list, int start, int i, t_env_param *env_p)
+int	fill_str(char *original_str, t_list *list, int start, int i, t_env_param *env_p)
 {
 	int			k;
 	char		tmp_quote;
@@ -68,7 +78,10 @@ void	fill_str(char *original_str, t_list *list, int start, int i, t_env_param *e
 					while (original_str[++start] != tmp_quote)
 					{
 						if (original_str[start] == '\0')
-							cust_write("ERROR: quote is not closed.\n", 1); //TODO: return to prompt.
+						{
+							printf("ERROR: quote is not closed.\n"); //TODO: error handle.
+							return (0);
+						}
 						tmp_str[k++] = original_str[start];
 					}
 					end_of_dollar = k;
@@ -88,12 +101,14 @@ void	fill_str(char *original_str, t_list *list, int start, int i, t_env_param *e
 		}
 		if (original_str[start] == '>' || original_str[start] == '<')
 		{
-			fill_str_allows(&res, list, original_str, start);
+			if (fill_str_allows(&res, list, original_str, start) == 0)
+				return (0);
 			start = res.start;
 			list = res.list;
 		}
 		count++;
 	}
+	return (1);
 }
 
 int	is_nullstr_in_list(t_list *list)
@@ -156,12 +171,18 @@ t_list	*parse(char *original_str, t_env_param *env_p)
 				if (num_of_continued_pipe == 1)
 					break ;
 				if (num_of_continued_pipe > 1)
-					cust_write("syntax error near unexpected token `|'\n", 1); //TODO: error handle
+				{
+					printf("syntax error near unexpected token `|'\n"); //TODO: error handle
+					return (NULL);
+				}
 				list = create_next_node(list, count);
 				if (count++ == 0)
 					first_node = list;
 				if (i == 0)
-					cust_write("syntax error near unexpected token `|'\n", 1); //TODO: error handle
+				{
+					printf("syntax error near unexpected token `|'\n"); //TODO: error handle
+					return (NULL);
+				}
 				fill_str(original_str, list, start, i, env_p);
 				i += 1;
 				start = i;
@@ -175,8 +196,12 @@ t_list	*parse(char *original_str, t_env_param *env_p)
 	list = create_next_node(list, count);
 	if (count == 0)
 		first_node = list;
-	fill_str(original_str, list, start, i, env_p);
+	if (fill_str(original_str, list, start, i, env_p) == 0)
+		return (NULL);
 	if (is_nullstr_in_list(first_node) == 1)
-		cust_write("syntax error near unexpected token `|'\n", 1); //TODO: error handle
+	{
+		printf("syntax error near unexpected token `|'\n"); //TODO: error handle
+		return (NULL);
+	}
 	return (first_node);
 }

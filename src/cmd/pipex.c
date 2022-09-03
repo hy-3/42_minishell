@@ -56,7 +56,8 @@ void	pipex(t_list *list, t_env_param *env_p)
 	i = 0;
 	while (list != NULL)
 	{
-		pipe(env_p->p[i]);
+		if (pipe(env_p->p[i]) < 0)
+			cust_perror("Error(pipex)", 1);;
 		cmd_p->input_fd = 0;
 		cmd_p->output_fd = 1;
 		cmd_p->is_heredoc = 0;

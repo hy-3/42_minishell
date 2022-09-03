@@ -13,7 +13,7 @@ void	exec_external_cmd(t_cmd_param *cmd_p, t_env_param *env_p, int i)
 {
 	cmd_p->pid = fork();
 	if (cmd_p->pid < 0)
-		cust_perror("Error(exec_cmd: fork)", 1);
+		cust_perror("Error(fork: cmd_p->pid)", 1);
 	if (cmd_p->pid == 0)
 	{
 		organize_fd(cmd_p, env_p, i);
@@ -21,11 +21,13 @@ void	exec_external_cmd(t_cmd_param *cmd_p, t_env_param *env_p, int i)
 	}
 	if (cmd_p->is_heredoc == 1)
 	{
-		close(cmd_p->heredoc_p[0]);
-		close(cmd_p->heredoc_p[1]);
+		if (close(cmd_p->heredoc_p[0]) == 0)
+			cust_perror("Error(close: cmd_p->heredoc_p[0])", 1);
+		if (close(cmd_p->heredoc_p[1]) == 0)
+			cust_perror("Error(close: cmd_p->heredoc_p[1])", 1);
 	}
 	if (i > 0)
 		if (!((close(env_p->p[i - 1][0]) == 0) && (close(env_p->p[i - 1][1]) == 0)))
-			cust_perror("Error(cmd: close cmd_p->p[i][0] or cmd_p->p[i][1])", 1);
+			cust_perror("Error(close: env_p->p[i - 1][0] or env_p->p[i - 1][1])", 1);
 	env_p->num_of_child += 1;
 }

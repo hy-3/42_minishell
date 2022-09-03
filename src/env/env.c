@@ -87,7 +87,7 @@ char	**create_new_env_with_str(char **old_envp, char *str)
 
 	if (is_valid_envname(str) == 0)
 	{
-		printf("export: %s:not a valid identifier\n", str); //TODO: error handle
+		printf("export: `%s': not a valid identifier\n", str); //TODO: error handle
 		return (old_envp);
 	}
 	if (is_exist_in_env(old_envp, str) == 0)
