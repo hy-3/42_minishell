@@ -22,7 +22,7 @@ void	exec_echo(t_cmd *cmd, t_env *env, int i)
 		write(get_output_fd(cmd, env, i), "\n", 1);
 	else
 	{
-		if (ft_strlen(cmd->exec_args[1]) == 2 && ft_strncmp(cmd->exec_args[1], "-n", 2) == 0)
+		if (ft_strncmp(cmd->exec_args[1], "-n", 3) == 0)
 			cmd_echo(cmd, 2, get_output_fd(cmd, env, i));
 		else
 			cmd_echo(cmd, 1, get_output_fd(cmd, env, i));

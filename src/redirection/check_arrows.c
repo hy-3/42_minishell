@@ -5,7 +5,7 @@ t_list	*check_arrows(t_list *list, t_cmd *cmd, t_env *env, int i)
 	char	*str;
 	char	*limit_str;
 
-	if (ft_strlen(list->str) == 1 && ft_strchr(list->str, '>') != NULL)
+	if (ft_strncmp(list->str, ">", 2) == 0)
 	{
 		list = list->extra;
 		if (list == NULL)
@@ -26,7 +26,7 @@ t_list	*check_arrows(t_list *list, t_cmd *cmd, t_env *env, int i)
 			list = list->extra;
 		}
 	}
-	else if (ft_strlen(list->str) == 2 && ft_strnstr(list->str, ">>", ft_strlen(list->str)) != NULL)
+	else if (ft_strncmp(list->str, ">>", 3) == 0)
 	{
 		list = list->extra;
 		if (list == NULL)
@@ -47,7 +47,7 @@ t_list	*check_arrows(t_list *list, t_cmd *cmd, t_env *env, int i)
 			list = list->extra;
 		}
 	}
-	else if (ft_strlen(list->str) == 1 && ft_strchr(list->str, '<') != NULL)
+	else if (ft_strncmp(list->str, "<", 2) == 0)
 	{
 		list = list->extra;
 		if (list == NULL)
@@ -75,7 +75,7 @@ t_list	*check_arrows(t_list *list, t_cmd *cmd, t_env *env, int i)
 			list = list->extra;
 		}
 	}
-	else if (ft_strlen(list->str) == 2 && ft_strnstr(list->str, "<<", ft_strlen(list->str)) != NULL)
+	else if (ft_strncmp(list->str, "<<", 3) == 0)
 	{
 		list = list->extra;
 		if (list == NULL)

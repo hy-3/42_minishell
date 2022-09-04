@@ -16,19 +16,19 @@ void	cust_waitpid(int num_of_executed_cmd)
 
 void	exec_cmd(t_cmd *cmd, t_env *env, int i)
 {
-	if (ft_strlen(cmd->exec_args[0]) == 4 && ft_strncmp(cmd->exec_args[0], "exit", 4) == 0) //TODO: consider ft_strncmp
+	if (ft_strncmp(cmd->exec_args[0], "exit", 5) == 0)
 		exit(0); //TODO: check which status code I should return.
-	if (ft_strlen(cmd->exec_args[0]) == 4 && ft_strncmp(cmd->exec_args[0], "echo", 4) == 0)
+	if (ft_strncmp(cmd->exec_args[0], "echo", 5) == 0)
 		exec_echo(cmd, env, i);
-	else if (ft_strlen(cmd->exec_args[0]) == 2 && ft_strncmp(cmd->exec_args[0], "cd", 2) == 0)
+	else if (ft_strncmp(cmd->exec_args[0], "cd", 3) == 0)
 		exec_cd(cmd, env, i);
-	else if (ft_strlen(cmd->exec_args[0]) == 3 && ft_strncmp(cmd->exec_args[0], "pwd", 3) == 0)
+	else if (ft_strncmp(cmd->exec_args[0], "pwd", 4) == 0)
 		exec_pwd(cmd, env, i);
-	else if (ft_strlen(cmd->exec_args[0]) == 6 && ft_strncmp(cmd->exec_args[0], "export", 6) == 0)
+	else if (ft_strncmp(cmd->exec_args[0], "export", 7) == 0)
 		exec_export(cmd, env, i);
-	else if (ft_strlen(cmd->exec_args[0]) == 5 && ft_strncmp(cmd->exec_args[0], "unset", 5) == 0)
+	else if (ft_strncmp(cmd->exec_args[0], "unset", 6) == 0)
 		exec_unset(cmd, env, i);
-	else if (ft_strlen(cmd->exec_args[0]) == 3 && ft_strncmp(cmd->exec_args[0], "env", 3) == 0)
+	else if (ft_strncmp(cmd->exec_args[0], "env", 4) == 0)
 		exec_env(cmd, env, i);
 	else
 		exec_external_cmd(cmd, env, i);
