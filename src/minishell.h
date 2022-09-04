@@ -49,6 +49,13 @@ typedef struct s_res_arrow
 	t_list	*list;
 }	t_res_arrow;
 
+typedef struct s_quote_con
+{
+	int	num_of_single;
+	int	num_of_double;
+	int	is_closed;
+}	t_quote_con;
+
 // src
 //	- parse.c
 t_list	*parse(char *original_str, t_env_param *env_p);

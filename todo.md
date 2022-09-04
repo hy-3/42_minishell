@@ -49,6 +49,10 @@ x [Hiro] Environment variables ($ followed by characters) should expand to their
 can I finish program when close/open/malloc failed? does exit status matter?
 - signal
 - should I change from printf to write? when error happens, should I output to stderr(2)?
+- fix
+$ export a = d
+zsh: bad assignment
+
 - add history
 - check if << updates history.
 

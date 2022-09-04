@@ -115,10 +115,64 @@ int	is_nullstr_in_list(t_list *list)
 {
 	while (list != NULL)
 	{
-		printf("##:%s\n",list->str);
 		if (list->str == NULL)
+		{
+			printf("parse error near `|'\n"); //TODO: error handle
 			return (1);
+		}
 		list = list->next;
+	}
+	return (0);
+}
+
+void	upd_quote_condition(t_quote_con *quote_condition, char c, int count)
+{
+	if (count == 0)
+	{
+		quote_condition->num_of_single = 0;
+		quote_condition->num_of_double = 0;
+	}
+	if (c == 39)
+		quote_condition->num_of_single++;
+	if (c == 34)
+		quote_condition->num_of_double++;
+	if (quote_condition->num_of_single % 2 == 0 && quote_condition->num_of_double % 2 == 0)
+		quote_condition->is_closed = 1;
+	else
+		quote_condition->is_closed = 0;
+}
+
+int	check_pipe_num(char *original_str, int k)
+{
+	int	num_of_pipe;
+
+	num_of_pipe = 1;
+	while (original_str[k] != '\0' && original_str[k] != ' ')
+	{
+		if (original_str[k] == '|')
+			num_of_pipe++;
+		k++;
+	}
+	return (num_of_pipe);
+}
+
+int	check_pipe_condition(char *original_str, int i)
+{
+	int	num_of_pipe;
+
+	num_of_pipe = 0;
+	if (i == 0)
+	{
+		printf("parse error near `|'\n"); //TODO: error handle
+		return (2);
+	}
+	num_of_pipe = check_pipe_num(original_str, i + 1);
+	if (num_of_pipe == 2)
+		return (1);
+	if (num_of_pipe > 2)
+	{
+		printf("syntax error near unexpected token `|' (pipe continued)\n"); //TODO: error handle
+		return (2);
 	}
 	return (0);
 }
@@ -126,56 +180,35 @@ int	is_nullstr_in_list(t_list *list)
 t_list	*parse(char *original_str, t_env_param *env_p)
 {
 	int		i;
+	int		start;
 	int		count;
 	t_list	*list;
 	t_list	*first_node;
-	int		num_of_single_quote;
-	int		num_of_double_quote;
-	int		start;
-	int		k;
-	int		num_of_continued_pipe;
+	t_quote_con quote_condition;
+	int		pipe_condition;
 
 	i = 0;
 	start = i;
 	count = 0;
-	num_of_single_quote = 0;
-	num_of_double_quote = 0;
 	first_node = NULL;
+	quote_condition.is_closed = 1;
 	if (original_str == NULL || original_str[start] == '\0')
 		return (NULL);
 	while (original_str[i] != '\0')
 	{
-		if (original_str[i] == 39)
-			num_of_single_quote++;
-		if (original_str[i] == 34)
-			num_of_double_quote++;
+		upd_quote_condition(&quote_condition, original_str[i], count);
 		if (original_str[i] == '|')
 		{
-			if (num_of_single_quote % 2 == 0 && num_of_double_quote % 2 == 0)
+			if (quote_condition.is_closed == 1)
 			{
-				k = i + 1;
-				num_of_continued_pipe = 0;
-				while (original_str[k] != '\0' && original_str[k] != ' ')
-				{
-					if (original_str[k] == '|')
-						num_of_continued_pipe++;
-					k++;
-				}
-				if (num_of_continued_pipe == 1)
+				pipe_condition = check_pipe_condition(original_str, i);
+				if (pipe_condition == 1)
 					break ;
-				if (num_of_continued_pipe > 1)
-				{
-					printf("syntax error near unexpected token `|' (pipe continued)\n"); //TODO: error handle
+				else if (pipe_condition == 2)
 					return (NULL);
-				}
 				list = create_next_node(list, count);
 				if (count++ == 0)
 					first_node = list;
-				if (i == 0)
-				{
-					printf("syntax error near unexpected token `|' (nothing after pipe)\n"); //TODO: error handle
-					return (NULL);
-				}
 				fill_str(original_str, list, start, i, env_p);
 				i += 1;
 				start = i;
@@ -192,9 +225,6 @@ t_list	*parse(char *original_str, t_env_param *env_p)
 	if (fill_str(original_str, list, start, i, env_p) == 0)
 		return (NULL);
 	if (is_nullstr_in_list(first_node) == 1)
-	{
-		printf("syntax error near unexpected token `|' (null str included)\n"); //TODO: error handle
 		return (NULL);
-	}
 	return (first_node);
 }
