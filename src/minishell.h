@@ -109,7 +109,7 @@ void	exec_unset(t_cmd *cmd, t_env *env, int i);
 
 // redirection
 //	- check_arrows.c
-t_list	*check_arrows(t_list *list, t_cmd *cmd, t_env *env, int i);
+t_list	*check_arrows(t_list *list, t_cmd *cmd, t_env *env);
 //	- bultin_fd.c
 int		get_output_fd(t_cmd *cmd, t_env *env, int i);
 //	- external_cmd_fd.c

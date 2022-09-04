@@ -34,14 +34,19 @@ void	exec_cmd(t_cmd *cmd, t_env *env, int i)
 		exec_external_cmd(cmd, env, i);
 }
 
-void	config_execargs(t_list *list, t_cmd *cmd, t_env *env, int i)
+void	config_execargs(t_list *list, t_cmd *cmd, t_env *env)
 {
 	int	k;
 
+	cmd->input_fd = 0;
+	cmd->output_fd = 1;
+	cmd->is_heredoc = 0;
+	cmd->pid = 0;
+	cmd->is_error = 0;
 	k = 0;
 	while (list != NULL)
 	{
-		list = check_arrows(list, cmd, env, i);
+		list = check_arrows(list, cmd, env);
 		if (list == NULL)
 			break;
 		cmd->exec_args[k++] = list->str;
@@ -62,12 +67,7 @@ void	pipex(t_list *list, t_env *env)
 	{
 		if (pipe(env->p[i]) < 0)
 			cust_perror("Error(pipex)", 1);;
-		cmd->input_fd = 0;
-		cmd->output_fd = 1;
-		cmd->is_heredoc = 0;
-		cmd->pid = 0;
-		cmd->is_error = 0;
-		config_execargs(list, cmd, env, i);
+		config_execargs(list, cmd, env);
 		if (cmd->is_error == 1)
 			return ;
 		if (cmd->num_of_args != 0)
