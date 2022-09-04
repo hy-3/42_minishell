@@ -45,7 +45,10 @@ x [Hiro] Environment variables ($ followed by characters) should expand to their
 # TODO
 - status code
 - free things
+- change from cust_perror/cust_write to printf & set status code
+can I finish program when close/open/malloc failed? does exit status matter?
 - signal
+- should I change from printf to write? when error happens, should I output to stderr(2)?
 - add history
 - check if << updates history.
 

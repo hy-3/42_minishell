@@ -1,5 +1,10 @@
 #include "../minishell.h"
 
+int	wexitstatus(int status)
+{
+	return (((status) & 0xff00) >> 8);
+}
+
 void	cust_waitpid(int num_of_executed_cmd)
 {
 	while (num_of_executed_cmd-- > 0)
@@ -61,11 +66,16 @@ void	pipex(t_list *list, t_env_param *env_p)
 		cmd_p->input_fd = 0;
 		cmd_p->output_fd = 1;
 		cmd_p->is_heredoc = 0;
+		cmd_p->pid = 0;
 		config_execargs(list, cmd_p, env_p, i);
 		if (cmd_p->num_of_args != 0)
 			exec_cmd(cmd_p, env_p, i);
 		list = list->next;
 		i++;
 	}
-	cust_waitpid(env_p->num_of_child);
+	if (cmd_p->pid != 0)
+		if (waitpid(cmd_p->pid, &(env_p->status_code), 0) == -1)
+			cust_perror("ERROR(last_cmd: waitpid)", 1);
+	env_p->status_code = wexitstatus(env_p->status_code);
+	cust_waitpid(env_p->num_of_child - 1);
 }
