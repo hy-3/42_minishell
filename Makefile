@@ -19,9 +19,9 @@ SRC = src/main.c \
 	  src/cmd/builtin/unset.c \
 	  src/env/env.c \
 	  src/env/dollar.c \
-	  src/redirection/redirect.c \
-	  src/redirection/builtin_output_fd.c \
-	  src/redirection/external_cmd_inoutput_fd.c \
+	  src/redirection/check_arrows.c \
+	  src/redirection/builtin_fd.c \
+	  src/redirection/external_cmd_fd.c \
 	  src/util/list.c \
 	  src/util/split_to_str.c \
 	  src/util/stderr.c \

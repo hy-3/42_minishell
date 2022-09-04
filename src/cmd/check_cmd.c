@@ -1,6 +1,6 @@
 #include "../minishell.h"
 
-char	*create_cmd_path(char *each_path, char *cmd)
+char	*create_cmdath(char *each_path, char *cmd)
 {
 	char	*tmp;
 	char	*res;
@@ -31,7 +31,7 @@ char	*is_cmd_exist_and_executable(char *path_env, char *cmd)
 {
 	int		n;
 	char	**each_path;
-	char	*cmd_path;
+	char	*cmdath;
 	char	*res;
 
 	n = count_num_of_str(path_env, ':');
@@ -41,11 +41,11 @@ char	*is_cmd_exist_and_executable(char *path_env, char *cmd)
 		res = check_f_and_x(cmd, each_path);
 		if (res != NULL)
 			return (res);
-		cmd_path = create_cmd_path(each_path[n], cmd);
-		res = check_f_and_x(cmd_path, each_path);
+		cmdath = create_cmdath(each_path[n], cmd);
+		res = check_f_and_x(cmdath, each_path);
 		if (res != NULL)
 			return (res);
-		free(cmd_path);
+		free(cmdath);
 	}
 	return (NULL);
 }

@@ -1,25 +1,25 @@
 #include "../../minishell.h"
 
-void	env(t_cmd_param *cmd_p, t_env_param *env_p, int fd)
+void	cmd_env(t_cmd *cmd, t_env *env, int fd)
 {
 	int	k;
 
 	k = 0;
-	while (env_p->current_envp[k] != NULL)
+	while (env->current_envp[k] != NULL)
 	{
-		if (is_exist_in_env(env_p->first_envp, env_p->current_envp[k]) == 1)
+		if (is_exist_in_env(env->first_envp, env->current_envp[k]) == 1)
 		{
-			write(fd, env_p->current_envp[k], ft_strlen(env_p->current_envp[k]));
+			write(fd, env->current_envp[k], ft_strlen(env->current_envp[k]));
 			write(fd, "\n", 1);
 		}
 		k++;
 	}
 }
 
-void	exec_env(t_cmd_param *cmd_p, t_env_param *env_p, int i)
+void	exec_env(t_cmd *cmd, t_env *env, int i)
 {
-	if (cmd_p->num_of_args == 1)
-		env(cmd_p, env_p, get_output_fd(cmd_p, env_p, i));
+	if (cmd->num_of_args == 1)
+		cmd_env(cmd, env, get_output_fd(cmd, env, i));
 	else
-		printf("env: %s: No such file or directory\n", cmd_p->exec_args[1]); //TODO: or do nothing and just return to prompt
+		printf("env: %s: No such file or directory\n", cmd->exec_args[1]); //TODO: or do nothing and just return to prompt
 }

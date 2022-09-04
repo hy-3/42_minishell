@@ -2,28 +2,28 @@
 
 int	main(int argc, char *argv[], char *envp[])
 {
-	t_env_param	env_p;
+	t_env	env;
 	t_list		*list;
 	char		*prompt;
 	char		*original_str;
 
-	env_p.first_envp = copy_env(envp);
-	env_p.current_envp = copy_env(envp);
-	env_p.status_code = 0;
+	env.first_envp = copy_env(envp);
+	env.current_envp = copy_env(envp);
+	env.status_code = 0;
 	prompt = "minishell> ";
 	while (1)
 	{
 		original_str = readline(prompt);
 		//TODO: add history
-		list = parse(original_str, &env_p);
+		list = parse(original_str, &env);
 		free(original_str);
 		if (list == NULL)
 			continue ;
-		env_p.pathenv = get_value_of_pathenv(env_p.current_envp);
-		env_p.num_of_child = 0;
-		env_p.num_of_next_node = count_next_node(list);
-		pipex(list, &env_p);
-		//TODO: Free env_p(first_envp, current_envp, pathenv)
+		env.pathenv = get_value_of_pathenv(env.current_envp);
+		env.num_of_child = 0;
+		env.num_of_next_node = count_next_node(list);
+		pipex(list, &env);
+		//TODO: Free env(first_envp, current_envp, pathenv)
 
 		/* --- to check args --- */
 		t_list *ex;

@@ -28,7 +28,7 @@ int	is_dollar_exist(char *tmp_str)
 	return (0);
 }
 
-char	*convert_str_from_dollar(char *tmp_str, int current_quote, int end_of_dollar, t_env_param *env_p)
+char	*convert_str_from_dollar(char *tmp_str, int current_quote, int end_of_dollar, t_env *env)
 {
 	int		i;
 	int		k;
@@ -60,7 +60,7 @@ char	*convert_str_from_dollar(char *tmp_str, int current_quote, int end_of_dolla
 	var_name[k] = '\0';
 	if (var_name[0] == '?')
 	{
-		str_dollar_part = ft_itoa(env_p->status_code);
+		str_dollar_part = ft_itoa(env->status_code);
 		end_dollar = find_question_position(tmp_str) + 1;
 	}
 	else

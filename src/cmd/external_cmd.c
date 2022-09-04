@@ -1,33 +1,33 @@
 #include "../minishell.h"
 
-void	child(t_cmd_param *cmd_p, t_env_param *env_p)
+void	child(t_cmd *cmd, t_env *env)
 {
-	char	*cmd_path;
+	char	*cmdath;
 
-	cmd_path = is_cmd_exist_and_executable(env_p->pathenv, cmd_p->exec_args[0]);
-	if (execve(cmd_path, cmd_p->exec_args, env_p->current_envp) == -1)
+	cmdath = is_cmd_exist_and_executable(env->pathenv, cmd->exec_args[0]);
+	if (execve(cmdath, cmd->exec_args, env->current_envp) == -1)
 		cust_write("command not found\n", 127);
 }
 
-void	exec_external_cmd(t_cmd_param *cmd_p, t_env_param *env_p, int i)
+void	exec_external_cmd(t_cmd *cmd, t_env *env, int i)
 {
-	cmd_p->pid = fork();
-	if (cmd_p->pid < 0)
-		cust_perror("Error(fork: cmd_p->pid)", 1);
-	if (cmd_p->pid == 0)
+	cmd->pid = fork();
+	if (cmd->pid < 0)
+		cust_perror("Error(fork: cmd->pid)", 1);
+	if (cmd->pid == 0)
 	{
-		organize_fd(cmd_p, env_p, i);
-		child(cmd_p, env_p);
+		organize_fd(cmd, env, i);
+		child(cmd, env);
 	}
-	if (cmd_p->is_heredoc == 1)
+	if (cmd->is_heredoc == 1)
 	{
-		if (close(cmd_p->heredoc_p[0]) == -1)
-			cust_perror("Error(close: cmd_p->heredoc_p[0])", 1);
-		if (close(cmd_p->heredoc_p[1]) == -1)
-			cust_perror("Error(close: cmd_p->heredoc_p[1])", 1);
+		if (close(cmd->heredoc_p[0]) == -1)
+			cust_perror("Error(close: cmd->heredoc_p[0])", 1);
+		if (close(cmd->heredoc_p[1]) == -1)
+			cust_perror("Error(close: cmd->heredoc_p[1])", 1);
 	}
 	if (i > 0)
-		if (!((close(env_p->p[i - 1][0]) == 0) && (close(env_p->p[i - 1][1]) == 0)))
-			cust_perror("Error(close: env_p->p[i - 1][0] or env_p->p[i - 1][1])", 1);
-	env_p->num_of_child += 1;
+		if (!((close(env->p[i - 1][0]) == 0) && (close(env->p[i - 1][1]) == 0)))
+			cust_perror("Error(close: env->p[i - 1][0] or env->p[i - 1][1])", 1);
+	env->num_of_child += 1;
 }

@@ -133,19 +133,19 @@ char	**create_new_env_without_str(char **old_envp, char *str)
 	return (new_envp);
 }
 
-char	**upd_to_new_env(t_env_param *env_p, t_cmd_param *cmd_p)
+char	**upd_to_new_env(t_env *env, t_cmd *cmd)
 {
 	char	**new_envp;
 	char	**old_envp;
 	int		i;
 
 	i = 1;
-	while (cmd_p->exec_args[i] != NULL)
+	while (cmd->exec_args[i] != NULL)
 	{
 		if (i == 1)
-			new_envp = create_new_env_without_str(env_p->current_envp, cmd_p->exec_args[i]);
+			new_envp = create_new_env_without_str(env->current_envp, cmd->exec_args[i]);
 		else
-			new_envp = create_new_env_without_str(new_envp, cmd_p->exec_args[i]);
+			new_envp = create_new_env_without_str(new_envp, cmd->exec_args[i]);
 		i++;
 	}
 	return (new_envp);
