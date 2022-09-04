@@ -74,8 +74,11 @@ void	pipex(t_list *list, t_env_param *env_p)
 		i++;
 	}
 	if (cmd_p->pid != 0)
+	{
+		env_p->num_of_child--;
 		if (waitpid(cmd_p->pid, &(env_p->status_code), 0) == -1)
 			cust_perror("ERROR(last_cmd: waitpid)", 1);
+	}
 	env_p->status_code = wexitstatus(env_p->status_code);
-	cust_waitpid(env_p->num_of_child - 1);
+	cust_waitpid(env_p->num_of_child);
 }
