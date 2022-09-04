@@ -54,8 +54,7 @@ void	config_execargs(t_list *list, t_cmd *cmd, t_env *env, int i)
 void	pipex(t_list *list, t_env *env)
 {
 	t_cmd	*cmd;
-	char		*pathenv;
-	int			i;
+	int		i;
 
 	cmd = (t_cmd *) malloc(sizeof(t_cmd));
 	i = 0;
@@ -67,7 +66,10 @@ void	pipex(t_list *list, t_env *env)
 		cmd->output_fd = 1;
 		cmd->is_heredoc = 0;
 		cmd->pid = 0;
+		cmd->is_error = 0;
 		config_execargs(list, cmd, env, i);
+		if (cmd->is_error == 1)
+			return ;
 		if (cmd->num_of_args != 0)
 			exec_cmd(cmd, env, i);
 		list = list->next;

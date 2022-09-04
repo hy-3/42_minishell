@@ -41,6 +41,7 @@ typedef struct s_cmd
 	int		is_heredoc;
 	int		heredoc_p[2];
 	int		num_of_args;
+	int		is_error;
 }	t_cmd;
 
 typedef struct s_parse

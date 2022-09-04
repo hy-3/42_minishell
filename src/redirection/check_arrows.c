@@ -9,12 +9,20 @@ t_list	*check_arrows(t_list *list, t_cmd *cmd, t_env *env, int i)
 	{
 		list = list->extra;
 		if (list == NULL)
-			printf("syntax error newar unexpected token `newline'\n"); //TODO: bring back to prompt. free if it's necessary.
+		{
+			printf("syntax error newar unexpected token `newline'\n"); //TODO: error handle
+			env->status_code = 258;
+			cmd->is_error = 1;
+		}
 		else
 		{
 			cmd->output_fd = open(list->str, O_CREAT | O_TRUNC | O_WRONLY, 0777);
 			if (cmd->output_fd == -1)
-				cust_write("file open failed\n", 1); //TODO: error handle
+			{
+				printf("Permission denied\n"); //TODO: error handle
+				env->status_code = 1;
+				cmd->is_error = 1;
+			}
 			list = list->extra;
 		}
 	}
@@ -22,12 +30,20 @@ t_list	*check_arrows(t_list *list, t_cmd *cmd, t_env *env, int i)
 	{
 		list = list->extra;
 		if (list == NULL)
-			printf("syntax error newar unexpected token `newline'\n"); //TODO: bring back to prompt. free if it's necessary.
+		{
+			printf("syntax error newar unexpected token `newline'\n"); //TODO: error handle
+			env->status_code = 258;
+			cmd->is_error = 1;
+		}
 		else
 		{
 			cmd->output_fd = open(list->str, O_CREAT | O_APPEND | O_WRONLY, 0777);
 			if (cmd->output_fd == -1)
-				cust_write("file open failed\n", 1); //TODO: error handle
+			{
+				printf("Permission denied\n"); //TODO: error handle
+				env->status_code = 1;
+				cmd->is_error = 1;
+			}
 			list = list->extra;
 		}
 	}
@@ -35,12 +51,27 @@ t_list	*check_arrows(t_list *list, t_cmd *cmd, t_env *env, int i)
 	{
 		list = list->extra;
 		if (list == NULL)
-			printf("syntax error newar unexpected token `newline'\n"); //TODO: bring back to prompt. free if it's necessary.
+		{
+			printf("syntax error newar unexpected token `newline'\n"); //TODO: error handle
+			env->status_code = 258;
+			cmd->is_error = 1;
+		}
 		else
 		{
+			if (access(list->str, F_OK) == -1)
+			{
+				printf("%s: No such file or directory\n", list->str); //TODO: error handle
+				env->status_code = 1;
+				cmd->is_error = 1;
+				return (NULL);
+			}
 			cmd->input_fd = open(list->str, O_RDONLY);
 			if (cmd->input_fd == -1)
-				printf("%s: No such file or directory\n", list->str); //TODO: bring back to prompt. free if it's necessary.
+			{
+				printf("Permission denied\n"); //TODO: error handle
+				env->status_code = 1;
+				cmd->is_error = 1;
+			}
 			list = list->extra;
 		}
 	}
@@ -48,7 +79,11 @@ t_list	*check_arrows(t_list *list, t_cmd *cmd, t_env *env, int i)
 	{
 		list = list->extra;
 		if (list == NULL)
-			printf("syntax error newar unexpected token `newline'\n"); //TODO: bring back to prompt. free if it's necessary.
+		{
+			printf("syntax error newar unexpected token `newline'\n"); //TODO: error handle
+			env->status_code = 258;
+			cmd->is_error = 1;
+		}
 		else
 		{
 			if (pipe(cmd->heredoc_p) < 0)
