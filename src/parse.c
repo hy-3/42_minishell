@@ -188,7 +188,7 @@ t_list	*parse(char *original_str, t_env_param *env_p)
 	int		pipe_condition;
 
 	i = 0;
-	start = i;
+	start = 0;
 	count = 0;
 	first_node = NULL;
 	quote_condition.is_closed = 1;
@@ -209,12 +209,9 @@ t_list	*parse(char *original_str, t_env_param *env_p)
 				list = create_next_node(list, count);
 				if (count++ == 0)
 					first_node = list;
-				fill_str(original_str, list, start, i, env_p);
-				i += 1;
+				fill_str(original_str, list, start, i++, env_p);
 				start = i;
 			}
-			else
-				i++;
 		}
 		else
 			i++;
