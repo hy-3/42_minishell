@@ -45,14 +45,10 @@ t_list	*single_left_arrow(t_list *list, t_cmd *cmd, t_env *env)
 		handle_error_arrows("syntax error newar unexpected token `newline'", env, cmd, 258);
 	else
 	{
-		if (access(list->str, F_OK) == -1)
-		{
-			printf("%s: ", list->str);
-			handle_error_arrows("No such file or directory", env, cmd, 1);
-			return (NULL);
-		}
 		cmd->input_fd = open(list->str, O_RDONLY);
-		if (cmd->input_fd == -1)
+		if (access(list->str, F_OK) == -1)
+			printf("%s: No such file or directory\n",list->str);
+		else if (cmd->input_fd == -1)
 			handle_error_arrows("Permission denied", env, cmd, 1);
 		list = list->extra;
 	}

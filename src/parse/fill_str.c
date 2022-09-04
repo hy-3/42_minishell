@@ -79,6 +79,8 @@ void	fill_str(char *original_str, t_fill *fill, t_parse *parse, t_env *env)
 	k = 0;
 	while (original_str[fill->start] != ' ' && original_str[fill->start] != '\0' && original_str[fill->start] != '>' && original_str[fill->start] != '<')
 	{
+		if (original_str[fill->start] == '|')
+			break ;
 		if (original_str[fill->start] == 34 || original_str[fill->start] == 39)
 		{
 			k = fill_till_quote_closed(original_str, fill, parse, k);
