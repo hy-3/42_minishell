@@ -125,13 +125,8 @@ int	is_nullstr_in_list(t_list *list)
 	return (0);
 }
 
-void	upd_quote_condition(t_quote_con *quote_condition, char c, int count)
+void	upd_quote_condition(t_quote_con *quote_condition, char c)
 {
-	if (count == 0)
-	{
-		quote_condition->num_of_single = 0;
-		quote_condition->num_of_double = 0;
-	}
 	if (c == 39)
 		quote_condition->num_of_single++;
 	if (c == 34)
@@ -177,41 +172,32 @@ int	check_pipe_condition(char *original_str, int i)
 	return (0);
 }
 
-t_list	*parse(char *original_str, t_env_param *env_p)
+t_list *create_node_with_str(char *original_str, t_env_param *env_p, t_quote_con *quote_condition, int pipe_condition)
 {
 	int		i;
 	int		start;
 	int		count;
 	t_list	*list;
 	t_list	*first_node;
-	t_quote_con quote_condition;
-	int		pipe_condition;
 
 	i = 0;
 	start = 0;
 	count = 0;
-	first_node = NULL;
-	quote_condition.is_closed = 1;
-	if (original_str == NULL || original_str[start] == '\0')
-		return (NULL);
 	while (original_str[i] != '\0')
 	{
-		upd_quote_condition(&quote_condition, original_str[i], count);
-		if (original_str[i] == '|')
+		upd_quote_condition(quote_condition, original_str[i]);
+		if (original_str[i] == '|' && quote_condition->is_closed == 1)
 		{
-			if (quote_condition.is_closed == 1)
-			{
-				pipe_condition = check_pipe_condition(original_str, i);
-				if (pipe_condition == 1)
-					break ;
-				else if (pipe_condition == 2)
-					return (NULL);
-				list = create_next_node(list, count);
-				if (count++ == 0)
-					first_node = list;
-				fill_str(original_str, list, start, i++, env_p);
-				start = i;
-			}
+			pipe_condition = check_pipe_condition(original_str, i);
+			if (pipe_condition == 1)
+				break ;
+			else if (pipe_condition == 2)
+				return (NULL);
+			list = create_next_node(list, count);
+			if (count++ == 0)
+				first_node = list;
+			fill_str(original_str, list, start, i++, env_p);
+			start = i;
 		}
 		else
 			i++;
@@ -221,6 +207,23 @@ t_list	*parse(char *original_str, t_env_param *env_p)
 		first_node = list;
 	if (fill_str(original_str, list, start, i, env_p) == 0)
 		return (NULL);
+	return (first_node);
+}
+
+t_list	*parse(char *original_str, t_env_param *env_p)
+{
+	t_list		*first_node;
+	t_quote_con	quote_condition;
+	int			pipe_condition;
+
+	first_node = NULL;
+	quote_condition.is_closed = 1;
+	quote_condition.num_of_single = 0;
+	quote_condition.num_of_double = 0;
+	pipe_condition = 0;
+	if (original_str == NULL || original_str[0] == '\0')
+		return (NULL);
+	first_node = create_node_with_str(original_str, env_p, &quote_condition, pipe_condition);
 	if (is_nullstr_in_list(first_node) == 1)
 		return (NULL);
 	return (first_node);
