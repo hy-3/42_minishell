@@ -21,9 +21,9 @@ void	exec_external_cmd(t_cmd_param *cmd_p, t_env_param *env_p, int i)
 	}
 	if (cmd_p->is_heredoc == 1)
 	{
-		if (close(cmd_p->heredoc_p[0]) == 0)
+		if (close(cmd_p->heredoc_p[0]) == -1)
 			cust_perror("Error(close: cmd_p->heredoc_p[0])", 1);
-		if (close(cmd_p->heredoc_p[1]) == 0)
+		if (close(cmd_p->heredoc_p[1]) == -1)
 			cust_perror("Error(close: cmd_p->heredoc_p[1])", 1);
 	}
 	if (i > 0)

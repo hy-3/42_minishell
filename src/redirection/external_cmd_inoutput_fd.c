@@ -2,7 +2,7 @@
 
 void	organize_fd(t_cmd_param *cmd_p, t_env_param *env_p, int i)
 {
-	if (i == 0) //first cmd
+	if (i == 0)
 	{
 		if (cmd_p->input_fd != 0)
 		{
@@ -11,7 +11,8 @@ void	organize_fd(t_cmd_param *cmd_p, t_env_param *env_p, int i)
 		}
 		else if (cmd_p->is_heredoc == 1)
 		{
-			close(cmd_p->heredoc_p[1]);
+			if (close(cmd_p->heredoc_p[1]) == -1)
+				cust_perror("Error(first_cmd: close cmd_p->heredoc_p[1])", 1);
 			if (dup2(cmd_p->heredoc_p[0], 0) == -1)
 				cust_perror("Error(first_cmd: dup2 heredoc_p[0])", 1);
 		}
@@ -28,7 +29,7 @@ void	organize_fd(t_cmd_param *cmd_p, t_env_param *env_p, int i)
 				cust_perror("Error(first_cmd: dup2 env_p->p[i][1])", 1);
 		}
 	}
-	else if (0 < i && i < env_p->num_of_next_node - 1) //middle cmd
+	else if (0 < i && i < env_p->num_of_next_node - 1)
 	{
 		if (close(env_p->p[i - 1][1]) == -1)
 			cust_perror("Error(middle_cmd: close p[i - 1][1])", 1);
@@ -41,7 +42,8 @@ void	organize_fd(t_cmd_param *cmd_p, t_env_param *env_p, int i)
 		}
 		else if (cmd_p->is_heredoc == 1)
 		{
-			close(cmd_p->heredoc_p[1]);
+			if (close(cmd_p->heredoc_p[1]) == -1)
+				cust_perror("Error(middle_cmd: close cmd_p->heredoc_p[1])", 1);
 			if (dup2(cmd_p->heredoc_p[0], 0) == -1)
 				cust_perror("Error(middle_cmd: dup2 heredoc_p[0])", 1);
 		}
@@ -61,7 +63,7 @@ void	organize_fd(t_cmd_param *cmd_p, t_env_param *env_p, int i)
 				cust_perror("Error(middle_cmd: dup2 env_p->p[i][1])", 1);
 		}
 	}
-	else if (0 < i && i == env_p->num_of_next_node - 1) //last cmd
+	else if (0 < i && i == env_p->num_of_next_node - 1)
 	{
 		if (close(env_p->p[i - 1][1]) == -1)
 			cust_perror("Error(last_cmd: close env_p->p[i - 1][1])", 1);
@@ -72,7 +74,8 @@ void	organize_fd(t_cmd_param *cmd_p, t_env_param *env_p, int i)
 		}
 		else if (cmd_p->is_heredoc == 1)
 		{
-			close(cmd_p->heredoc_p[1]);
+			if (close(cmd_p->heredoc_p[1]) == -1)
+				cust_perror("Error(last_cmd: close cmd_p->heredoc_p[1])", 1);
 			if (dup2(cmd_p->heredoc_p[0], 0) == -1)
 				cust_perror("Error(last_cmd: dup2 heredoc_p[0])", 1);
 		}
