@@ -38,18 +38,23 @@ int	fill_str_allows(t_res_arrow *res, t_list *list, char *original_str, int star
 	return (1);
 }
 
-int	fill_str(char *original_str, t_list *list, int start, int i, t_env_param *env_p)
+void	fill_str(char *original_str, t_list *list, t_env_param *env_p, t_parse_param *parse_p)
 {
-	int			k;
 	char		tmp_quote;
 	char		*tmp_str;
-	int			count;
 	t_res_arrow	res;
-	char		current_quote;
 	int	end_of_dollar;
 
-	end_of_dollar = -1;
+	int		i;
+	int		k;
+	int		start;
+	int		count;
+	char	current_quote;
+
+	i = parse_p->i;
+	start = parse_p->start;
 	count = 0;
+	end_of_dollar = -1;
 	current_quote = 0;
 	while ((i - start) > 0)
 	{
@@ -80,7 +85,8 @@ int	fill_str(char *original_str, t_list *list, int start, int i, t_env_param *en
 						if (original_str[start] == '\0')
 						{
 							printf("ERROR: quote is not closed.\n"); //TODO: error handle.
-							return (0);
+							parse_p->first_node = NULL;
+							return ;
 						}
 						tmp_str[k++] = original_str[start];
 					}
@@ -102,13 +108,15 @@ int	fill_str(char *original_str, t_list *list, int start, int i, t_env_param *en
 		if (original_str[start] == '>' || original_str[start] == '<')
 		{
 			if (fill_str_allows(&res, list, original_str, start, count) == 0)
-				return (0);
+			{
+				parse_p->first_node = NULL;
+				return ;
+			}
 			start = res.start;
 			list = res.list;
 		}
 		count++;
 	}
-	return (1);
 }
 
 int	is_nullstr_in_list(t_list *list)
@@ -125,16 +133,16 @@ int	is_nullstr_in_list(t_list *list)
 	return (0);
 }
 
-void	upd_quote_condition(t_quote_con *quote_condition, char c)
+void	upd_quote_condition(t_parse_param *parse_p, char c)
 {
 	if (c == 39)
-		quote_condition->num_of_single++;
+		parse_p->num_of_single_quote++;
 	if (c == 34)
-		quote_condition->num_of_double++;
-	if (quote_condition->num_of_single % 2 == 0 && quote_condition->num_of_double % 2 == 0)
-		quote_condition->is_closed = 1;
+		parse_p->num_of_double_quote++;
+	if (parse_p->num_of_single_quote % 2 == 0 && parse_p->num_of_double_quote % 2 == 0)
+		parse_p->is_quote_closed = 1;
 	else
-		quote_condition->is_closed = 0;
+		parse_p->is_quote_closed = 0;
 }
 
 int	check_pipe_num(char *original_str, int k)
@@ -151,80 +159,76 @@ int	check_pipe_num(char *original_str, int k)
 	return (num_of_pipe);
 }
 
-int	check_pipe_condition(char *original_str, int i)
+void	check_pipe_condition(char *original_str, t_parse_param *parse_p)
 {
 	int	num_of_pipe;
 
 	num_of_pipe = 0;
-	if (i == 0)
+	if (parse_p->i == 0)
 	{
 		printf("parse error near `|'\n"); //TODO: error handle
-		return (2);
+		parse_p->first_node = NULL;
+		parse_p->pipe_condition = 2;
+		return ;
 	}
-	num_of_pipe = check_pipe_num(original_str, i + 1);
-	if (num_of_pipe == 2)
-		return (1);
+	num_of_pipe = check_pipe_num(original_str, parse_p->i + 1);
 	if (num_of_pipe > 2)
 	{
 		printf("syntax error near unexpected token `|' (pipe continued)\n"); //TODO: error handle
-		return (2);
+		parse_p->first_node = NULL;
+		parse_p->pipe_condition = 2;
 	}
-	return (0);
+	if (num_of_pipe == 2)
+		parse_p->pipe_condition = 1;
+	return ;
 }
 
-t_list *create_node_with_str(char *original_str, t_env_param *env_p, t_quote_con *quote_condition, int pipe_condition)
+void	create_node_with_str(char *original_str, t_env_param *env_p, t_parse_param *parse_p)
 {
-	int		i;
-	int		start;
-	int		count;
 	t_list	*list;
-	t_list	*first_node;
 
-	i = 0;
-	start = 0;
-	count = 0;
-	while (original_str[i] != '\0')
+	while (original_str[parse_p->i] != '\0')
 	{
-		upd_quote_condition(quote_condition, original_str[i]);
-		if (original_str[i] == '|' && quote_condition->is_closed == 1)
+		upd_quote_condition(parse_p, original_str[parse_p->i]);
+		if (original_str[parse_p->i] == '|' && parse_p->is_quote_closed == 1)
 		{
-			pipe_condition = check_pipe_condition(original_str, i);
-			if (pipe_condition == 1)
+			check_pipe_condition(original_str, parse_p);
+			if (parse_p->pipe_condition == 1)
 				break ;
-			else if (pipe_condition == 2)
-				return (NULL);
-			list = create_next_node(list, count);
-			if (count++ == 0)
-				first_node = list;
-			fill_str(original_str, list, start, i++, env_p);
-			start = i;
+			else if (parse_p->pipe_condition == 2)
+				return ;
+			list = create_next_node(list, parse_p->count);
+			if (parse_p->count++ == 0)
+				parse_p->first_node = list;
+			fill_str(original_str, list, env_p, parse_p);
+			parse_p->i++;
+			parse_p->start = parse_p->i;
 		}
 		else
-			i++;
+			parse_p->i++;
 	}
-	list = create_next_node(list, count);
-	if (count == 0)
-		first_node = list;
-	if (fill_str(original_str, list, start, i, env_p) == 0)
-		return (NULL);
-	return (first_node);
+	list = create_next_node(list, parse_p->count);
+	if (parse_p->count == 0)
+		parse_p->first_node = list;
+	fill_str(original_str, list, env_p, parse_p);
 }
 
 t_list	*parse(char *original_str, t_env_param *env_p)
 {
-	t_list		*first_node;
-	t_quote_con	quote_condition;
-	int			pipe_condition;
+	t_parse_param	parse_p;
 
-	first_node = NULL;
-	quote_condition.is_closed = 1;
-	quote_condition.num_of_single = 0;
-	quote_condition.num_of_double = 0;
-	pipe_condition = 0;
+	parse_p.first_node = NULL;
+	parse_p.i = 0;
+	parse_p.start = 0;
+	parse_p.count = 0;
+	parse_p.num_of_single_quote = 0;
+	parse_p.num_of_double_quote = 0;
+	parse_p.is_quote_closed = 1;
+	parse_p.pipe_condition = 0;
 	if (original_str == NULL || original_str[0] == '\0')
 		return (NULL);
-	first_node = create_node_with_str(original_str, env_p, &quote_condition, pipe_condition);
-	if (is_nullstr_in_list(first_node) == 1)
+	create_node_with_str(original_str, env_p, &parse_p);
+	if (is_nullstr_in_list(parse_p.first_node) == 1)
 		return (NULL);
-	return (first_node);
+	return (parse_p.first_node);
 }

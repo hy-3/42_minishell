@@ -49,12 +49,17 @@ typedef struct s_res_arrow
 	t_list	*list;
 }	t_res_arrow;
 
-typedef struct s_quote_con
+typedef struct s_parse_param
 {
-	int	num_of_single;
-	int	num_of_double;
-	int	is_closed;
-}	t_quote_con;
+	t_list	*first_node;
+	int		i;
+	int		start;
+	int		count;
+	int		num_of_single_quote;
+	int		num_of_double_quote;
+	int		is_quote_closed;
+	int		pipe_condition;
+}	t_parse_param;
 
 // src
 //	- parse.c
