@@ -50,3 +50,17 @@ int	count_next_node(t_list *list)
 	}
 	return (list_size);
 }
+
+int	is_nullstr_in_list(t_list *list)
+{
+	while (list != NULL)
+	{
+		if (list->str == NULL)
+		{
+			printf("parse error near `|'\n"); //TODO: error handle
+			return (1);
+		}
+		list = list->next;
+	}
+	return (0);
+}

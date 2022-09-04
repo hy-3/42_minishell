@@ -5,7 +5,9 @@ FLAG_LIB = -lreadline
 LIBFT_PATH = lib/libft/
 LIBFT = lib/libft/libft.a
 SRC = src/main.c \
-	  src/parse.c \
+	  src/parse/parse.c \
+	  src/parse/check.c \
+	  src/parse/fill_str.c \
 	  src/cmd/check_cmd.c \
 	  src/cmd/external_cmd.c \
 	  src/cmd/pipex.c \

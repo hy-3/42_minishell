@@ -53,6 +53,16 @@ can I finish program when close/open/malloc failed? does exit status matter?
 $ export a = d
 zsh: bad assignment
 
+$ ls <> a
+Makefile        README.md              lib             minishell       src             todo.md
+
+$ ls >< a
+$ ls > < a
+bash: syntax error near unexpected token `<'
+
+$ ls < > a
+bash: syntax error near unexpected token `>'
+
 - add history
 - check if << updates history.
 

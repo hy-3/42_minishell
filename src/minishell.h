@@ -43,12 +43,6 @@ typedef struct s_cmd_param
 	int		num_of_args;
 }	t_cmd_param;
 
-typedef struct s_res_arrow
-{
-	int		start;
-	t_list	*list;
-}	t_res_arrow;
-
 typedef struct s_parse_param
 {
 	t_list	*first_node;
@@ -61,9 +55,27 @@ typedef struct s_parse_param
 	int		pipe_condition;
 }	t_parse_param;
 
-// src
+typedef struct s_fill
+{
+	int		i;
+	int		start;
+	int		count;
+	char	*tmp_str;
+	char	current_quote;
+	int		end_pos_of_dollar_var;
+	t_list	*list;
+}	t_fill;
+
+// src/parse
 //	- parse.c
 t_list	*parse(char *original_str, t_env_param *env_p);
+//	- check.c
+void	check_pipe_condition(char *original_str, t_parse_param *parse_p);
+void	check_quote_condition(t_parse_param *parse_p, char c);
+int		is_include_cmd(char *original_str, t_fill *fill);
+//	- fill_str.c
+void	fill_str(char *original_str, t_fill *fill, t_parse_param *parse_p, t_env_param *env_p);
+void	fill_str_allows(char *original_str, t_fill *fill, t_parse_param *parse_p);
 
 // src/env
 //	- env.c
@@ -107,6 +119,7 @@ void	organize_fd(t_cmd_param *cmd_p, t_env_param *env_p, int i);
 int		count_next_node(t_list *list);
 t_list *create_next_node(t_list *list, int count);
 t_list *create_extra_node(t_list *list);
+int		is_nullstr_in_list(t_list *list);
 //	- split_to_str.c
 char	**split_to_str(char const *s, char c);
 int		count_num_of_str(char const *s, char c);
