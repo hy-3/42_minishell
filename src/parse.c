@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int	fill_str_allows(t_res_arrow *res, t_list *list, char *original_str, int start)
+int	fill_str_allows(t_res_arrow *res, t_list *list, char *original_str, int start, int count)
 {
 	int		i;
 	char	*tmp_str;
@@ -8,7 +8,7 @@ int	fill_str_allows(t_res_arrow *res, t_list *list, char *original_str, int star
 
 	i = 0;
 	arrow = original_str[start];
-	if (start != 0)
+	if (count != 0)
 		list = create_extra_node(list);
 	while (original_str[start] == '>' || original_str[start] == '<')
 	{
@@ -101,7 +101,7 @@ int	fill_str(char *original_str, t_list *list, int start, int i, t_env_param *en
 		}
 		if (original_str[start] == '>' || original_str[start] == '<')
 		{
-			if (fill_str_allows(&res, list, original_str, start) == 0)
+			if (fill_str_allows(&res, list, original_str, start, count) == 0)
 				return (0);
 			start = res.start;
 			list = res.list;
@@ -113,17 +113,12 @@ int	fill_str(char *original_str, t_list *list, int start, int i, t_env_param *en
 
 int	is_nullstr_in_list(t_list *list)
 {
-	t_list	*prev_node;
-	int		list_size;
-
-	list_size = 0;
 	while (list != NULL)
 	{
-		prev_node = list;
+		printf("##:%s\n",list->str);
 		if (list->str == NULL)
 			return (1);
 		list = list->next;
-		list_size++;
 	}
 	return (0);
 }
@@ -146,10 +141,8 @@ t_list	*parse(char *original_str, t_env_param *env_p)
 	num_of_single_quote = 0;
 	num_of_double_quote = 0;
 	first_node = NULL;
-	while (original_str[start] == ' ')
-		start++;
 	if (original_str == NULL || original_str[start] == '\0')
-		return (first_node);
+		return (NULL);
 	while (original_str[i] != '\0')
 	{
 		if (original_str[i] == 39)
@@ -172,7 +165,7 @@ t_list	*parse(char *original_str, t_env_param *env_p)
 					break ;
 				if (num_of_continued_pipe > 1)
 				{
-					printf("syntax error near unexpected token `|'\n"); //TODO: error handle
+					printf("syntax error near unexpected token `|' (pipe continued)\n"); //TODO: error handle
 					return (NULL);
 				}
 				list = create_next_node(list, count);
@@ -180,7 +173,7 @@ t_list	*parse(char *original_str, t_env_param *env_p)
 					first_node = list;
 				if (i == 0)
 				{
-					printf("syntax error near unexpected token `|'\n"); //TODO: error handle
+					printf("syntax error near unexpected token `|' (nothing after pipe)\n"); //TODO: error handle
 					return (NULL);
 				}
 				fill_str(original_str, list, start, i, env_p);
@@ -200,7 +193,7 @@ t_list	*parse(char *original_str, t_env_param *env_p)
 		return (NULL);
 	if (is_nullstr_in_list(first_node) == 1)
 	{
-		printf("syntax error near unexpected token `|'\n"); //TODO: error handle
+		printf("syntax error near unexpected token `|' (null str included)\n"); //TODO: error handle
 		return (NULL);
 	}
 	return (first_node);
