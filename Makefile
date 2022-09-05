@@ -8,6 +8,7 @@ SRC = src/main.c \
 	  src/parse/parse.c \
 	  src/parse/check.c \
 	  src/parse/fill_str.c \
+	  src/parse/dollar.c \
 	  src/cmd/check_cmd.c \
 	  src/cmd/external_cmd.c \
 	  src/cmd/pipex.c \
@@ -19,7 +20,6 @@ SRC = src/main.c \
 	  src/cmd/builtin/unset.c \
 	  src/env/env_upd.c \
 	  src/env/env_util.c \
-	  src/env/dollar.c \
 	  src/redirection/check_arrows.c \
 	  src/redirection/builtin_fd.c \
 	  src/redirection/external_cmd_fd.c \

@@ -94,7 +94,7 @@ void	fill_str(char *original_str, t_fill *fill, t_parse *parse, t_env *env)
 	if (fill->count != 0)
 		fill->list = create_extra_node(fill->list);
 	if (is_dollar_exist(fill->tmp_str) == 1 && (fill->current_quote == 0 || fill->current_quote == 34))
-		fill->list->str = convert_str_from_dollar(fill->tmp_str, fill->current_quote, fill->end_pos_of_dollar_var, env);
+		fill->list->str = convert_str_from_dollar(fill, env);
 	else
 		fill->list->str = ft_strdup(fill->tmp_str);
 }

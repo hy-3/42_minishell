@@ -68,6 +68,15 @@ typedef struct s_fill
 	t_list	*list;
 }	t_fill;
 
+typedef struct s_dollar
+{
+	int		start;
+	int		tmp_start;
+	int		end;
+	char	*str_dollar_part;
+	int		size_dollar_part;
+}	t_dollar;
+
 // src/parse
 //	- parse.c
 t_list	*parse(char *original_str, t_env *env);
@@ -78,6 +87,9 @@ int		is_include_cmd(char *original_str, t_fill *fill);
 //	- fill_str.c
 void	fill_str(char *original_str, t_fill *fill, t_parse *parse, t_env *env);
 void	fill_str_allows(char *original_str, t_fill *fill, t_parse *parse);
+//	- dollar.c
+int		is_dollar_exist(char *tmp_str);
+char	*convert_str_from_dollar(t_fill *fill, t_env *env);
 
 // src/env
 //	- env_upd.c
@@ -90,9 +102,6 @@ int		calc_envp_size(char **envp);
 int		count_till_equal(char *str);
 int		is_exist_in_env(char **envp, char *str);
 int		is_valid_envname(char *str);
-//	- dollar.c
-int		is_dollar_exist(char *tmp_str);
-char	*convert_str_from_dollar(char *tmp_str, int current_quote, int end_of_dollar, t_env *env);
 
 // src/cmd
 //	- pipex.c
