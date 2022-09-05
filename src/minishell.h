@@ -80,13 +80,16 @@ void	fill_str(char *original_str, t_fill *fill, t_parse *parse, t_env *env);
 void	fill_str_allows(char *original_str, t_fill *fill, t_parse *parse);
 
 // src/env
-//	- env.c
+//	- env_upd.c
 char	**copy_env(char **old_envp);
+char	**upd_to_new_env(t_env *env, t_cmd *cmd);
+char	**create_new_env_with_str(char **old_envp, char *str);
+//	- env_util.c
+char	*get_value_of_pathenv(char **envp);
+int		calc_envp_size(char **envp);
+int		count_till_equal(char *str);
 int		is_exist_in_env(char **envp, char *str);
 int		is_valid_envname(char *str);
-char	**create_new_env_with_str(char **old_envp, char *str);
-char	**upd_to_new_env(t_env *env, t_cmd *cmd);
-char	*get_value_of_pathenv(char **envp);
 //	- dollar.c
 int		is_dollar_exist(char *tmp_str);
 char	*convert_str_from_dollar(char *tmp_str, int current_quote, int end_of_dollar, t_env *env);
