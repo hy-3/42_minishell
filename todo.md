@@ -1,7 +1,7 @@
 [Hiro] Not interpret unclosed quotes or unspecified special characters like \ or ;.
 - when quote is not closed: change from error to giving back prompt
 
-x [only_gnl] Not use more than one global variable, think about it and be ready to explain why you do it.
+[] Not use more than one global variable, think about it and be ready to explain why you do it.
 
 x [Hiro] Show a prompt when waiting for a new command.
 

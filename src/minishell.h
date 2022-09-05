@@ -11,6 +11,7 @@
 # include "../lib/libft/libft.h"
 # include <sys/uio.h>
 # include <stddef.h>
+# include <termios.h>
 
 # define BUFFER_SIZE 10 //TODO: check (for gnl)
 
