@@ -47,9 +47,17 @@ t_list	*single_left_arrow(t_list *list, t_cmd *cmd, t_env *env)
 	{
 		cmd->input_fd = open(list->str, O_RDONLY); //TODO: fix
 		if (access(list->str, F_OK) == -1)
+		{
 			printf("%s: No such file or directory\n",list->str);
+			env->status_code = 1;
+			cmd->is_error = 2;
+		}
 		else if (cmd->input_fd == -1)
-			handle_error_arrows("Permission denied", env, cmd, 1);
+		{
+			printf("Permission denied\n");
+			env->status_code = 1;
+			cmd->is_error = 2;
+		}
 		list = list->extra;
 	}
 	return (list);

@@ -13,7 +13,7 @@ void	create_arrow_str(t_fill *fill, char arrow, int i)
 {
 	fill->tmp_str = (char *) malloc((i + 1) * sizeof(char));
 	if (fill->tmp_str == NULL)
-		printf("malloc failed\n"); //TODO: error handle
+		cust_write("malloc failed\n", 1);
 	fill->tmp_str[0] = arrow;
 	if (i == 2)
 		fill->tmp_str[1] = arrow;

@@ -6,7 +6,7 @@ t_list *create_next_node(t_list *list, int count)
 	{
 		list = (t_list *) malloc(sizeof(t_list));
 		if (list == NULL)
-			printf("malloc failed\n"); //TODO: error handle
+			cust_write("malloc failed\n", 1);
 		list->str = NULL;
 		list->extra = NULL;
 		list->next = NULL;
@@ -15,7 +15,7 @@ t_list *create_next_node(t_list *list, int count)
 	{
 		list->next = (t_list *) malloc(sizeof(t_list));
 		if (list->next == NULL)
-			printf("malloc failed\n"); //TODO: error handle
+			cust_write("malloc failed\n", 1);
 		list = list->next;
 		list->str = NULL;
 		list->extra = NULL;
@@ -28,7 +28,7 @@ t_list *create_extra_node(t_list *list)
 {
 	list->extra = (t_list *) malloc(sizeof(t_list));
 	if (list->extra == NULL)
-		printf("malloc failed\n"); //TODO: error handle
+		cust_write("malloc failed\n", 1);
 	list = list->extra;
 	list->str = NULL;
 	list->extra = NULL;

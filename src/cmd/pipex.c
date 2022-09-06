@@ -70,7 +70,7 @@ void	pipex(t_list *list, t_env *env)
 		config_execargs(list, cmd, env);
 		if (cmd->is_error == 1)
 			return ;
-		if (cmd->num_of_args != 0)
+		if (cmd->num_of_args != 0 && cmd->is_error == 0)
 			exec_cmd(cmd, env, i);
 		list = list->next;
 		i++;

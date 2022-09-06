@@ -33,8 +33,7 @@ x [Hiro] Pipes | The output of each command in the pipeline is connected via a p
 
 x [Hiro] Environment variables ($ followed by characters) should expand to their values.
 
-[Hiro] $? should expand to the exit status of the most recently executed foreground pipeline.
-- Make sure exit status code whenever we handles error.
+x [Hiro] $? should expand to the exit status of the most recently executed foreground pipeline.
 
 [Hiro] ctrl-C ctrl-D ctrl-\ should work like in bash.
     When interactive:
@@ -43,16 +42,9 @@ x [Hiro] Environment variables ($ followed by characters) should expand to their
       [Hiro] ctrl-\ do nothing.
 
 # TODO
-- status code
 - free things
-- change from cust_perror/cust_write to printf & set status code
-can I finish program when close/open/malloc failed? does exit status matter?
 - signal
-- should I change from printf to write? when error happens, should I output to stderr(2)?
 - fix
-    $ export a = d
-    zsh: bad assignment
-
     $ ls <> a
     Makefile        README.md              lib             minishell       src             todo.md
 
@@ -64,6 +56,11 @@ can I finish program when close/open/malloc failed? does exit status matter?
     bash: syntax error near unexpected token `>'
 - add history
 - check if << updates history.
+
+# Things to check
+- TODO
+- should I change from printf to write? when error happens, should I output to stderr(2)?
+- check possible error & status code
 
 # Things to be careful with quote
 $ echo "$USER"
