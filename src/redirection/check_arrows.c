@@ -45,7 +45,7 @@ t_list	*single_left_arrow(t_list *list, t_cmd *cmd, t_env *env)
 		handle_error_arrows("syntax error newar unexpected token `newline'", env, cmd, 258);
 	else
 	{
-		cmd->input_fd = open(list->str, O_RDONLY);
+		cmd->input_fd = open(list->str, O_RDONLY); //TODO: fix
 		if (access(list->str, F_OK) == -1)
 			printf("%s: No such file or directory\n",list->str);
 		else if (cmd->input_fd == -1)

@@ -16,7 +16,7 @@ void	handle_str(char *original_str, t_list *list, t_env *env, t_parse *parse)
 		if (is_include_cmd(original_str, &fill) == 0)
 			break;
 		if (original_str[fill.start] == '>' || original_str[fill.start] == '<')
-			fill_str_allows(original_str, &fill, parse);
+			fill_str_allows(original_str, &fill, parse, env);
 		else
 			fill_str(original_str, &fill, parse, env);
 		if (parse->first_node == NULL)
@@ -37,7 +37,7 @@ void	create_node_with_str(char *original_str, t_env *env, t_parse *parse)
 		check_quote_condition(parse, original_str[parse->i]);
 		if (original_str[parse->i] == '|' && parse->is_quote_closed == 1)
 		{
-			check_pipe_condition(original_str, parse);
+			check_pipe_condition(original_str, parse, env);
 			if (parse->pipe_condition == 1)
 				break ;
 			else if (parse->pipe_condition == 2)
@@ -71,7 +71,7 @@ t_list	*parse(char *original_str, t_env *env)
 	if (original_str == NULL || original_str[0] == '\0')
 		return (NULL);
 	create_node_with_str(original_str, env, &parse);
-	if (is_nullstr_in_list(parse.first_node) == 1)
+	if (is_nullstr_in_list(parse.first_node, env) == 1)
 		return (NULL);
 	return (parse.first_node);
 }

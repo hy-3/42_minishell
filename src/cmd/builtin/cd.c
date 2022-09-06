@@ -10,12 +10,18 @@ void	exec_cd(t_cmd *cmd, t_env *env, int i)
 		{
 			var = getenv("HOME");
 			if (chdir(var) == -1)
+			{
 				printf("%s: No such file or directory\n", cmd->exec_args[1]);
+				env->status_code = 1;
+			}
 		}
 		else
 		{
 			if (chdir(cmd->exec_args[1]) == -1)
+			{
 				printf("%s: No such file or directory\n", cmd->exec_args[1]);
+				env->status_code = 1;
+			}
 		}
 	}
 }

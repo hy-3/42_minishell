@@ -35,7 +35,7 @@ int	check_pipe_num(char *original_str, int k)
 	return (num_of_pipe);
 }
 
-void	check_pipe_condition(char *original_str, t_parse *parse)
+void	check_pipe_condition(char *original_str, t_parse *parse, t_env *env)
 {
 	int	num_of_pipe;
 
@@ -43,6 +43,7 @@ void	check_pipe_condition(char *original_str, t_parse *parse)
 	if (parse->i == 0)
 	{
 		printf("parse error near `|'\n"); //TODO: error handle
+		env->status_code = 258;
 		parse->first_node = NULL;
 		parse->pipe_condition = 2;
 		return ;
@@ -51,6 +52,7 @@ void	check_pipe_condition(char *original_str, t_parse *parse)
 	if (num_of_pipe > 2)
 	{
 		printf("syntax error near unexpected token `|' (pipe continued)\n"); //TODO: error handle
+		env->status_code = 258;
 		parse->first_node = NULL;
 		parse->pipe_condition = 2;
 	}

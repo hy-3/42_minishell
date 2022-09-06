@@ -21,5 +21,8 @@ void	exec_env(t_cmd *cmd, t_env *env, int i)
 	if (cmd->num_of_args == 1)
 		cmd_env(cmd, env, get_output_fd(cmd, env, i));
 	else
-		printf("env: %s: No such file or directory\n", cmd->exec_args[1]); //TODO: or do nothing and just return to prompt
+	{
+		printf("env: %s: No such file or directory\n", cmd->exec_args[1]);
+		env->status_code = 127;
+	}
 }

@@ -51,13 +51,14 @@ int	count_next_node(t_list *list)
 	return (list_size);
 }
 
-int	is_nullstr_in_list(t_list *list)
+int	is_nullstr_in_list(t_list *list, t_env *env)
 {
 	while (list != NULL)
 	{
 		if (list->str == NULL)
 		{
 			printf("parse error near `|'\n"); //TODO: error handle
+			env->status_code = 258;
 			return (1);
 		}
 		list = list->next;

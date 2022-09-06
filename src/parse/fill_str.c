@@ -1,8 +1,9 @@
 #include "../minishell.h"
 
-void	print_toomany_arrow_error(char arrow, int i)
+void	print_toomany_arrow_error(char arrow, int i, t_env *env)
 {
 	printf("syntax error near unexpected token `");
+	env->status_code = 258;
 	while (i-- > 2)
 		printf("%c", arrow);
 	printf("'\n");
@@ -19,7 +20,7 @@ void	create_arrow_str(t_fill *fill, char arrow, int i)
 	fill->tmp_str[i] = '\0';
 }
 
-void	fill_str_allows(char *original_str, t_fill *fill, t_parse *parse)
+void	fill_str_allows(char *original_str, t_fill *fill, t_parse *parse, t_env *env)
 {
 	int		i;
 	char	arrow;
@@ -35,7 +36,7 @@ void	fill_str_allows(char *original_str, t_fill *fill, t_parse *parse)
 	}
 	if (i > 2) //TODO: check what to do with when three <. ex) wc <<< a
 	{
-		print_toomany_arrow_error(arrow, i); //TODO: error handle
+		print_toomany_arrow_error(arrow, i, env); //TODO: error handle
 		parse->first_node = NULL;
 		return ;
 	}
@@ -58,7 +59,7 @@ int	fill_till_quote_closed(char *original_str, t_fill *fill, t_parse *parse, int
 	{
 		if (original_str[fill->start] == '\0')
 		{
-			printf("ERROR: quote is not closed.\n"); //TODO: error handle.
+			printf("ERROR: quote is not closed.\n"); //TODO: error handle. decide not to put status code.
 			parse->first_node = NULL;
 			return (-1);
 		}

@@ -26,6 +26,6 @@ void	exec_export(t_cmd *cmd, t_env *env, int i)
 	{
 		k = 1;
 		while (cmd->exec_args[k] != NULL)
-			env->current_envp = create_new_env_with_str(env->current_envp, cmd->exec_args[k++]);
+			env->current_envp = create_new_env_with_str(env->current_envp, cmd->exec_args[k++], env);
 	}
 }

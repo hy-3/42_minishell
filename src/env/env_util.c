@@ -58,7 +58,7 @@ int	is_exist_in_env(char **envp, char *str)
 
 int	is_valid_envname(char *str)
 {
-	if (ft_isdigit(str[0]) == 1)
+	if (ft_isdigit(str[0]) == 1 || str[0] == '=')
 		return (0);
 	return (1);
 }

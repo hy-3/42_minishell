@@ -81,12 +81,12 @@ typedef struct s_dollar
 //	- parse.c
 t_list	*parse(char *original_str, t_env *env);
 //	- check.c
-void	check_pipe_condition(char *original_str, t_parse *parse);
+void	check_pipe_condition(char *original_str, t_parse *parse, t_env *env);
 void	check_quote_condition(t_parse *parse, char c);
 int		is_include_cmd(char *original_str, t_fill *fill);
 //	- fill_str.c
 void	fill_str(char *original_str, t_fill *fill, t_parse *parse, t_env *env);
-void	fill_str_allows(char *original_str, t_fill *fill, t_parse *parse);
+void	fill_str_allows(char *original_str, t_fill *fill, t_parse *parse, t_env *env);
 //	- dollar.c
 int		is_dollar_exist(char *tmp_str);
 char	*convert_str_from_dollar(t_fill *fill, t_env *env);
@@ -95,7 +95,7 @@ char	*convert_str_from_dollar(t_fill *fill, t_env *env);
 //	- env_upd.c
 char	**copy_env(char **old_envp);
 char	**upd_to_new_env(t_env *env, t_cmd *cmd);
-char	**create_new_env_with_str(char **old_envp, char *str);
+char	**create_new_env_with_str(char **old_envp, char *str, t_env *env);
 //	- env_util.c
 char	*get_value_of_pathenv(char **envp);
 int		calc_envp_size(char **envp);
@@ -133,7 +133,7 @@ void	organize_fd(t_cmd *cmd, t_env *env, int i);
 int		count_next_node(t_list *list);
 t_list	*create_next_node(t_list *list, int count);
 t_list	*create_extra_node(t_list *list);
-int		is_nullstr_in_list(t_list *list);
+int		is_nullstr_in_list(t_list *list, t_env *env);
 //	- split_to_str.c
 char	**split_to_str(char const *s, char c);
 int		count_num_of_str(char const *s, char c);

@@ -16,7 +16,7 @@ char	**copy_env(char **old_envp)
 	return (new_envp);
 }
 
-char	**create_new_env_with_str(char **old_envp, char *str)
+char	**create_new_env_with_str(char **old_envp, char *str, t_env *env)
 {
 	char	**new_envp;
 	int		k;
@@ -25,6 +25,7 @@ char	**create_new_env_with_str(char **old_envp, char *str)
 	if (is_valid_envname(str) == 0)
 	{
 		printf("export: `%s': not a valid identifier\n", str); //TODO: error handle
+		env->status_code = 1;
 		return (old_envp);
 	}
 	if (is_exist_in_env(old_envp, str) == 0)
