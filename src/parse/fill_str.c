@@ -46,7 +46,7 @@ int	fill_till_quote_closed(char *original_str, t_fill *fill, t_parse *parse, int
 	{
 		if (original_str[fill->start] == '\0')
 		{
-			printf("ERROR: quote is not closed.\n"); //TODO: error handle. decide not to put status code.
+			printf("quote is not closed.\n"); //TODO: error handle. decide not to put status code.
 			parse->first_node = NULL;
 			return (-1);
 		}
@@ -63,7 +63,7 @@ void	fill_str(char *original_str, t_fill *fill, t_parse *parse, t_env *env)
 
 	fill->tmp_str = (char *) malloc((fill->i - fill->start + 1) * sizeof(char));
 	if (fill->tmp_str == NULL)
-		printf("malloc failed\n"); //TODO: error handle
+		cust_write("malloc failed\n", 1);
 	k = 0;
 	while (original_str[fill->start] != ' ' && original_str[fill->start] != '\0' && original_str[fill->start] != '>' && original_str[fill->start] != '<')
 	{
