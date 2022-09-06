@@ -1,46 +1,33 @@
 #include "../minishell.h"
 
-void	print_toomany_arrow_error(char arrow, int i, t_env *env)
+void	create_arrow_str(char *original_str, t_fill *fill, int i)
 {
-	printf("syntax error near unexpected token `");
-	env->status_code = 258;
-	while (i-- > 2)
-		printf("%c", arrow);
-	printf("'\n");
-}
+	int	k;
 
-void	create_arrow_str(t_fill *fill, char arrow, int i)
-{
 	fill->tmp_str = (char *) malloc((i + 1) * sizeof(char));
 	if (fill->tmp_str == NULL)
 		cust_write("malloc failed\n", 1);
-	fill->tmp_str[0] = arrow;
-	if (i == 2)
-		fill->tmp_str[1] = arrow;
-	fill->tmp_str[i] = '\0';
+	k = 0;
+	while (i-- > 0)
+		fill->tmp_str[k++] = original_str[fill->start++];
+	fill->tmp_str[k] = '\0';
 }
 
 void	fill_str_allows(char *original_str, t_fill *fill, t_parse *parse, t_env *env)
 {
-	int		i;
-	char	arrow;
+	int	i;
+	int	start;
 
 	i = 0;
-	arrow = original_str[fill->start];
+	start = fill->start;
 	if (fill->count != 0)
 		fill->list = create_extra_node(fill->list);
-	while (original_str[fill->start] == '>' || original_str[fill->start] == '<')
+	while (original_str[start] == '>' || original_str[start] == '<')
 	{
-		fill->start++;
+		start++;
 		i++;
 	}
-	if (i > 2) //TODO: check what to do with when three <. ex) wc <<< a
-	{
-		print_toomany_arrow_error(arrow, i, env); //TODO: error handle
-		parse->first_node = NULL;
-		return ;
-	}
-	create_arrow_str(fill, arrow, i);
+	create_arrow_str(original_str, fill, i);
 	fill->list->str = ft_strdup(fill->tmp_str);
 }
 

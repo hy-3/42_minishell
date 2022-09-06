@@ -48,10 +48,6 @@ x [Hiro] $? should expand to the exit status of the most recently executed foreg
     $ ls <> a
     Makefile        README.md              lib             minishell       src             todo.md
 
-    $ ls >< a
-    $ ls > < a
-    bash: syntax error near unexpected token `<'
-
     $ ls < > a
     bash: syntax error near unexpected token `>'
 - add history
