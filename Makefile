@@ -1,6 +1,6 @@
 NAME = minishell
 CC = gcc
-FLAG_WARN = -Wall -Wextra -Werror
+FLAG_WARN = -Wall -Wextra -Werror #-fsanitize=address -g3
 FLAG_LIB = -lreadline
 LIBFT_PATH = lib/libft/
 LIBFT = lib/libft/libft.a
@@ -15,6 +15,7 @@ SRC = src/main.c \
 	  src/cmd/builtin/cd.c \
 	  src/cmd/builtin/echo.c \
 	  src/cmd/builtin/env.c \
+	  src/cmd/builtin/exit.c \
 	  src/cmd/builtin/export.c \
 	  src/cmd/builtin/pwd.c \
 	  src/cmd/builtin/unset.c \
@@ -36,7 +37,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	make -C $(LIBFT_PATH)
-	$(CC) $(OBJ) $(LIBFT) $(FLAG_LIB) $(FLAG_WARN) -fsanitize=address -g3 -o $(NAME)
+	$(CC) $(OBJ) $(LIBFT) $(FLAG_LIB) $(FLAG_WARN) -o $(NAME)
 
 %.o: %.c
 	$(CC) $(FLAGS) -c $< -o $@

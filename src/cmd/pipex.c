@@ -17,7 +17,7 @@ void	cust_waitpid(int num_of_executed_cmd)
 void	exec_cmd(t_cmd *cmd, t_env *env, int i)
 {
 	if (ft_strncmp(cmd->exec_args[0], "exit", 5) == 0)
-		exit(0); //TODO: check which status code I should return.
+		exec_exit(cmd, env);
 	if (ft_strncmp(cmd->exec_args[0], "echo", 5) == 0)
 		exec_echo(cmd, env, i);
 	else if (ft_strncmp(cmd->exec_args[0], "cd", 3) == 0)

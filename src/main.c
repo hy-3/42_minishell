@@ -27,6 +27,13 @@ void change_terminal()
 	// signal(SIGQUIT, sig_handler);
 }
 
+/* -- to check -- */
+void leaks()
+{
+	system("leaks minishell");
+}
+/* -------------- */
+
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_env	env;
@@ -36,6 +43,7 @@ int	main(int argc, char *argv[], char *envp[])
 
 	if (argc != 1)
 		return (0);
+	// atexit(leaks);
 	env.first_envp = copy_env(envp);
 	env.current_envp = copy_env(envp);
 	env.status_code = 0;
