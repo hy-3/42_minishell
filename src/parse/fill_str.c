@@ -46,7 +46,7 @@ int	fill_till_quote_closed(char *original_str, t_fill *fill, t_parse *parse, int
 	{
 		if (original_str[fill->start] == '\0')
 		{
-			printf("quote is not closed.\n"); //TODO: error handle. decide not to put status code.
+			printf("quote is not closed.\n");
 			parse->first_node = NULL;
 			return (-1);
 		}

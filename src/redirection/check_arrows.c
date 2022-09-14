@@ -1,6 +1,5 @@
 #include "../minishell.h"
 
-//TODO: error handle
 void	handle_error_arrows(char *str, t_env *env, t_cmd *cmd, int status_code)
 {
 	printf("%s\n", str);

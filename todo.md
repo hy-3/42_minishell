@@ -42,8 +42,9 @@ x [Hiro] $? should expand to the exit status of the most recently executed foreg
       [Hiro] ctrl-\ do nothing.
 
 # TODO
-- free things
 - signal
+- fix:
+    export HOME=aaa
 - add history
 - check if << updates history.
 

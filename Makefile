@@ -1,6 +1,6 @@
 NAME = minishell
 CC = gcc
-# FLAG_WARN = -Wall -Wextra -Werror
+FLAG_WARN = -Wall -Wextra -Werror
 FLAG_LIB = -lreadline
 LIBFT_PATH = lib/libft/
 LIBFT = lib/libft/libft.a
@@ -26,6 +26,7 @@ SRC = src/main.c \
 	  src/util/list.c \
 	  src/util/split_to_str.c \
 	  src/util/stderr.c \
+	  src/util/free.c \
 	  lib/get_next_line/get_next_line.c \
 	  lib/get_next_line/get_next_line_utils.c
 

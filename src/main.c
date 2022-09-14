@@ -57,7 +57,6 @@ int	main(int argc, char *argv[], char *envp[])
 		env.num_of_child = 0;
 		env.num_of_next_node = count_next_node(list);
 		pipex(list, &env);
-		//TODO: Free env(first_envp, current_envp, pathenv)
 
 		/* --- to check args --- */
 		t_list *ex;
@@ -82,7 +81,8 @@ int	main(int argc, char *argv[], char *envp[])
 		}
 		printf("=====//\n");
 		/* ---------------- */
+
+		free_list(list);
 	}
-	//TODO: clear gnl global var?
 	return (0);
 }

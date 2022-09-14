@@ -30,7 +30,7 @@ typedef struct s_env
 	int		num_of_next_node;
 	int		num_of_child;
 	int		p[100][2]; //TODO: p[ARG_MAX][2];
-	int		status_code; //TODO: implement
+	int		status_code;
 }	t_env;
 
 typedef struct s_cmd
@@ -75,6 +75,7 @@ typedef struct s_dollar
 	int		end;
 	char	*str_dollar_part;
 	int		size_dollar_part;
+	int		is_free_needed;
 }	t_dollar;
 
 // src/parse
@@ -141,6 +142,8 @@ void	cust_free(char **res);
 //	- stderr.c
 void	cust_perror(char *str, int status);
 void	cust_write(char *str, int status);
+//	- free.c
+void	free_list(t_list *list);
 
 // lib/get_next_line
 //	- get_next_line.c

@@ -24,7 +24,7 @@ char	**create_new_env_with_str(char **old_envp, char *str, t_env *env)
 
 	if (is_valid_envname(str) == 0)
 	{
-		printf("export: `%s': not a valid identifier\n", str); //TODO: error handle
+		printf("export: `%s': not a valid identifier\n", str);
 		env->status_code = 1;
 		return (old_envp);
 	}
@@ -74,7 +74,6 @@ char	**create_new_env_without_str(char **old_envp, char *str)
 char	**upd_to_new_env(t_env *env, t_cmd *cmd)
 {
 	char	**new_envp;
-	char	**old_envp;
 	int		i;
 
 	i = 1;

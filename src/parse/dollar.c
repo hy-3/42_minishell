@@ -54,6 +54,7 @@ void	convert_dollar_part(t_fill *fill, t_env *env, t_dollar *dollar)
 	int		i;
 	char	*var_name;
 
+	dollar->is_free_needed = 0;
 	upd_dollar_start_and_end(fill, dollar);
 	var_name = (char *) malloc((dollar->end - dollar->start + 1) * sizeof(char));
 	i = 0;
@@ -65,6 +66,7 @@ void	convert_dollar_part(t_fill *fill, t_env *env, t_dollar *dollar)
 	{
 		dollar->str_dollar_part = ft_itoa(env->status_code);
 		dollar->end = find_question_position(fill->tmp_str) + 1;
+		dollar->is_free_needed = 1;
 	}
 	else
 		dollar->str_dollar_part = getenv(var_name);
@@ -99,5 +101,7 @@ char	*convert_str_from_dollar(t_fill *fill, t_env *env)
 	while (fill->tmp_str[dollar.end] != '\0')
 		converted_str[i++] = fill->tmp_str[dollar.end++];
 	converted_str[i] = '\0';
+	if (dollar.is_free_needed == 1)
+		free(dollar.str_dollar_part);
 	return (converted_str);
 }

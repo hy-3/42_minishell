@@ -58,27 +58,26 @@ void	config_execargs(t_list *list, t_cmd *cmd, t_env *env)
 
 void	pipex(t_list *list, t_env *env)
 {
-	t_cmd	*cmd;
+	t_cmd	cmd;
 	int		i;
 
-	cmd = (t_cmd *) malloc(sizeof(t_cmd));
 	i = 0;
 	while (list != NULL)
 	{
 		if (pipe(env->p[i]) < 0)
 			cust_perror("Error(pipex)", 1);;
-		config_execargs(list, cmd, env);
-		if (cmd->is_error == 1)
+		config_execargs(list, &cmd, env);
+		if (cmd.is_error == 1)
 			return ;
-		if (cmd->num_of_args != 0 && cmd->is_error == 0)
-			exec_cmd(cmd, env, i);
+		if (cmd.num_of_args != 0 && cmd.is_error == 0)
+			exec_cmd(&cmd, env, i);
 		list = list->next;
 		i++;
 	}
-	if (cmd->pid != 0)
+	if (cmd.pid != 0)
 	{
 		env->num_of_child--;
-		if (waitpid(cmd->pid, &(env->status_code), 0) == -1)
+		if (waitpid(cmd.pid, &(env->status_code), 0) == -1)
 			cust_perror("ERROR(last_cmd: waitpid)", 1);
 		env->status_code = wexitstatus(env->status_code);
 	}
