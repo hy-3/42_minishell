@@ -45,16 +45,10 @@ x [Hiro] $? should expand to the exit status of the most recently executed foreg
 - signal
 - fix:
     export HOME=aaa
-    implement exit builtin
 - add history
 - check if << updates history.
-
-# Things to check
-- TODO
-- should I change from printf to write? when error happens, should I output to stderr(2)?
 - check: possible error, status code, memory leak
-
-# Things to be careful with quote
+- check quote:
 $ echo "$USER"
 hiyamamo
 $ echo '$USER'

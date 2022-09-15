@@ -117,7 +117,7 @@ void	exec_external_cmd(t_cmd *cmd, t_env *env, int i);
 void	exec_cd(t_cmd *cmd, t_env *env, int i);
 void	exec_echo(t_cmd *cmd, t_env *env, int i);
 void	exec_env(t_cmd *cmd, t_env *env, int i);
-void	exec_exit(t_cmd *cmd, t_env *env);
+void	exec_exit(t_cmd *cmd, t_env *env, int i);
 void	exec_export(t_cmd *cmd, t_env *env, int i);
 void	exec_pwd(t_cmd *cmd, t_env *env, int i);
 void	exec_unset(t_cmd *cmd, t_env *env, int i);
