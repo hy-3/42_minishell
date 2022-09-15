@@ -43,8 +43,6 @@ x [Hiro] $? should expand to the exit status of the most recently executed foreg
 
 # TODO
 - signal
-- fix:
-    export HOME=aaa
 - add history
 - check if << updates history.
 - check: possible error, status code, memory leak

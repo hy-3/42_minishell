@@ -95,8 +95,6 @@ char	*convert_str_from_dollar(t_fill *fill, t_env *env);
 // src/env
 //	- env_upd.c
 char	**copy_env(char **old_envp);
-char	**upd_to_new_env(t_env *env, t_cmd *cmd);
-char	**create_new_env_with_str(char **old_envp, char *str, t_env *env);
 //	- env_util.c
 char	*get_value_of_pathenv(char **envp);
 int		calc_envp_size(char **envp);
