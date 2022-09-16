@@ -22,6 +22,7 @@ char	**create_newenv_unset(char **old_envp, char *str)
 		new_envp[l++] = ft_strdup(old_envp[k]);
 		free(old_envp[k++]);
 	}
+	free(old_envp);
 	new_envp[l] = NULL;
 	return (new_envp);
 }

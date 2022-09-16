@@ -45,7 +45,6 @@ x [Hiro] $? should expand to the exit status of the most recently executed foreg
 - signal
 - add history
 - check if << updates history.
-- check: possible error, status code, memory leak
 - check quote:
 $ echo "$USER"
 hiyamamo

@@ -47,5 +47,6 @@ char	*is_cmd_exist_and_executable(char *path_env, char *cmd)
 			return (res);
 		free(cmdath);
 	}
+	free(each_path);
 	return (NULL);
 }

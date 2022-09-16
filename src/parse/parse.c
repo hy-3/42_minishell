@@ -19,9 +19,9 @@ void	handle_str(char *original_str, t_list *list, t_env *env, t_parse *parse)
 			fill_str_allows(original_str, &fill, parse, env);
 		else
 			fill_str(original_str, &fill, parse, env);
+		free(fill.tmp_str);
 		if (parse->first_node == NULL)
 			return ;
-		free(fill.tmp_str);
 		fill.count++;
 	}
 	parse->i++;

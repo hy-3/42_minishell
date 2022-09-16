@@ -49,6 +49,7 @@ char	**create_newenv_upd(char **old_envp, char *str)
 				new_envp[k++] = ft_strdup(old_envp[i]);
 			free(old_envp[i++]);
 		}
+		free(old_envp);
 		new_envp[k] = NULL;
 		return (new_envp);
 	}
@@ -71,6 +72,7 @@ char	**create_newenv_add(char **old_envp, char *str)
 		new_envp[k++] = ft_strdup(old_envp[i]);
 		free(old_envp[i++]);
 	}
+	free(old_envp);
 	new_envp[k++] = ft_strdup(str);
 	new_envp[k] = NULL;
 	return (new_envp);
@@ -94,7 +96,7 @@ char	**handle_export(char **old_envp, char *str, t_env *env)
 	return (old_envp);
 }
 
-void	cmd_export(t_cmd *cmd, t_env *env, int fd)
+void	print_export(t_cmd *cmd, t_env *env, int fd)
 {
 	int		k;
 	char	*new_str;
@@ -115,7 +117,7 @@ void	exec_export(t_cmd *cmd, t_env *env, int i)
 	int	k;
 
 	if (cmd->num_of_args == 1)
-		cmd_export(cmd, env, get_output_fd(cmd, env, i));
+		print_export(cmd, env, get_output_fd(cmd, env, i));
 	else
 	{
 		k = 1;
