@@ -30,6 +30,8 @@ void	exec_cmd(t_cmd *cmd, t_env *env, int i)
 		exec_unset(cmd, env, i);
 	else if (ft_strncmp(cmd->exec_args[0], "env", 4) == 0)
 		exec_env(cmd, env, i);
+	else if (ft_strncmp(cmd->exec_args[0], "history", 8) == 0)
+		exec_history(cmd, env, i);
 	else
 		exec_external_cmd(cmd, env, i);
 }

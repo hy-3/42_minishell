@@ -120,6 +120,11 @@ void	exec_export(t_cmd *cmd, t_env *env, int i);
 void	exec_pwd(t_cmd *cmd, t_env *env, int i);
 void	exec_unset(t_cmd *cmd, t_env *env, int i);
 
+//	src/cmd/history.c
+//	- history.c
+void	save_history(char *str);
+void	exec_history(t_cmd *cmd, t_env *env, int i);
+
 // redirection
 //	- check_arrows.c
 t_list	*check_arrows(t_list *list, t_cmd *cmd, t_env *env);

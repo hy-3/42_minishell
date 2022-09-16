@@ -6,7 +6,6 @@
 x [Hiro] Show a prompt when waiting for a new command.
 
 x [Edu] Have a working History.
-- Merge & check
 
 x [Hiro] Search and launch the right executable (based on the PATH variable or by using relative or absolute path)
 
@@ -41,11 +40,7 @@ x [Hiro] $? should expand to the exit status of the most recently executed foreg
       [Hiro] ctrl-D exit the shell.
       [Hiro] ctrl-\ do nothing.
 
-# TODO
-- signal
-- add history
-- check if << updates history.
-- check quote:
+# quotes
 $ echo "$USER"
 hiyamamo
 $ echo '$USER'
@@ -63,3 +58,6 @@ $ echo "$HOME"s
 $ echo "   $HOME "s 
    /Users/hiyamamo s
 -> DONE
+
+# TODO
+- signal

@@ -56,7 +56,7 @@ int	main(int argc, char *argv[], char *envp[])
 			printf("exit\n");
 			exit(1);
 		}
-		//TODO: add history
+		save_history(original_str);
 		list = parse(original_str, &env);
 		free(original_str);
 		if (list == NULL)
