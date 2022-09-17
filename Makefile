@@ -1,9 +1,11 @@
 NAME = minishell
 CC = gcc
 FLAG_WARN = -Wall -Wextra -Werror #-fsanitize=address -g3
-FLAG_LIB = -lreadline
+LDFLAGS = -L ~/brew/opt/readline/lib/
+CPPFLAGS = -I ~/brew/opt/readline/include/
+FLAG_LIB = $(LDFLAGS) $(CPPFLAGS) -lreadline
 LIBFT_PATH = lib/libft/
-LIBFT = lib/libft/libft.a
+LIBFT = $(LIBFT_PATH)/libft.a
 SRC = src/main.c \
 	  src/parse/parse.c \
 	  src/parse/check.c \
@@ -19,12 +21,13 @@ SRC = src/main.c \
 	  src/cmd/builtin/export.c \
 	  src/cmd/builtin/pwd.c \
 	  src/cmd/builtin/unset.c \
-	  src/cmd/history/history.c \
+	  src/cmd/builtin/history.c \
 	  src/env/env_upd.c \
 	  src/env/env_util.c \
 	  src/redirection/check_arrows.c \
 	  src/redirection/builtin_fd.c \
 	  src/redirection/external_cmd_fd.c \
+	  src/signal/signal.c \
 	  src/util/list.c \
 	  src/util/split_to_str.c \
 	  src/util/stderr.c \

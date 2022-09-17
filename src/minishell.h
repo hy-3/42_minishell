@@ -6,12 +6,12 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <fcntl.h>
-# include <readline/readline.h>
-# include <readline/history.h>
 # include "../lib/libft/libft.h"
 # include <sys/uio.h>
 # include <stddef.h>
 # include <termios.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 
 # define BUFFER_SIZE 10 //TODO: check (for gnl)
 
@@ -92,6 +92,10 @@ void	fill_str_allows(char *original_str, t_fill *fill, t_parse *parse, t_env *en
 int		is_dollar_exist(char *tmp_str);
 char	*convert_str_from_dollar(t_fill *fill, t_env *env);
 
+// src/signal
+//	- signal.c
+void	sig_handler(int sig);
+
 // src/env
 //	- env_upd.c
 char	**copy_env(char **old_envp);
@@ -119,11 +123,8 @@ void	exec_exit(t_cmd *cmd, t_env *env, int i);
 void	exec_export(t_cmd *cmd, t_env *env, int i);
 void	exec_pwd(t_cmd *cmd, t_env *env, int i);
 void	exec_unset(t_cmd *cmd, t_env *env, int i);
-
-//	src/cmd/history.c
-//	- history.c
-void	save_history(char *str);
 void	exec_history(t_cmd *cmd, t_env *env, int i);
+void	save_history(char *str);
 
 // redirection
 //	- check_arrows.c
