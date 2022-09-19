@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 17:04:35 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/09/19 17:07:27 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/09/19 18:09:28 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	check_quote_condition(t_parse *parse, char c);
 int		is_include_cmd(char *original_str, t_fill *fill);
 //	- fill_str.c
 void	fill_str(char *original_str, t_fill *fill, t_parse *parse, t_env *env);
-void	fill_str_allows(char *original_str, t_fill *fill, t_parse *parse, t_env *env);
+void	fill_al(char *original_str, t_fill *fill, t_parse *parse, t_env *env);
 //	- dollar.c
 int		is_dollar_exist(char *tmp_str);
 char	*convert_str_from_dollar(t_fill *fill, t_env *env);
@@ -113,6 +113,8 @@ void	change_terminal_setting(void);
 // src/env
 //	- env_upd.c
 char	**copy_env(char **old_envp);
+char	**create_newenv_upd(char **old_envp, char *str, char *pos_equal);
+char	**create_newenv_add(char **old_envp, char *str);
 //	- env_util.c
 char	*get_value_of_pathenv(char **envp);
 int		calc_envp_size(char **envp);
@@ -143,6 +145,11 @@ void	save_history(char *str);
 // redirection
 //	- check_arrows.c
 t_list	*check_arrows(t_list *list, t_cmd *cmd, t_env *env);
+//	- check_arrows_util.c
+void	handle_err1(char *str, t_env *env, t_cmd *cmd, int status_code);
+void	handle_err2(char *str, t_env *env, t_cmd *cmd, int status_code);
+int		is_special_char(char first_char);
+t_list	*arrow_special_case(t_list *list, t_cmd *cmd, t_env *env);
 //	- bultin_fd.c
 int		get_output_fd(t_cmd *cmd, t_env *env, int i);
 //	- external_cmd_fd.c
@@ -154,10 +161,11 @@ int		count_next_node(t_list *list);
 t_list	*create_next_node(t_list *list, int count);
 t_list	*create_extra_node(t_list *list);
 int		is_nullstr_in_list(t_list *list, t_env *env);
-//	- split_to_str.c
+//	- string.c
 char	**split_to_str(char const *s, char c);
 int		count_num_of_str(char const *s, char c);
 void	cust_free(char **res);
+int		is_specialchar(char c);
 //	- stderr.c
 void	cust_perror(char *str, int status);
 void	cust_write(char *str, int status);

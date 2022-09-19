@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_str.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hiyamamo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 17:05:00 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/09/19 17:05:01 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/09/19 17:49:23 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	create_arrow_str(char *original_str, t_fill *fill, int i)
 	fill->tmp_str[k] = '\0';
 }
 
-void	fill_str_allows(char *original_str, t_fill *fill, t_parse *parse, t_env *env)
+void	fill_al(char *original_str, t_fill *fill, t_parse *parse, t_env *env)
 {
 	int	i;
 	int	start;
@@ -43,7 +43,7 @@ void	fill_str_allows(char *original_str, t_fill *fill, t_parse *parse, t_env *en
 	fill->list->str = ft_strdup(fill->tmp_str);
 }
 
-int	fill_till_quote_closed(char *original_str, t_fill *fill, t_parse *parse, int k)
+int	fill_till_quote(char *original_str, t_fill *fill, t_parse *parse, int k)
 {
 	char	tmp_quote;
 
@@ -70,6 +70,17 @@ int	fill_till_quote_closed(char *original_str, t_fill *fill, t_parse *parse, int
 	return (k);
 }
 
+void	lastnode_fill_str(t_fill *fill, t_env *env)
+{
+	if (fill->count != 0)
+		fill->list = create_extra_node(fill->list);
+	if (is_dollar_exist(fill->tmp_str) == 1 \
+			&& (fill->current_quote == 0 || fill->current_quote == 34))
+		fill->list->str = convert_str_from_dollar(fill, env);
+	else
+		fill->list->str = ft_strdup(fill->tmp_str);
+}
+
 void	fill_str(char *original_str, t_fill *fill, t_parse *parse, t_env *env)
 {
 	int	k;
@@ -78,13 +89,13 @@ void	fill_str(char *original_str, t_fill *fill, t_parse *parse, t_env *env)
 	if (fill->tmp_str == NULL)
 		cust_write("malloc failed\n", 1);
 	k = 0;
-	while (original_str[fill->start] != ' ' && original_str[fill->start] != '\0' && original_str[fill->start] != '>' && original_str[fill->start] != '<')
+	while (is_specialchar(original_str[fill->start]) == 0)
 	{
 		if (original_str[fill->start] == '|')
 			break ;
 		if (original_str[fill->start] == 34 || original_str[fill->start] == 39)
 		{
-			k = fill_till_quote_closed(original_str, fill, parse, k);
+			k = fill_till_quote(original_str, fill, parse, k);
 			if (k == -1)
 				return ;
 			continue ;
@@ -92,10 +103,5 @@ void	fill_str(char *original_str, t_fill *fill, t_parse *parse, t_env *env)
 		fill->tmp_str[k++] = original_str[fill->start++];
 	}
 	fill->tmp_str[k] = '\0';
-	if (fill->count != 0)
-		fill->list = create_extra_node(fill->list);
-	if (is_dollar_exist(fill->tmp_str) == 1 && (fill->current_quote == 0 || fill->current_quote == 34))
-		fill->list->str = convert_str_from_dollar(fill, env);
-	else
-		fill->list->str = ft_strdup(fill->tmp_str);
+	lastnode_fill_str(fill, env);
 }

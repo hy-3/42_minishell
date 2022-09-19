@@ -62,3 +62,8 @@ $ echo "   $HOME "s
 # TODO
 - signal
 - add signal to heredoc
+- fix
+> ls
+Makefile        README.md       lib             minishell       src             todo.md         wc
+> ls | wc
+command not found

@@ -25,11 +25,12 @@ SRC = src/main.c \
 	  src/env/env_upd.c \
 	  src/env/env_util.c \
 	  src/redirection/check_arrows.c \
+	  src/redirection/check_arrows_util.c \
 	  src/redirection/builtin_fd.c \
 	  src/redirection/external_cmd_fd.c \
 	  src/signal/signal.c \
 	  src/util/list.c \
-	  src/util/split_to_str.c \
+	  src/util/string.c \
 	  src/util/stderr.c \
 	  src/util/free.c \
 	  lib/get_next_line/get_next_line.c \

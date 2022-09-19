@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hiyamamo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 17:05:05 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/09/19 17:05:07 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/09/19 17:53:13 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ void	handle_str(char *original_str, t_list *list, t_env *env, t_parse *parse)
 	while ((fill.i - fill.start) > 0)
 	{
 		if (is_include_cmd(original_str, &fill) == 0)
-			break;
+			break ;
 		if (original_str[fill.start] == '>' || original_str[fill.start] == '<')
-			fill_str_allows(original_str, &fill, parse, env);
+			fill_al(original_str, &fill, parse, env);
 		else
 			fill_str(original_str, &fill, parse, env);
 		free(fill.tmp_str);

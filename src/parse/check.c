@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hiyamamo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 17:04:46 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/09/19 17:04:48 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/09/19 17:32:51 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ void	check_quote_condition(t_parse *parse, char c)
 		parse->num_of_single_quote++;
 	if (c == 34)
 		parse->num_of_double_quote++;
-	if (parse->num_of_single_quote % 2 == 0 && parse->num_of_double_quote % 2 == 0)
+	if (parse->num_of_single_quote % 2 == 0 \
+			&& parse->num_of_double_quote % 2 == 0)
 		parse->is_quote_closed = 1;
 	else
 		parse->is_quote_closed = 0;

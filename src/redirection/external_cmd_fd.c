@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   external_cmd_fd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hiyamamo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 17:05:37 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/09/19 17:05:38 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/09/19 18:11:29 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	first_cmd_fd(t_cmd *cmd, t_env *env, int i)
 		if (dup2(cmd->output_fd, 1) == -1)
 			cust_perror("Error(first_cmd: dup2 output_fd)", 1);
 		if (close(cmd->output_fd) == -1) //TODO: check if it's necessary
-			cust_perror("TEMP",1);
+			cust_perror("TEMP", 1);
 	}
 	else if (env->num_of_next_node > 1)
 	{

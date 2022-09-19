@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dollar.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hiyamamo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 17:04:54 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/09/19 17:04:55 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/09/19 17:34:37 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	find_question_position(char *str)
 	while (str[i] != '\0')
 	{
 		if (str[i] == '?')
-			break;
+			break ;
 		i++;
 	}
 	return (i);
@@ -31,7 +31,7 @@ int	is_dollar_exist(char *tmp_str)
 	int	i;
 
 	i = 0;
-	while(tmp_str[i] != '\0')
+	while (tmp_str[i] != '\0')
 	{
 		if (tmp_str[i] == '$')
 			return (1);
@@ -43,7 +43,7 @@ int	is_dollar_exist(char *tmp_str)
 void	upd_dollar_start_and_end(t_fill *fill, t_dollar *dollar)
 {
 	int	i;
-	
+
 	i = 0;
 	while (fill->tmp_str[i] != '$')
 		i++;
@@ -68,7 +68,8 @@ void	convert_dollar_part(t_fill *fill, t_env *env, t_dollar *dollar)
 
 	dollar->is_free_needed = 0;
 	upd_dollar_start_and_end(fill, dollar);
-	var_name = (char *) malloc((dollar->end - dollar->start + 1) * sizeof(char));
+	var_name = (char *) malloc((dollar->end - dollar->start + 1) \
+					* sizeof(char));
 	i = 0;
 	dollar->start++;
 	while (dollar->start < dollar->end)

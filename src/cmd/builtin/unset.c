@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hiyamamo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 17:03:04 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/09/19 17:03:06 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/09/19 17:33:29 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ char	**handle_unset(t_env *env, t_cmd *cmd)
 	while (cmd->exec_args[i] != NULL)
 	{
 		if (i == 1)
-			new_envp = create_newenv_unset(env->current_envp, cmd->exec_args[i]);
+			new_envp = \
+				create_newenv_unset(env->current_envp, cmd->exec_args[i]);
 		else
 			new_envp = create_newenv_unset(new_envp, cmd->exec_args[i]);
 		i++;

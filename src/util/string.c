@@ -1,16 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   split_to_str.c                                     :+:      :+:    :+:   */
+/*   string.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hiyamamo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 17:06:01 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/09/19 17:06:02 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/09/19 17:50:47 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+int	is_specialchar(char c)
+{
+	if (c == ' ')
+		return (1);
+	if (c == '\0')
+		return (1);
+	if (c == '>')
+		return (1);
+	if (c == '<')
+		return (1);
+	return (0);
+}
 
 int	count_num_of_str(char const *s, char c)
 {

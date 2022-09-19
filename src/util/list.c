@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   list.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hiyamamo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 17:05:54 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/09/19 17:05:56 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/09/19 17:53:37 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-t_list *create_next_node(t_list *list, int count)
+t_list	*create_next_node(t_list *list, int count)
 {
 	if (count == 0)
 	{
@@ -36,7 +36,7 @@ t_list *create_next_node(t_list *list, int count)
 	return (list);
 }
 
-t_list *create_extra_node(t_list *list)
+t_list	*create_extra_node(t_list *list)
 {
 	list->extra = (t_list *) malloc(sizeof(t_list));
 	if (list->extra == NULL)
