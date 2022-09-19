@@ -32,7 +32,6 @@ SRC = src/main.c \
 	  src/util/list.c \
 	  src/util/string.c \
 	  src/util/stderr.c \
-	  src/util/free.c \
 	  lib/get_next_line/get_next_line.c \
 	  lib/get_next_line/get_next_line_utils.c
 

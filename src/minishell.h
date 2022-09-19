@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 17:04:35 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/09/19 18:09:28 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/09/19 18:17:30 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,7 @@ int		count_next_node(t_list *list);
 t_list	*create_next_node(t_list *list, int count);
 t_list	*create_extra_node(t_list *list);
 int		is_nullstr_in_list(t_list *list, t_env *env);
+void	free_list(t_list *list);
 //	- string.c
 char	**split_to_str(char const *s, char c);
 int		count_num_of_str(char const *s, char c);
@@ -169,8 +170,6 @@ int		is_specialchar(char c);
 //	- stderr.c
 void	cust_perror(char *str, int status);
 void	cust_write(char *str, int status);
-//	- free.c
-void	free_list(t_list *list);
 
 // lib/get_next_line
 //	- get_next_line.c

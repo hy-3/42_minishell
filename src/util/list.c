@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 17:05:54 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/09/19 17:53:37 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/09/19 18:17:03 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,4 +80,25 @@ int	is_nullstr_in_list(t_list *list, t_env *env)
 		list = list->next;
 	}
 	return (0);
+}
+
+void	free_list(t_list *list)
+{
+	t_list	*ex;
+
+	while (list != NULL)
+	{
+		if (list->str != NULL)
+			free(list->str);
+		ex = list->extra;
+		while (ex != NULL)
+		{
+			if (ex->str != NULL)
+				free(ex->str);
+			free(ex);
+			ex = ex->extra;
+		}
+		free(list);
+		list = list->next;
+	}
 }
