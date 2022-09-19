@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipex.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/19 17:03:27 by hiyamamo          #+#    #+#             */
+/*   Updated: 2022/09/19 17:09:37 by hiyamamo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 int	wexitstatus(int status)
@@ -50,7 +62,7 @@ void	config_execargs(t_list *list, t_cmd *cmd, t_env *env)
 	{
 		list = check_arrows(list, cmd, env);
 		if (list == NULL)
-			break;
+			break ;
 		cmd->exec_args[k++] = list->str;
 		list = list->extra;
 	}
@@ -67,7 +79,7 @@ void	pipex(t_list *list, t_env *env)
 	while (list != NULL)
 	{
 		if (pipe(env->p[i]) < 0)
-			cust_perror("Error(pipex)", 1);;
+			cust_perror("Error(pipex)", 1);
 		config_execargs(list, &cmd, env);
 		if (cmd.is_error == 1)
 			return ;

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   external_cmd.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/19 17:03:20 by hiyamamo          #+#    #+#             */
+/*   Updated: 2022/09/19 17:08:54 by hiyamamo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 void	child(t_cmd *cmd, t_env *env)
@@ -28,6 +40,6 @@ void	exec_external_cmd(t_cmd *cmd, t_env *env, int i)
 	}
 	if (i > 0)
 		if (!((close(env->p[i - 1][0]) == 0) && (close(env->p[i - 1][1]) == 0)))
-			cust_perror("Error(close: env->p[i - 1][0] or env->p[i - 1][1])", 1);
+			cust_perror("Error(close: p[i - 1][0] or p[i - 1][1])", 1);
 	env->num_of_child += 1;
 }

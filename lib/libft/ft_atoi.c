@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 17:34:44 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/04/15 20:09:32 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/09/19 17:01:44 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,5 @@ int	ft_atoi(const char *str)
 			return (-1);
 		res = res * 10 + str[i++] - '0';
 	}
-	return (int)(res * sign);
+	return ((int)(res * sign));
 }

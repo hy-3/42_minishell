@@ -1,19 +1,31 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   export.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/19 17:02:43 by hiyamamo          #+#    #+#             */
+/*   Updated: 2022/09/19 17:17:49 by hiyamamo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../minishell.h"
 
-void	upd_env_value(char **new_envp, char *str_old_envp, char *pos_equal, int k)
+void	upd_env_value(char **new_envp, char *str, char *pos_equal, int k)
 {
 	int		l;
 	int		index_equal_pos;
 	char	*tmp_str;
 
 	l = 0;
-	index_equal_pos = count_till_equal(str_old_envp);
+	index_equal_pos = count_till_equal(str);
 	tmp_str = (char *) malloc((index_equal_pos + 1) * sizeof(char));
 	if (tmp_str == NULL)
 		cust_write("malloc failed\n", 1);
 	while (l < index_equal_pos)
 	{
-		tmp_str[l] = str_old_envp[l];
+		tmp_str[l] = str[l];
 		l++;
 	}
 	tmp_str[l] = '\0';
@@ -33,7 +45,8 @@ char	**create_newenv_upd(char **old_envp, char *str)
 	pos_equal = ft_strchr(str, '=');
 	if (pos_equal != NULL)
 	{
-		new_envp = (char **) malloc((calc_envp_size(old_envp)) * sizeof(char *));
+		new_envp = (char **) malloc((calc_envp_size(old_envp)) \
+						* sizeof(char *));
 		if (new_envp == NULL)
 			cust_write("malloc failed\n", 1);
 		while (old_envp[i] != NULL)
@@ -62,7 +75,8 @@ char	**create_newenv_add(char **old_envp, char *str)
 	int		i;
 	int		k;
 
-	new_envp = (char **) malloc((calc_envp_size(old_envp) + 1) * sizeof(char *));
+	new_envp = (char **) malloc((calc_envp_size(old_envp) + 1) \
+					* sizeof(char *));
 	if (new_envp == NULL)
 		cust_write("malloc failed\n", 1);
 	i = 0;
@@ -122,6 +136,9 @@ void	exec_export(t_cmd *cmd, t_env *env, int i)
 	{
 		k = 1;
 		while (cmd->exec_args[k] != NULL)
-			env->current_envp = handle_export(env->current_envp, cmd->exec_args[k++], env);
+		{
+			env->current_envp = \
+				handle_export(env->current_envp, cmd->exec_args[k++], env);
+		}
 	}
 }

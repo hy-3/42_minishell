@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/19 17:04:35 by hiyamamo          #+#    #+#             */
+/*   Updated: 2022/09/19 17:07:27 by hiyamamo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -29,13 +41,13 @@ typedef struct s_env
 	char	*pathenv;
 	int		num_of_next_node;
 	int		num_of_child;
-	int		p[100][2]; //TODO: p[ARG_MAX][2];
+	int		p[ARG_MAX][2];
 	int		status_code;
 }	t_env;
 
 typedef struct s_cmd
 {
-	char	*exec_args[100]; //TODO: *exec_args[ARG_MAX];
+	char	*exec_args[ARG_MAX];
 	int		pid;
 	int		input_fd;
 	int		output_fd;
