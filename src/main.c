@@ -11,7 +11,6 @@ int	main(int argc, char *argv[], char *envp[])
 {
 	t_env	env;
 	t_list	*list;
-	char	*prompt;
 	char	*original_str;
 
 	if (argc != 1)
@@ -20,16 +19,16 @@ int	main(int argc, char *argv[], char *envp[])
 	env.first_envp = copy_env(envp);
 	env.current_envp = copy_env(envp);
 	env.status_code = 0;
-	prompt = "minishell> ";
+	change_terminal_setting();
 	signal(SIGINT, sig_handler);
 	signal(SIGQUIT, sig_handler);
 	while (1)
 	{
-		original_str = readline(prompt);
-		if (!original_str)
+		original_str = readline("minishell> ");
+		if (original_str == 0)
 		{
 			printf("exit\n");
-			exit(1);
+			exit(0);
 		}
 		save_history(original_str);
 		list = parse(original_str, &env);

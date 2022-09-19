@@ -95,6 +95,8 @@ char	*convert_str_from_dollar(t_fill *fill, t_env *env);
 // src/signal
 //	- signal.c
 void	sig_handler(int sig);
+void	rl_replace_line(char *s, int a);
+void	change_terminal_setting(void);
 
 // src/env
 //	- env_upd.c

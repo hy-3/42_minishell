@@ -61,4 +61,4 @@ $ echo "   $HOME "s
 
 # TODO
 - signal
-- add ctlD to heredoc
+- add signal to heredoc

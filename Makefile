@@ -3,7 +3,7 @@ CC = gcc
 FLAG_WARN = -Wall -Wextra -Werror #-fsanitize=address -g3
 LDFLAGS = -L ~/brew/opt/readline/lib/
 CPPFLAGS = -I ~/brew/opt/readline/include/
-FLAG_LIB = $(LDFLAGS) $(CPPFLAGS) -lreadline
+FLAG_LIB = -lreadline $(LDFLAGS) $(CPPFLAGS)
 LIBFT_PATH = lib/libft/
 LIBFT = $(LIBFT_PATH)/libft.a
 SRC = src/main.c \
