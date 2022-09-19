@@ -67,3 +67,6 @@ $ echo "   $HOME "s
 Makefile        README.md       lib             minishell       src             todo.md         wc
 > ls | wc
 command not found
+- fix: no new line when ctlD
+minishell> 
+exit

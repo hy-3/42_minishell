@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 17:05:43 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/09/19 18:19:22 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/09/19 18:40:25 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	sig_handler(int sig)
 	if (sig == SIGINT) //TODO: set status code of 1
 	{
 		write(1, "\n", 1);
-		rl_on_new_line(); //if cat/wc input, this line is not needed.
+		rl_on_new_line(); //TODO: if cat/wc input, this line is not needed.
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
