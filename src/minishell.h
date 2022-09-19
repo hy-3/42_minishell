@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 17:04:35 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/09/19 18:32:08 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/09/19 19:14:00 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@
 
 # define BUFFER_SIZE 10 //TODO: check (for gnl)
 
+int	g_status_code;
+
 typedef struct s_list
 {
 	char			*str;
@@ -42,7 +44,6 @@ typedef struct s_env
 	int		num_of_next_node;
 	int		num_of_child;
 	int		p[ARG_MAX][2];
-	int		status_code;
 }	t_env;
 
 typedef struct s_cmd

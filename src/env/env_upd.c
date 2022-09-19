@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 17:03:43 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/09/19 17:32:07 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/09/19 18:55:48 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ char	**copy_env(char **old_envp)
 
 	i = 0;
 	new_envp = (char **) malloc(calc_envp_size(old_envp) * sizeof(char *));
+	if (new_envp == NULL)
+		cust_write("malloc failed\n", 1);
 	while (old_envp[i] != NULL)
 	{
 		new_envp[i] = ft_strdup(old_envp[i]);

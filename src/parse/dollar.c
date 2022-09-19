@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 17:04:54 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/09/19 17:34:37 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/09/19 19:11:53 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	convert_dollar_part(t_fill *fill, t_env *env, t_dollar *dollar)
 	var_name[i] = '\0';
 	if (var_name[0] == '?')
 	{
-		dollar->str_dollar_part = ft_itoa(env->status_code);
+		dollar->str_dollar_part = ft_itoa(g_status_code);
 		dollar->end = find_question_position(fill->tmp_str) + 1;
 		dollar->is_free_needed = 1;
 	}

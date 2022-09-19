@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 17:02:43 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/09/19 17:22:44 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/09/19 19:11:26 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	**handle_export(char **old_envp, char *str, t_env *env)
 	if (is_valid_envname(str) == 0)
 	{
 		printf("export: `%s': not a valid identifier\n", str);
-		env->status_code = 1;
+		g_status_code = 1;
 		return (old_envp);
 	}
 	if (is_exist_in_env(old_envp, str) == 0)

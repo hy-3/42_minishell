@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 17:03:04 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/09/19 17:33:29 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/09/19 18:55:34 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ char	**create_newenv_unset(char **old_envp, char *str)
 	int		l;
 
 	new_envp = (char **) malloc(calc_envp_size(old_envp) * sizeof(char *));
+	if (new_envp == NULL)
+		cust_write("malloc failed\n", 1);
 	k = 0;
 	l = 0;
 	while (old_envp[k] != NULL)

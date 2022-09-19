@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 17:05:54 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/09/19 18:17:03 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/09/19 19:12:41 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	is_nullstr_in_list(t_list *list, t_env *env)
 		if (list->str == NULL)
 		{
 			printf("parse error near `|'\n");
-			env->status_code = 258;
+			g_status_code = 258;
 			free_list(first_node);
 			return (1);
 		}

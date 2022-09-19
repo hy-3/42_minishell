@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hiyamamo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 17:02:16 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/09/19 17:02:18 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/09/19 19:11:18 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,6 @@ void	exec_env(t_cmd *cmd, t_env *env, int i)
 	else
 	{
 		printf("env: %s: No such file or directory\n", cmd->exec_args[1]);
-		env->status_code = 127;
+		g_status_code = 127;
 	}
 }

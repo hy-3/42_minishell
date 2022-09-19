@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hiyamamo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 17:04:05 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/09/19 17:04:07 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/09/19 19:13:06 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ int	main(int argc, char *argv[], char *envp[])
 	if (argc != 1)
 		return (0);
 	// atexit(leaks); //TODO: check memory leaks
+	g_status_code = 0;
 	env.first_envp = copy_env(envp);
 	env.current_envp = copy_env(envp);
-	env.status_code = 0;
 	change_terminal_setting();
 	signal(SIGINT, sig_handler);
 	signal(SIGQUIT, sig_handler);

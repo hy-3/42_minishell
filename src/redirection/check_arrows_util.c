@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 18:07:36 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/09/19 18:09:38 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/09/19 19:12:28 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 void	handle_err2(char *str, t_env *env, t_cmd *cmd, int status_code)
 {
 	printf("%s\n", str);
-	env->status_code = status_code;
+	g_status_code = status_code;
 	cmd->is_error = 2;
 }
 
 void	handle_err1(char *str, t_env *env, t_cmd *cmd, int status_code)
 {
 	printf("%s\n", str);
-	env->status_code = status_code;
+	g_status_code = status_code;
 	cmd->is_error = 1;
 }
 

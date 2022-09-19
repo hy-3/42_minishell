@@ -1,7 +1,8 @@
 [Hiro] Not interpret unclosed quotes or unspecified special characters like \ or ;.
 - when quote is not closed: change from error to giving back prompt
 
-[] Not use more than one global variable, think about it and be ready to explain why you do it.
+[Hiro] Not use more than one global variable, think about it and be ready to explain why you do it.
+- Used for status code of process to update status code when ctlC pressed.
 
 x [Hiro] Show a prompt when waiting for a new command.
 
@@ -60,7 +61,6 @@ $ echo "   $HOME "s
 -> DONE
 
 # TODO
-- signal
 - add signal to heredoc
 - fix
 > ls
@@ -70,3 +70,5 @@ command not found
 - fix: no new line when ctlD
 minishell> 
 exit
+- malloc handle, open/close
+- norminate

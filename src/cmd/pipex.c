@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 17:03:27 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/09/19 17:09:37 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/09/19 19:14:25 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,9 @@ void	pipex(t_list *list, t_env *env)
 	if (cmd.pid != 0)
 	{
 		env->num_of_child--;
-		if (waitpid(cmd.pid, &(env->status_code), 0) == -1)
+		if (waitpid(cmd.pid, &g_status_code, 0) == -1)
 			cust_perror("ERROR(last_cmd: waitpid)", 1);
-		env->status_code = wexitstatus(env->status_code);
+		g_status_code = wexitstatus(g_status_code);
 	}
 	cust_waitpid(env->num_of_child);
 }

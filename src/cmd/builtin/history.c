@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   history.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hiyamamo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 17:02:49 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/09/19 17:02:51 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/09/19 19:11:29 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,6 @@ void	exec_history(t_cmd *cmd, t_env *env, int i)
 	else
 	{
 		printf("history: too many arguments\n");
-		env->status_code = 1;
+		g_status_code = 1;
 	}
 }

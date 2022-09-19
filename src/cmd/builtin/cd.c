@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hiyamamo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 17:02:08 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/09/19 17:02:10 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/09/19 19:11:13 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	exec_cd(t_cmd *cmd, t_env *env, int i)
 			if (chdir(var) == -1)
 			{
 				printf("%s: No such file or directory\n", cmd->exec_args[1]);
-				env->status_code = 1;
+				g_status_code = 1;
 			}
 		}
 		else
@@ -32,7 +32,7 @@ void	exec_cd(t_cmd *cmd, t_env *env, int i)
 			if (chdir(cmd->exec_args[1]) == -1)
 			{
 				printf("%s: No such file or directory\n", cmd->exec_args[1]);
-				env->status_code = 1;
+				g_status_code = 1;
 			}
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 17:02:35 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/09/19 17:12:05 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/09/19 19:11:22 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	handle_exit(t_cmd *cmd, t_env *env)
 	else
 	{
 		printf("exit\nexit: too many arguments\n");
-		env->status_code = 1;
+		g_status_code = 1;
 	}
 }
 

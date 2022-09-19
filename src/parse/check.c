@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 17:04:46 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/09/19 17:32:51 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/09/19 19:11:35 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	check_pipe_condition(char *original_str, t_parse *parse, t_env *env)
 	{
 		printf("parse error near `|'\n");
 		free(parse->first_node);
-		env->status_code = 258;
+		g_status_code = 258;
 		parse->first_node = NULL;
 		parse->pipe_condition = 2;
 		return ;
@@ -67,7 +67,7 @@ void	check_pipe_condition(char *original_str, t_parse *parse, t_env *env)
 	{
 		printf("syntax error near unexpected token `|' (pipe continued)\n");
 		free(parse->first_node);
-		env->status_code = 258;
+		g_status_code = 258;
 		parse->first_node = NULL;
 		parse->pipe_condition = 2;
 	}
