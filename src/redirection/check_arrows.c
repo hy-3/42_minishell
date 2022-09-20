@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 17:05:28 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/09/19 18:10:57 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/09/20 14:43:44 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ t_list	*double_left_arrow(t_list *list, t_cmd *cmd, t_env *env)
 			while (1)
 			{
 				str = get_next_line(0);
-				if (ft_strncmp(str, limit_str, ft_strlen(limit_str)) == 0)
+				if (str == NULL || ft_strncmp(str, limit_str, ft_strlen(limit_str)) == 0)
 				{
 					free(str);
 					break ;

@@ -61,7 +61,7 @@ $ echo "   $HOME "s
 -> DONE
 
 # TODO
-- add signal to heredoc
+- add signal to heredoc & cat/wc
 - fix
 > ls
 Makefile        README.md       lib             minishell       src             todo.md         wc
