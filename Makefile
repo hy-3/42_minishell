@@ -44,7 +44,8 @@ $(NAME): $(OBJ)
 	$(CC) $(OBJ) $(LIBFT) $(FLAG_LIB) $(FLAG_WARN) -o $(NAME)
 
 %.o: %.c
-	$(CC) $(FLAGS) -c $< -o $@
+	$(CC) $(FLAGS) -c $< -o $@ 
+#TODO: $(FLAG_WARN)
 
 clean:
 	make clean -C $(LIBFT_PATH)

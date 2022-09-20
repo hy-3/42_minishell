@@ -61,7 +61,10 @@ $ echo "   $HOME "s
 -> DONE
 
 # TODO
-- add signal to heredoc & cat/wc
+- add signal to cat/wc
+    -> set negative g_status_code before execve & set 0 to g_status_code afterwards.
+    -> in signal, do nothing.
+- add signal to heredoc
 - fix
 > ls
 Makefile        README.md       lib             minishell       src             todo.md         wc
@@ -70,5 +73,11 @@ command not found
 - fix: no new line when ctlD
 minishell> 
 exit
+- close pipes (lsof -c minishell)
+- history; ls
+-> change error message. check memory leak etc
+- env
+SHLVL=5
 - malloc handle, open/close
+- change env logic (only not update when there is no value)
 - norminate

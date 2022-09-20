@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 17:04:05 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/09/20 14:40:19 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/09/20 20:24:25 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	main(int argc, char *argv[], char *envp[])
 	{
 		g_status_code = 0;
 		original_str = readline("minishell> ");
-		if (original_str == 0)
+		if (!original_str)
 		{
 			printf("exit\n");
 			exit(0);
