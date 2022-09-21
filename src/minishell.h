@@ -24,10 +24,11 @@
 # include <termios.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <signal.h>
 
 # define BUFFER_SIZE 10 //TODO: check (for gnl)
 
-int	g_status_code;
+int	g_condition;
 
 typedef struct s_list
 {
@@ -43,12 +44,13 @@ typedef struct s_env
 	char	*pathenv;
 	int		num_of_next_node;
 	int		num_of_child;
-	int		p[ARG_MAX][2];
+	int		status_code;
+	int		p[100][2];
 }	t_env;
 
 typedef struct s_cmd
 {
-	char	*exec_args[ARG_MAX];
+	char	*exec_args[100];
 	int		pid;
 	int		input_fd;
 	int		output_fd;
@@ -107,7 +109,7 @@ char	*convert_str_from_dollar(t_fill *fill, t_env *env);
 
 // src/signal
 //	- signal.c
-void	sig_handler(int sig);
+void	handle_signals(void);
 void	rl_replace_line(char *s, int a);
 void	change_terminal_setting(void);
 

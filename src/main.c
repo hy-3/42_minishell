@@ -21,9 +21,9 @@ void leaks()
 
 int	main(int argc, char *argv[], char *envp[])
 {
-	t_env	env;
-	t_list	*list;
-	char	*original_str;
+	t_env		env;
+	t_list		*list;
+	char		*original_str;
 
 	if (argc != 1)
 		return (0);
@@ -31,17 +31,24 @@ int	main(int argc, char *argv[], char *envp[])
 	env.first_envp = copy_env(envp);
 	env.current_envp = copy_env(envp);
 	change_terminal_setting();
-	signal(SIGINT, sig_handler);
-	signal(SIGQUIT, sig_handler);
+	handle_signals();
+	env.status_code = 0;
+	g_condition = 0;
 	while (1)
 	{
-		g_status_code = 0;
+		if (g_condition == -1)
+			env.status_code = 1;
+		if (g_condition == -2)
+			env.status_code = 130;
+		g_condition = 0;
 		original_str = readline("minishell> ");
 		if (!original_str)
 		{
 			printf("exit\n");
 			exit(0);
 		}
+		if (ft_strncmp(original_str, "", 2) == 0)
+			env.status_code = 0;
 		save_history(original_str);
 		list = parse(original_str, &env);
 		free(original_str);

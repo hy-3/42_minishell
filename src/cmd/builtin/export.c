@@ -20,7 +20,7 @@ char	**handle_export(char **old_envp, char *str, t_env *env)
 	if (is_valid_envname(str) == 0)
 	{
 		printf("export: `%s': not a valid identifier\n", str);
-		g_status_code = 1;
+		env->status_code = 1;
 		return (old_envp);
 	}
 	if (is_exist_in_env(old_envp, str) == 0)

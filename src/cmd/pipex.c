@@ -91,9 +91,9 @@ void	pipex(t_list *list, t_env *env)
 	if (cmd.pid != 0)
 	{
 		env->num_of_child--;
-		if (waitpid(cmd.pid, &g_status_code, 0) == -1)
+		if (waitpid(cmd.pid, &(env->status_code), 0) == -1)
 			cust_perror("ERROR(last_cmd: waitpid)", 1);
-		g_status_code = wexitstatus(g_status_code);
+		env->status_code = wexitstatus(env->status_code);
 	}
 	cust_waitpid(env->num_of_child);
 }

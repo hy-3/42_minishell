@@ -93,9 +93,16 @@ t_list	*double_left_arrow(t_list *list, t_cmd *cmd, t_env *env)
 			if (pipe(cmd->heredoc_p) < 0)
 				cust_perror("Error(pipe: heredoc_p)", 1);
 			limit_str = ft_strjoin(list->str, "\n");
+			g_condition = 1;
 			while (1)
 			{
-				str = get_next_line(0);
+				str = readline("> ");
+				if (g_condition == -1)
+				{
+					cmd->is_error = 1;
+					free(str);
+					break ;
+				}
 				if (str == NULL || ft_strncmp(str, limit_str, ft_strlen(limit_str)) == 0)
 				{
 					free(str);

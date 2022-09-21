@@ -12,18 +12,52 @@
 
 #include "../minishell.h"
 
-void	sig_handler(int sig)
+void	ctrlc_handler(int sig)
 {
-	if (sig == SIGQUIT)
-		rl_redisplay();
-	if (sig == SIGINT) //TODO: set status code of 1
+	extern int rl_done;
+
+	if (g_condition == 1)
 	{
+		rl_done = 1;
+		rl_replace_line("", 0);
+		rl_redisplay();
+		g_condition = -1;
+	}
+	else
+	{
+		if (g_condition == 2)
+			g_condition = -2;
+		else
+		{
+			g_condition = -1;
+			rl_on_new_line(); //TODO: when cat/wc, don't run this line & status_code 130
+		}
 		write(1, "\n", 1);
-		g_status_code = 1;
-		rl_on_new_line(); //TODO: if cat/wc input, this line is not needed.
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
+}
+
+void	ctrlslash_handler(int sig)
+{
+	rl_redisplay();
+}
+
+int readline_event(void){
+	return 0;
+}
+
+void	handle_signals(void)
+{
+	struct sigaction	ctrlc;
+	struct sigaction	ctrlslash;
+	extern int			(*rl_event_hook)(void);
+
+	rl_event_hook = readline_event;
+	ctrlc.sa_handler = ctrlc_handler;
+	ctrlslash.sa_handler = ctrlslash_handler;
+	sigaction(SIGINT, &ctrlc, NULL);
+	sigaction(SIGQUIT, &ctrlslash, NULL);
 }
 
 void	change_terminal_setting(void)

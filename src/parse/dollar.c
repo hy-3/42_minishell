@@ -77,7 +77,7 @@ void	convert_dollar_part(t_fill *fill, t_env *env, t_dollar *dollar)
 	var_name[i] = '\0';
 	if (var_name[0] == '?')
 	{
-		dollar->str_dollar_part = ft_itoa(g_status_code);
+		dollar->str_dollar_part = ft_itoa(env->status_code);
 		dollar->end = find_question_position(fill->tmp_str) + 1;
 		dollar->is_free_needed = 1;
 	}
@@ -98,6 +98,8 @@ char	*convert_str_from_dollar(t_fill *fill, t_env *env)
 	int			total_length;
 	char		*converted_str;
 
+	if (g_condition == -1)
+		env->status_code = 1;
 	convert_dollar_part(fill, env, &dollar);
 	total_length = dollar.tmp_start + dollar.size_dollar_part + \
 					(ft_strlen(fill->tmp_str) - dollar.end) + 1;
@@ -116,5 +118,6 @@ char	*convert_str_from_dollar(t_fill *fill, t_env *env)
 	converted_str[i] = '\0';
 	if (dollar.is_free_needed == 1)
 		free(dollar.str_dollar_part);
+	g_condition = 0;
 	return (converted_str);
 }

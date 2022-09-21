@@ -49,7 +49,7 @@ void	handle_exit(t_cmd *cmd, t_env *env)
 	else
 	{
 		printf("exit\nexit: too many arguments\n");
-		g_status_code = 1;
+		env->status_code = 1;
 	}
 }
 

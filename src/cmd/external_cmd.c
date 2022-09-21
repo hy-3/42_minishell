@@ -26,6 +26,7 @@ void	exec_external_cmd(t_cmd *cmd, t_env *env, int i)
 	cmd->pid = fork();
 	if (cmd->pid < 0)
 		cust_perror("Error(fork: cmd->pid)", 1);
+	g_condition = 2;
 	if (cmd->pid == 0)
 	{
 		organize_fd(cmd, env, i);

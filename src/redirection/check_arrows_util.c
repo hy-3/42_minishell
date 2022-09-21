@@ -15,14 +15,14 @@
 void	handle_err2(char *str, t_env *env, t_cmd *cmd, int status_code)
 {
 	printf("%s\n", str);
-	g_status_code = status_code;
+	env->status_code = status_code;
 	cmd->is_error = 2;
 }
 
 void	handle_err1(char *str, t_env *env, t_cmd *cmd, int status_code)
 {
 	printf("%s\n", str);
-	g_status_code = status_code;
+	env->status_code = status_code;
 	cmd->is_error = 1;
 }
 

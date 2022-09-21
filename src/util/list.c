@@ -73,7 +73,7 @@ int	is_nullstr_in_list(t_list *list, t_env *env)
 		if (list->str == NULL)
 		{
 			printf("parse error near `|'\n");
-			g_status_code = 258;
+			env->status_code = 258;
 			free_list(first_node);
 			return (1);
 		}

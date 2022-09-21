@@ -72,6 +72,6 @@ void	exec_history(t_cmd *cmd, t_env *env, int i)
 	else
 	{
 		printf("history: too many arguments\n");
-		g_status_code = 1;
+		env->status_code = 1;
 	}
 }

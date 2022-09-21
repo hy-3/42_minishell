@@ -35,6 +35,6 @@ void	exec_env(t_cmd *cmd, t_env *env, int i)
 	else
 	{
 		printf("env: %s: No such file or directory\n", cmd->exec_args[1]);
-		g_status_code = 127;
+		env->status_code = 127;
 	}
 }
