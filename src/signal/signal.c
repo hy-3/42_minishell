@@ -25,12 +25,10 @@ void	ctrlc_handler(int sig)
 	}
 	else
 	{
-		if (g_condition == 2)
-			g_condition = -2;
-		else
+		if (g_condition != 2)
 		{
 			g_condition = -1;
-			rl_on_new_line(); //TODO: when cat/wc, don't run this line & status_code 130
+			rl_on_new_line();
 		}
 		write(1, "\n", 1);
 		rl_replace_line("", 0);

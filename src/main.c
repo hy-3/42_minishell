@@ -38,8 +38,6 @@ int	main(int argc, char *argv[], char *envp[])
 	{
 		if (g_condition == -1)
 			env.status_code = 1;
-		if (g_condition == -2)
-			env.status_code = 130;
 		g_condition = 0;
 		original_str = readline("minishell> ");
 		if (!original_str)

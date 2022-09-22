@@ -61,10 +61,6 @@ $ echo "   $HOME "s
 -> DONE
 
 # TODO
-- add signal to cat/wc
-    -> set negative g_status_code before execve & set 0 to g_status_code afterwards.
-    -> in signal, do nothing.
-- add signal to heredoc
 - fix
 > ls
 Makefile        README.md       lib             minishell       src             todo.md         wc
