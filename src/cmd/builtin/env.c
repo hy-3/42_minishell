@@ -19,7 +19,7 @@ void	cmd_env(t_cmd *cmd, t_env *env, int fd)
 	k = 0;
 	while (env->current_envp[k] != NULL)
 	{
-		if (is_exist_in_env(env->first_envp, env->current_envp[k]) == 1)
+		if (ft_strchr(env->current_envp[k], '=') != NULL)
 		{
 			write(fd, env->current_envp[k], ft_strlen(env->current_envp[k]));
 			write(fd, "\n", 1);

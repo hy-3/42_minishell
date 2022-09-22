@@ -39,7 +39,6 @@ typedef struct s_list
 
 typedef struct s_env
 {
-	char	**first_envp;
 	char	**current_envp;
 	char	*pathenv;
 	int		num_of_next_node;

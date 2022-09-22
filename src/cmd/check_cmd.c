@@ -57,8 +57,8 @@ char	*is_cmd_exist_and_executable(char *path_env, char *cmd)
 			return (res);
 	}
 	res = check_f_and_x(cmd, each_path);
-	free(each_path);
 	if (res != NULL)
 		return (res);
+	free(each_path);
 	return (NULL);
 }

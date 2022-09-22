@@ -28,7 +28,6 @@ int	main(int argc, char *argv[], char *envp[])
 	if (argc != 1)
 		return (0);
 	// atexit(leaks); //TODO: check memory leaks
-	env.first_envp = copy_env(envp);
 	env.current_envp = copy_env(envp);
 	change_terminal_setting();
 	handle_signals();
@@ -60,7 +59,6 @@ int	main(int argc, char *argv[], char *envp[])
 		pipex(list, &env);
 		free_list(list);
 	}
-	free(env.first_envp);
 	free(env.current_envp);
 	return (0);
 }

@@ -61,11 +61,10 @@ $ echo "   $HOME "s
 -> DONE
 
 # TODO
+- check if necessary to handle
+    - history; ls 
+    - hisotry ; ls
+    - env: SHLVL=5 (increment new minishell starts, decrement going back to prev minishell)
 - close pipes (lsof -c minishell)
-- history; ls
--> change error message. check memory leak etc
-- env
-SHLVL=5
 - malloc handle, open/close
-- change env logic (only not update when there is no value)
 - norminate
