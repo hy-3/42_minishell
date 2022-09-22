@@ -43,22 +43,22 @@ char	*is_cmd_exist_and_executable(char *path_env, char *cmd)
 {
 	int		n;
 	char	**each_path;
-	char	*cmdath;
+	char	*cmdpath;
 	char	*res;
 
 	n = count_num_of_str(path_env, ':');
 	each_path = split_to_str(path_env, ':');
 	while (0 <= --n)
 	{
-		res = check_f_and_x(cmd, each_path);
+		cmdpath = create_cmdpath(each_path[n], cmd);
+		res = check_f_and_x(cmdpath, each_path);
+		free(cmdpath);
 		if (res != NULL)
 			return (res);
-		cmdath = create_cmdpath(each_path[n], cmd);
-		res = check_f_and_x(cmdath, each_path);
-		if (res != NULL)
-			return (res);
-		free(cmdath);
 	}
+	res = check_f_and_x(cmd, each_path);
 	free(each_path);
+	if (res != NULL)
+		return (res);
 	return (NULL);
 }

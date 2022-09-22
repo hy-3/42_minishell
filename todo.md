@@ -61,14 +61,6 @@ $ echo "   $HOME "s
 -> DONE
 
 # TODO
-- fix
-> ls
-Makefile        README.md       lib             minishell       src             todo.md         wc
-> ls | wc
-command not found
-- fix: no new line when ctlD
-minishell> 
-exit
 - close pipes (lsof -c minishell)
 - history; ls
 -> change error message. check memory leak etc

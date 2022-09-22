@@ -25,7 +25,9 @@ void	ctrlc_handler(int sig)
 	}
 	else
 	{
-		if (g_condition != 2)
+		if (g_condition == 2)
+			g_condition = -2;
+		else
 		{
 			g_condition = -1;
 			rl_on_new_line();
