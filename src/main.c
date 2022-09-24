@@ -13,76 +13,62 @@
 #include "minishell.h"
 
 /* -- to check -- */
-void leaks()
+void	leaks(void)
 {
 	system("leaks minishell");
 }
 /* -------------- */
 
-int	main(int argc, char *argv[], char *envp[])
+void	prep(t_env *env, char **envp)
 {
-	t_env		env;
-	t_list		*list;
-	char		*original_str;
-
-	if (argc != 1)
-		return (0);
-	// atexit(leaks); //TODO: check memory leaks
-	env.current_envp = copy_env(envp);
+	env->current_envp = copy_env(envp);
+	env->status_code = 0;
 	change_terminal_setting();
 	handle_signals();
-	env.status_code = 0;
 	g_condition = 0;
+}
+
+void	handle_globalvar_and_status_code(t_env *env)
+{
+	if (g_condition == -1)
+		env->status_code = 1;
+	if (g_condition == -2)
+		env->status_code = 130;
+	g_condition = 0;
+}
+
+void	handle_ctrld(void)
+{
+	printf("exit\n");
+	exit(0);
+}
+
+int	main(int argc, char *argv[], char *envp[])
+{
+	t_env	env;
+	t_list	*list;
+	char	*original_str;
+
+	// atexit(leaks); //TODO: check memory leaks
+	if (argc != 1 || argv[1])
+		return (0);
+	prep(&env, envp);
 	while (1)
 	{
-		if (g_condition == -1)
-			env.status_code = 1;
-		if (g_condition == -2)
-			env.status_code = 130;
-		g_condition = 0;
+		handle_globalvar_and_status_code(&env);
 		original_str = readline("minishell> ");
 		if (!original_str)
-		{
-			printf("exit\n");
-			exit(0);
-		}
+			handle_ctrld();
 		if (ft_strncmp(original_str, "", 2) == 0)
 			env.status_code = 0;
-		save_history(original_str);
+		else
+			save_history(original_str);
 		list = parse(original_str, &env);
 		free(original_str);
 		if (list == NULL)
 			continue ;
-		env.pathenv = get_value_of_pathenv(env.current_envp);
-		env.num_of_child = 0;
-		env.num_of_next_node = count_next_node(list);
 		pipex(list, &env);
-		free_list(list);
 	}
 	free(env.current_envp);
 	return (0);
 }
-
-		/* --- to check args --- */
-		// t_list *ex;
-		// int	i = 0;
-		// int	k;
-		// printf("//=====\n");
-		// while (list != NULL)
-		// {
-		// 	printf("node[%i]:%s.", i, list->str);
-		// 	printf("\n");
-		// 	k = 0;
-		// 	ex = list->extra;
-		// 	while (ex != NULL)
-		// 	{
-		// 		printf("node[%i.%i]:%s.",i,k,ex->str);
-		// 		printf("\n");
-		// 		ex = ex->extra;
-		// 		k++;
-		// 	}
-		// 	list = list->next;
-		// 	i++;
-		// }
-		// printf("=====//\n");
-		/* ---------------- */

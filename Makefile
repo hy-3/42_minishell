@@ -13,9 +13,12 @@ SRC = src/main.c \
 	  src/parse/check.c \
 	  src/parse/fill_str.c \
 	  src/parse/dollar.c \
+	  src/parse/dollar_util.c \
 	  src/cmd/check_cmd.c \
 	  src/cmd/external_cmd.c \
 	  src/cmd/pipex.c \
+	  src/cmd/close_pipe.c \
+	  src/cmd/wait.c \
 	  src/cmd/builtin/cd.c \
 	  src/cmd/builtin/echo.c \
 	  src/cmd/builtin/env.c \
@@ -46,8 +49,7 @@ $(NAME): $(OBJ)
 	$(CC) $(OBJ) $(LIBFT) $(FLAG_LIB) $(FLAG_WARN) -o $(NAME)
 
 %.o: %.c
-	$(CC) $(FLAGS) -c $< -o $@ 
-#TODO: $(FLAG_WARN)
+	$(CC) $(FLAG_WARN) -c $< -o $@ 
 
 clean:
 	make clean -C $(LIBFT_PATH)

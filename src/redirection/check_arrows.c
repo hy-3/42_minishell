@@ -95,19 +95,8 @@ t_list	*double_left_arrow(t_list *list, t_cmd *cmd, t_env *env)
 			while (1)
 			{
 				str = readline("> ");
-				if (g_condition == -1)
-				{
-					cmd->is_error = 1;
-					free(str);
+				if (write_heredoc(list, cmd, str) == 1)
 					break ;
-				}
-				if (str == NULL || ft_strncmp(str, list->str, ft_strlen(list->str) + 1) == 0)
-				{
-					free(str);
-					break ;
-				}
-				write(cmd->heredoc_p[1], str, ft_strlen(str));
-				free(str);
 			}
 			cmd->is_heredoc = 1;
 		}

@@ -14,8 +14,9 @@
 
 void	ctrlc_handler(int sig)
 {
-	extern int rl_done;
+	extern int	rl_done;
 
+	sig = 0;
 	if (g_condition == 1)
 	{
 		rl_done = 1;
@@ -40,11 +41,13 @@ void	ctrlc_handler(int sig)
 
 void	ctrlslash_handler(int sig)
 {
+	sig = 0;
 	rl_redisplay();
 }
 
-int readline_event(void){
-	return 0;
+int	readline_event(void)
+{
+	return (0);
 }
 
 void	handle_signals(void)

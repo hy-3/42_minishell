@@ -101,10 +101,14 @@ void	check_quote_condition(t_parse *parse, char c);
 int		is_include_cmd(char *original_str, t_fill *fill);
 //	- fill_str.c
 void	fill_str(char *original_str, t_fill *fill, t_parse *parse, t_env *env);
-void	fill_al(char *original_str, t_fill *fill, t_parse *parse, t_env *env);
+void	fill_al(char *original_str, t_fill *fill);
 //	- dollar.c
-int		is_dollar_exist(char *tmp_str);
 char	*convert_str_from_dollar(t_fill *fill, t_env *env);
+//	- dollar_util.c
+void	upd_dollar_start_and_end(t_fill *fill, t_dollar *dollar);
+int		is_dollar_exist(char *tmp_str);
+int		find_question_position(char *str);
+int		calc_length(t_dollar *dollar, t_fill *fill);
 
 // src/signal
 //	- signal.c
@@ -131,6 +135,11 @@ void	pipex(t_list *list, t_env *env);
 char	*is_cmd_exist_and_executable(char *path_env, char *cmd);
 //	- external_cmd.c
 void	exec_external_cmd(t_cmd *cmd, t_env *env, int i);
+//	- close_pipe.c
+void	close_pipes(t_env *env, t_cmd *cmd, int i);
+void	close_pipes_when_ctrlc(t_env *env, t_cmd *cmd, int i);
+//	- wait.c
+void	handle_wait(t_env *env, t_cmd *cmd);
 
 // src/cmd/builtin
 //	- *.c
@@ -152,6 +161,7 @@ void	handle_err1(char *str, t_env *env, t_cmd *cmd, int status_code);
 void	handle_err2(char *str, t_env *env, t_cmd *cmd, int status_code);
 int		is_special_char(char first_char);
 t_list	*arrow_special_case(t_list *list, t_cmd *cmd, t_env *env);
+int		write_heredoc(t_list *list, t_cmd *cmd, char *str);
 //	- bultin_fd.c
 int		get_output_fd(t_cmd *cmd, t_env *env, int i);
 //	- external_cmd_fd.c

@@ -25,7 +25,7 @@ void	create_arrow_str(char *original_str, t_fill *fill, int i)
 	fill->tmp_str[k] = '\0';
 }
 
-void	fill_al(char *original_str, t_fill *fill, t_parse *parse, t_env *env)
+void	fill_al(char *original_str, t_fill *fill)
 {
 	int	i;
 	int	start;

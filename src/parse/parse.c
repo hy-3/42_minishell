@@ -28,7 +28,7 @@ void	handle_str(char *original_str, t_list *list, t_env *env, t_parse *parse)
 		if (is_include_cmd(original_str, &fill) == 0)
 			break ;
 		if (original_str[fill.start] == '>' || original_str[fill.start] == '<')
-			fill_al(original_str, &fill, parse, env);
+			fill_al(original_str, &fill);
 		else
 			fill_str(original_str, &fill, parse, env);
 		free(fill.tmp_str);

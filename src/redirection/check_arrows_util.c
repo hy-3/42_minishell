@@ -12,6 +12,29 @@
 
 #include "../minishell.h"
 
+int	write_heredoc(t_list *list, t_cmd *cmd, char *str)
+{
+	char	*str_with_newline;
+
+	if (g_condition == -1)
+	{
+		cmd->is_error = 1;
+		free(str);
+		return (1);
+	}
+	if (str == NULL \
+			|| ft_strncmp(str, list->str, ft_strlen(list->str) + 1) == 0)
+	{
+		free(str);
+		return (1);
+	}
+	str_with_newline = ft_strjoin(str, "\n");
+	write(cmd->heredoc_p[1], str_with_newline, ft_strlen(str_with_newline));
+	free(str);
+	free(str_with_newline);
+	return (0);
+}
+
 void	handle_err2(char *str, t_env *env, t_cmd *cmd, int status_code)
 {
 	printf("%s\n", str);

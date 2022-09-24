@@ -12,7 +12,7 @@
 
 #include "../../minishell.h"
 
-void	cmd_env(t_cmd *cmd, t_env *env, int fd)
+void	cmd_env(t_env *env, int fd)
 {
 	int	k;
 
@@ -31,7 +31,7 @@ void	cmd_env(t_cmd *cmd, t_env *env, int fd)
 void	exec_env(t_cmd *cmd, t_env *env, int i)
 {
 	if (cmd->num_of_args == 1)
-		cmd_env(cmd, env, get_output_fd(cmd, env, i));
+		cmd_env(env, get_output_fd(cmd, env, i));
 	else
 	{
 		printf("env: %s: No such file or directory\n", cmd->exec_args[1]);

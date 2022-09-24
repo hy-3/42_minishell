@@ -32,7 +32,7 @@ char	**handle_export(char **old_envp, char *str, t_env *env)
 	return (old_envp);
 }
 
-void	print_export(t_cmd *cmd, t_env *env, int fd)
+void	print_export(t_env *env, int fd)
 {
 	int		k;
 	char	*new_str;
@@ -53,7 +53,7 @@ void	exec_export(t_cmd *cmd, t_env *env, int i)
 	int	k;
 
 	if (cmd->num_of_args == 1)
-		print_export(cmd, env, get_output_fd(cmd, env, i));
+		print_export(env, get_output_fd(cmd, env, i));
 	else
 	{
 		k = 1;

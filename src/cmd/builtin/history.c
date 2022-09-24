@@ -21,6 +21,12 @@ void	write_each_line(int fd, char *id_str, char *str)
 	write(fd, "\n", 1);
 }
 
+void	handle_error(t_env *env)
+{
+	printf("history: too many arguments\n");
+	env->status_code = 1;
+}
+
 void	save_history(char *str)
 {
 	int		fd;
@@ -72,8 +78,5 @@ void	exec_history(t_cmd *cmd, t_env *env, int i)
 			cust_perror("Error(close: input_fd)", 1);
 	}
 	else
-	{
-		printf("history: too many arguments\n");
-		env->status_code = 1;
-	}
+		handle_error(env);
 }

@@ -38,6 +38,20 @@ void	first_cmd_fd(t_cmd *cmd, t_env *env, int i)
 	}
 }
 
+void	middle_cmd_output_fd(t_cmd *cmd, t_env *env, int i)
+{
+	if (cmd->output_fd != 1)
+	{
+		if (dup2(cmd->output_fd, 1) == -1)
+			cust_perror("Error(middle_cmd: dup2 output_fd)", 1);
+	}
+	else
+	{
+		if (dup2(env->p[i][1], 1) == -1)
+			cust_perror("Error(middle_cmd: dup2 env->p[i][1])", 1);
+	}
+}
+
 void	middle_cmd_fd(t_cmd *cmd, t_env *env, int i)
 {
 	if (close(env->p[i - 1][1]) == -1)
@@ -61,16 +75,7 @@ void	middle_cmd_fd(t_cmd *cmd, t_env *env, int i)
 		if (dup2(env->p[i - 1][0], 0) == -1)
 			cust_perror("Error(middle_cmd: dup2 env->p[i - 1][0])", 1);
 	}
-	if (cmd->output_fd != 1)
-	{
-		if (dup2(cmd->output_fd, 1) == -1)
-			cust_perror("Error(middle_cmd: dup2 output_fd)", 1);
-	}
-	else
-	{
-		if (dup2(env->p[i][1], 1) == -1)
-			cust_perror("Error(middle_cmd: dup2 env->p[i][1])", 1);
-	}
+	middle_cmd_output_fd(cmd, env, i);
 }
 
 void	last_cmd_fd(t_cmd *cmd, t_env *env, int i)
