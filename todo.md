@@ -61,8 +61,7 @@ $ echo "   $HOME "s
 -> DONE
 
 # TODO
-- check if necessary to handle
+- check if it's necessary to handle
     - history; ls 
     - hisotry ; ls
     - env: SHLVL=5 (increment new minishell starts, decrement going back to prev minishell)
-- norminate
