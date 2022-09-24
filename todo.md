@@ -65,6 +65,4 @@ $ echo "   $HOME "s
     - history; ls 
     - hisotry ; ls
     - env: SHLVL=5 (increment new minishell starts, decrement going back to prev minishell)
-- close pipes (lsof -c minishell)
-- malloc handle, open/close
 - norminate

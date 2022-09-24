@@ -35,13 +35,19 @@ int	is_special_char(char first_char)
 
 t_list	*arrow_special_case(t_list *list, t_cmd *cmd, t_env *env)
 {
+	int	fd;
+
 	list = list->extra;
 	if (list == NULL)
 		handle_err1("syntax error near unexpected token", env, cmd, 258);
 	else
 	{
-		open(list->str, O_CREAT | O_TRUNC | O_WRONLY, 0777);
+		fd = open(list->str, O_CREAT | O_TRUNC | O_WRONLY, 0777);
+		if (fd == -1)
+			cust_write("file open error with <>\n", 1);
 		list = list->extra;
+		if (close(fd) == -1)
+			cust_perror("Error(close: fd with <>)", 1);
 	}
 	return (list);
 }

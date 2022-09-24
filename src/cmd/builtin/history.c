@@ -44,7 +44,8 @@ void	save_history(char *str)
 	id_str = ft_itoa(id);
 	write_each_line(fd, id_str, str);
 	free(id_str);
-	close(fd);
+	if (close(fd) == -1)
+		cust_perror("Error(close: .history)", 1);
 }
 
 void	exec_history(t_cmd *cmd, t_env *env, int i)
@@ -67,7 +68,8 @@ void	exec_history(t_cmd *cmd, t_env *env, int i)
 			write(output_fd, each_cmd, ft_strlen(each_cmd));
 			free(each_cmd);
 		}
-		close(input_fd);
+		if (close(input_fd) == -1)
+			cust_perror("Error(close: input_fd)", 1);
 	}
 	else
 	{

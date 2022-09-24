@@ -79,7 +79,6 @@ t_list	*single_left_arrow(t_list *list, t_cmd *cmd, t_env *env)
 t_list	*double_left_arrow(t_list *list, t_cmd *cmd, t_env *env)
 {
 	char	*str;
-	char	*limit_str;
 
 	list = list->extra;
 	if (list == NULL)
@@ -92,7 +91,6 @@ t_list	*double_left_arrow(t_list *list, t_cmd *cmd, t_env *env)
 		{
 			if (pipe(cmd->heredoc_p) < 0)
 				cust_perror("Error(pipe: heredoc_p)", 1);
-			limit_str = ft_strjoin(list->str, "\n");
 			g_condition = 1;
 			while (1)
 			{
@@ -103,7 +101,7 @@ t_list	*double_left_arrow(t_list *list, t_cmd *cmd, t_env *env)
 					free(str);
 					break ;
 				}
-				if (str == NULL || ft_strncmp(str, limit_str, ft_strlen(limit_str)) == 0)
+				if (str == NULL || ft_strncmp(str, list->str, ft_strlen(list->str) + 1) == 0)
 				{
 					free(str);
 					break ;
@@ -111,7 +109,6 @@ t_list	*double_left_arrow(t_list *list, t_cmd *cmd, t_env *env)
 				write(cmd->heredoc_p[1], str, ft_strlen(str));
 				free(str);
 			}
-			free(limit_str);
 			cmd->is_heredoc = 1;
 		}
 		list = list->extra;

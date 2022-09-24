@@ -70,6 +70,8 @@ void	convert_dollar_part(t_fill *fill, t_env *env, t_dollar *dollar)
 	upd_dollar_start_and_end(fill, dollar);
 	var_name = (char *) malloc((dollar->end - dollar->start + 1) \
 					* sizeof(char));
+	if (var_name == NULL)
+		cust_write("malloc failed\n", 1);
 	i = 0;
 	dollar->start++;
 	while (dollar->start < dollar->end)
@@ -104,6 +106,8 @@ char	*convert_str_from_dollar(t_fill *fill, t_env *env)
 	total_length = dollar.tmp_start + dollar.size_dollar_part + \
 					(ft_strlen(fill->tmp_str) - dollar.end) + 1;
 	converted_str = (char *) malloc(total_length * sizeof(char));
+	if (converted_str == NULL)
+		cust_write("malloc failed\n", 1);
 	i = 0;
 	while (i < dollar.tmp_start)
 	{

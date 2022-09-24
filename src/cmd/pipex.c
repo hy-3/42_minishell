@@ -82,12 +82,37 @@ void	pipex(t_list *list, t_env *env)
 			cust_perror("Error(pipex)", 1);
 		config_execargs(list, &cmd, env);
 		if (cmd.is_error == 1)
+		{
+			if (g_condition < 0)
+			{
+				close(env->p[i][0]);
+				close(env->p[i][1]);
+				close(cmd.heredoc_p[0]);
+				close(cmd.heredoc_p[1]);
+			}
 			return ;
+		}
 		if (cmd.num_of_args != 0 && cmd.is_error == 0)
 			exec_cmd(&cmd, env, i);
+		if (cmd.is_heredoc == 1)
+		{
+			if (close(cmd.heredoc_p[0]) == -1)
+				cust_perror("Error(close: cmd->heredoc_p[0])", 1);
+			if (close(cmd.heredoc_p[1]) == -1)
+				cust_perror("Error(close: cmd->heredoc_p[1])", 1);
+		}
+		if (i > 0)
+			if (!((close(env->p[i - 1][0]) == 0) && (close(env->p[i - 1][1]) == 0)))
+				cust_perror("Error(close: p[i - 1][0] or p[i - 1][1])", 1);
+		if (cmd.input_fd != 0)
+			close(cmd.input_fd);
+		if (cmd.output_fd != 1)
+			close(cmd.output_fd);
 		list = list->next;
 		i++;
 	}
+	if (!((close(env->p[i - 1][0]) == 0) && (close(env->p[i - 1][1]) == 0)))
+		cust_perror("Error(close: last pipe)", 1);
 	if (cmd.pid != 0)
 	{
 		env->num_of_child--;

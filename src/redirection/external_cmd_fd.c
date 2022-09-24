@@ -30,8 +30,6 @@ void	first_cmd_fd(t_cmd *cmd, t_env *env, int i)
 	{
 		if (dup2(cmd->output_fd, 1) == -1)
 			cust_perror("Error(first_cmd: dup2 output_fd)", 1);
-		if (close(cmd->output_fd) == -1) //TODO: check if it's necessary
-			cust_perror("TEMP", 1);
 	}
 	else if (env->num_of_next_node > 1)
 	{

@@ -23,24 +23,14 @@ void	child(t_cmd *cmd, t_env *env)
 
 void	exec_external_cmd(t_cmd *cmd, t_env *env, int i)
 {
+	g_condition = 2;
 	cmd->pid = fork();
 	if (cmd->pid < 0)
 		cust_perror("Error(fork: cmd->pid)", 1);
-	g_condition = 2;
 	if (cmd->pid == 0)
 	{
 		organize_fd(cmd, env, i);
 		child(cmd, env);
 	}
-	if (cmd->is_heredoc == 1)
-	{
-		if (close(cmd->heredoc_p[0]) == -1)
-			cust_perror("Error(close: cmd->heredoc_p[0])", 1);
-		if (close(cmd->heredoc_p[1]) == -1)
-			cust_perror("Error(close: cmd->heredoc_p[1])", 1);
-	}
-	if (i > 0)
-		if (!((close(env->p[i - 1][0]) == 0) && (close(env->p[i - 1][1]) == 0)))
-			cust_perror("Error(close: p[i - 1][0] or p[i - 1][1])", 1);
 	env->num_of_child += 1;
 }
