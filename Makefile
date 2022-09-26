@@ -29,6 +29,7 @@ SRC = src/main.c \
 	  src/cmd/builtin/history.c \
 	  src/env/env_upd.c \
 	  src/env/env_util.c \
+	  src/env/shlvl.c \
 	  src/redirection/check_arrows.c \
 	  src/redirection/check_arrows_util.c \
 	  src/redirection/builtin_fd.c \

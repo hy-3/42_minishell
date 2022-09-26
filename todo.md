@@ -1,7 +1,6 @@
-[Hiro] Not interpret unclosed quotes or unspecified special characters like \ or ;.
-- when quote is not closed: change from error to giving back prompt
+x [Hiro] Not interpret unclosed quotes or unspecified special characters like \ or ;.
 
-[Hiro] Not use more than one global variable, think about it and be ready to explain why you do it.
+x [Hiro] Not use more than one global variable, think about it and be ready to explain why you do it.
 - Used for status code of process to update status code when ctlC pressed.
 
 x [Hiro] Show a prompt when waiting for a new command.
@@ -59,9 +58,3 @@ $ echo "$HOME"s
 $ echo "   $HOME "s 
    /Users/hiyamamo s
 -> DONE
-
-# TODO
-- check if it's necessary to handle
-    - history; ls 
-    - hisotry ; ls
-    - env: SHLVL=5 (increment new minishell starts, decrement going back to prev minishell)

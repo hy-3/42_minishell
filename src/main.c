@@ -22,6 +22,7 @@ void	leaks(void)
 void	prep(t_env *env, char **envp)
 {
 	env->current_envp = copy_env(envp);
+	increment_shlvl(env);
 	env->status_code = 0;
 	change_terminal_setting();
 	handle_signals();

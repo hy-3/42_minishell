@@ -127,6 +127,8 @@ int		calc_envp_size(char **envp);
 int		count_till_equal(char *str);
 int		is_exist_in_env(char **envp, char *str);
 int		is_valid_envname(char *str);
+//	- shlvl.c
+void	increment_shlvl(t_env *env);
 
 // src/cmd
 //	- pipex.c
@@ -148,6 +150,7 @@ void	exec_echo(t_cmd *cmd, t_env *env, int i);
 void	exec_env(t_cmd *cmd, t_env *env, int i);
 void	exec_exit(t_cmd *cmd, t_env *env, int i);
 void	exec_export(t_cmd *cmd, t_env *env, int i);
+char	**handle_export(char **old_envp, char *str, t_env *env);
 void	exec_pwd(t_cmd *cmd, t_env *env, int i);
 void	exec_unset(t_cmd *cmd, t_env *env, int i);
 void	exec_history(t_cmd *cmd, t_env *env, int i);
