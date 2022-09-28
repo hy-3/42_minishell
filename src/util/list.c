@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 17:05:54 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/09/19 19:12:41 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/09/28 15:35:20 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ int	is_nullstr_in_list(t_list *list, t_env *env)
 void	free_list(t_list *list)
 {
 	t_list	*ex;
+	t_list	*tmp_next;
+	t_list	*tmp_ex;
 
 	while (list != NULL)
 	{
@@ -95,10 +97,12 @@ void	free_list(t_list *list)
 		{
 			if (ex->str != NULL)
 				free(ex->str);
-			free(ex);
+			tmp_ex = ex;
 			ex = ex->extra;
+			free(tmp_ex);
 		}
-		free(list);
+		tmp_next = list;
 		list = list->next;
+		free(tmp_next);
 	}
 }
