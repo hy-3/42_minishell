@@ -6,11 +6,36 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 17:04:54 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/09/19 19:11:53 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/09/28 18:46:25 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+char	*pos_if_exist_in_env(char **envp, char *str)
+{
+	int	i;
+
+	i = 0;
+	while (envp[i] != NULL)
+	{
+		if (count_till_equal(envp[i]) == count_till_equal(str))
+			if (ft_strncmp(envp[i], str, count_till_equal(str)) == 0)
+				return (&(envp[i][count_till_equal(envp[i])]));
+		i++;
+	}
+	return (NULL);
+}
+
+char	*cust_getenv(char *key, t_env *env)
+{
+	char	*pos;
+
+	pos = pos_if_exist_in_env(env->current_envp, key);
+	if (pos != NULL)
+		return (++pos);
+	return (NULL);
+}
 
 void	convert_dollar_part(t_fill *fill, t_env *env, t_dollar *dollar)
 {
@@ -33,7 +58,7 @@ void	convert_dollar_part(t_fill *fill, t_env *env, t_dollar *dollar)
 		dollar->is_free_needed = 1;
 	}
 	else
-		dollar->str_dollar_part = getenv(var);
+		dollar->str_dollar_part = cust_getenv(var, env);
 	if (dollar->str_dollar_part == NULL)
 		dollar->size_dollar_part = 0;
 	else

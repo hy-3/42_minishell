@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 17:04:05 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/09/28 15:23:20 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/09/28 18:45:12 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,24 @@ void	handle_ctrld(void)
 	exit(0);
 }
 
+int	check_original_str(char *original_str, t_env *env)
+{
+	char	*trimmed_original_str;
+
+	if (!original_str)
+		handle_ctrld();
+	trimmed_original_str = ft_strtrim(original_str, " \t");
+	if (ft_strncmp(trimmed_original_str, "", 2) == 0)
+	{
+		env->status_code = 0;
+		free(original_str);
+		free(trimmed_original_str);
+		return (1);
+	}
+	free(trimmed_original_str);
+	return (0);
+}
+
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_env	env;
@@ -50,10 +68,8 @@ int	main(int argc, char *argv[], char *envp[])
 	{
 		handle_globalvar_and_status_code(&env);
 		original_str = readline("minishell> ");
-		if (!original_str)
-			handle_ctrld();
-		if (ft_strncmp(original_str, "", 2) == 0)
-			env.status_code = 0;
+		if (check_original_str(original_str, &env) == 1)
+			continue ;
 		save_history(original_str);
 		list = parse(original_str, &env);
 		free(original_str);

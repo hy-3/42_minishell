@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hiyamamo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 17:03:12 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/09/19 17:03:14 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/09/28 18:28:33 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ char	*is_cmd_exist_and_executable(char *path_env, char *cmd)
 	{
 		cmdpath = create_cmdpath(each_path[n], cmd);
 		res = check_f_and_x(cmdpath, each_path);
-		free(cmdpath);
 		if (res != NULL)
 			return (res);
 	}

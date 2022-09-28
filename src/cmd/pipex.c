@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 17:03:27 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/09/28 15:17:45 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/09/28 18:26:14 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ void	pipex(t_list *list, t_env *env)
 		if (cmd.is_error == 1)
 		{
 			close_pipes_when_ctrlc(env, &cmd, i);
-			free_list(list);
 			return ;
 		}
 		if (cmd.num_of_args != 0 && cmd.is_error == 0)
