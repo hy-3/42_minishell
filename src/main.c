@@ -14,6 +14,10 @@
 
 void	prep(t_env *env, char **envp)
 {
+	char	program_path[PATH_MAX];
+
+	getcwd(program_path, PATH_MAX);
+	env->history_file = ft_strjoin(program_path, "/.history");
 	env->current_envp = copy_env(envp);
 	increment_shlvl(env);
 	env->status_code = 0;
@@ -70,7 +74,7 @@ int	main(int argc, char *argv[], char *envp[])
 		original_str = readline("minishell> ");
 		if (check_original_str(original_str, &env) == 1)
 			continue ;
-		save_history(original_str);
+		save_history(original_str, &env);
 		list = parse(original_str, &env);
 		free(original_str);
 		if (list == NULL)
@@ -79,5 +83,6 @@ int	main(int argc, char *argv[], char *envp[])
 		free_list(list);
 	}
 	free(env.current_envp);
+	free(env.history_file);
 	return (0);
 }

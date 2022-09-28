@@ -29,14 +29,22 @@ void	upd_pwd(t_env *env, char *old_path)
 
 void	cd_to_home(t_cmd *cmd, t_env *env)
 {
+	char	*tmp;
 	char	*var;
 
-	var = getenv("HOME");
+	if (cmd->num_of_args == 1)
+		tmp = ft_strdup("");
+	else
+		tmp = ft_substr(cmd->exec_args[1], 1, ft_strlen(cmd->exec_args[1]));
+	var = ft_strjoin(getenv("HOME"), tmp);
+	free(tmp);
 	if (chdir(var) == -1)
 	{
 		printf("%s: No such file or directory\n", cmd->exec_args[1]);
+		free(var);
 		env->status_code = 1;
 	}
+	free(var);
 }
 
 void	cd_to_oldpwd(t_cmd *cmd, t_env *env)
@@ -62,7 +70,7 @@ void	exec_cd(t_cmd *cmd, t_env *env, int i)
 			cd_to_home(cmd, env);
 		else
 		{
-			if (ft_strncmp(cmd->exec_args[1], "~", 2) == 0)
+			if (cmd->exec_args[1][0] == '~')
 				cd_to_home(cmd, env);
 			else if (ft_strncmp(cmd->exec_args[1], "-", 2) == 0)
 				cd_to_oldpwd(cmd, env);

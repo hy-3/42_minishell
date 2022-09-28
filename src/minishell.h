@@ -45,6 +45,7 @@ typedef struct s_env
 	int		num_of_child;
 	int		status_code;
 	int		p[ARG_MAX][2];
+	char	*history_file;
 }	t_env;
 
 typedef struct s_cmd
@@ -155,7 +156,7 @@ char	**handle_export(char **old_envp, char *str, t_env *env);
 void	exec_pwd(t_cmd *cmd, t_env *env, int i);
 void	exec_unset(t_cmd *cmd, t_env *env, int i);
 void	exec_history(t_cmd *cmd, t_env *env, int i);
-void	save_history(char *str);
+void	save_history(char *str, t_env *env);
 
 // redirection
 //	- check_arrows.c

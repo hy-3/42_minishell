@@ -27,7 +27,7 @@ void	handle_error(t_env *env)
 	env->status_code = 1;
 }
 
-void	save_history(char *str)
+void	save_history(char *str, t_env *env)
 {
 	int		fd;
 	int		id;
@@ -36,9 +36,9 @@ void	save_history(char *str)
 
 	if (ft_strncmp(str, "", 2) == 0)
 		return ;
-	fd = open(".history", O_CREAT | O_RDWR | O_APPEND, 0777);
+	fd = open(env->history_file, O_CREAT | O_RDWR | O_APPEND, 0777);
 	if (fd == -1)
-		cust_write("file open error\n", 1);
+		cust_write("file open error 222\n", 1);
 	add_history(str);
 	id = 1;
 	while (1)
@@ -64,7 +64,7 @@ void	exec_history(t_cmd *cmd, t_env *env, int i)
 
 	if (cmd->num_of_args == 1)
 	{
-		input_fd = open(".history", O_RDONLY);
+		input_fd = open(env->history_file, O_RDONLY);
 		if (input_fd == -1)
 			cust_write("file open error\n", 1);
 		output_fd = get_output_fd(cmd, env, i);
