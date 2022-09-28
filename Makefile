@@ -1,10 +1,8 @@
 NAME = minishell
 CC = gcc
-FLAG_WARN = -Wall -Wextra -Werror #-fsanitize=address -g3
-# LDFLAGS = -L ~/brew/opt/readline/lib/
-# CPPFLAGS = -I ~/brew/opt/readline/include/
-LDFLAGS = -L /usr/local/opt/readline/lib
-CPPFLAGS = -I /usr/local/opt/readline/include
+FLAG_WARN = -Wall -Wextra -Werror
+LDFLAGS = -L ~/brew/opt/readline/lib/
+CPPFLAGS = -I ~/brew/opt/readline/include/
 FLAG_LIB = -lreadline $(LDFLAGS) $(CPPFLAGS)
 LIBFT_PATH = lib/libft/
 LIBFT = $(LIBFT_PATH)/libft.a

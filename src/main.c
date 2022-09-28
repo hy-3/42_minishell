@@ -6,18 +6,11 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 17:04:05 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/09/20 20:24:25 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/09/28 15:23:20 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/* -- to check -- */
-void	leaks(void)
-{
-	system("leaks minishell");
-}
-/* -------------- */
 
 void	prep(t_env *env, char **envp)
 {
@@ -50,7 +43,6 @@ int	main(int argc, char *argv[], char *envp[])
 	t_list	*list;
 	char	*original_str;
 
-	// atexit(leaks); //TODO: check memory leaks
 	if (argc != 1 || argv[1])
 		return (0);
 	prep(&env, envp);
@@ -62,13 +54,13 @@ int	main(int argc, char *argv[], char *envp[])
 			handle_ctrld();
 		if (ft_strncmp(original_str, "", 2) == 0)
 			env.status_code = 0;
-		else
-			save_history(original_str);
+		save_history(original_str);
 		list = parse(original_str, &env);
 		free(original_str);
 		if (list == NULL)
 			continue ;
 		pipex(list, &env);
+		free_list(list);
 	}
 	free(env.current_envp);
 	return (0);

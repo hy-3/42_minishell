@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 17:04:35 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/09/19 19:14:00 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/09/28 15:25:08 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # include <readline/history.h>
 # include <signal.h>
 
-# define BUFFER_SIZE 10 //TODO: check (for gnl)
+# define BUFFER_SIZE 10
 
 int	g_condition;
 
@@ -44,12 +44,12 @@ typedef struct s_env
 	int		num_of_next_node;
 	int		num_of_child;
 	int		status_code;
-	int		p[100][2];
+	int		p[ARG_MAX][2];
 }	t_env;
 
 typedef struct s_cmd
 {
-	char	*exec_args[100];
+	char	*exec_args[ARG_MAX];
 	int		pid;
 	int		input_fd;
 	int		output_fd;

@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 17:02:49 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/09/19 19:11:29 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/09/28 15:20:41 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ void	save_history(char *str)
 	char	*id_str;
 	char	*each_cmd;
 
+	if (ft_strncmp(str, "", 2) == 0)
+		return ;
 	fd = open(".history", O_CREAT | O_RDWR | O_APPEND, 0777);
 	if (fd == -1)
 		cust_write("file open error\n", 1);

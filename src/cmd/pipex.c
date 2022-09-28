@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 17:03:27 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/09/19 19:14:25 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/09/28 15:17:45 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,5 +89,4 @@ void	pipex(t_list *list, t_env *env)
 	if (!((close(env->p[i - 1][0]) == 0) && (close(env->p[i - 1][1]) == 0)))
 		cust_perror("Error(close: last pipe)", 1);
 	handle_wait(env, &cmd);
-	free_list(list);
 }
