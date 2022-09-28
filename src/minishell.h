@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 17:04:35 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/09/28 15:25:08 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/09/28 18:57:52 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ void	fill_str(char *original_str, t_fill *fill, t_parse *parse, t_env *env);
 void	fill_al(char *original_str, t_fill *fill);
 //	- dollar.c
 char	*convert_str_from_dollar(t_fill *fill, t_env *env);
+char	*cust_getenv(char *key, t_env *env);
 //	- dollar_util.c
 void	upd_dollar_start_and_end(t_fill *fill, t_dollar *dollar);
 int		is_dollar_exist(char *tmp_str);
