@@ -32,6 +32,8 @@ void	handle_globalvar_and_status_code(t_env *env)
 		env->status_code = 1;
 	if (g_condition == -2)
 		env->status_code = 130;
+	if (g_condition == -3)
+		env->status_code = 131;
 	g_condition = 0;
 }
 

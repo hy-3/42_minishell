@@ -42,7 +42,16 @@ void	ctrlc_handler(int sig)
 void	ctrlslash_handler(int sig)
 {
 	sig = 0;
-	rl_redisplay();
+	if (g_condition == 2)
+	{
+		g_condition = -3;
+		printf("Quit: 3\n");
+	}
+	else
+	{
+		rl_on_new_line();
+		rl_redisplay();
+	}
 }
 
 int	readline_event(void)
