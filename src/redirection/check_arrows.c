@@ -117,14 +117,11 @@ t_list	*check_arrows(t_list *list, t_cmd *cmd, t_env *env)
 		list = double_left_arrow(list, cmd, env);
 	else if (ft_strncmp(list->str, "<>", 3) == 0)
 		list = arrow_special_case(list, cmd, env);
-	else
+	else if (ft_strncmp(list->str, ">>>", 3) == 0 || \
+				ft_strncmp(list->str, "<<<", 3) == 0)
 	{
-		if (ft_strchr(list->str, '<') != NULL \
-				|| ft_strchr(list->str, '>') != NULL)
-		{
-			handle_err1("syntax error near unexpected token", env, cmd, 258);
-			list = NULL;
-		}
+		handle_err1("syntax error near unexpected token", env, cmd, 258);
+		list = NULL;
 	}
 	return (list);
 }

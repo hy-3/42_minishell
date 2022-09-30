@@ -56,8 +56,14 @@ void	config_execargs(t_list *list, t_cmd *cmd, t_env *env)
 		list = check_arrows(list, cmd, env);
 		if (list == NULL)
 			break ;
-		cmd->exec_args[k++] = list->str;
-		list = list->extra;
+		if (ft_strncmp(list->str, ">", 2) != 0 && \
+			ft_strncmp(list->str, ">>", 3) != 0 && \
+			ft_strncmp(list->str, "<", 2) != 0 && \
+			ft_strncmp(list->str, "<<", 3) != 0)
+		{
+			cmd->exec_args[k++] = list->str;
+			list = list->extra;
+		}
 	}
 	cmd->exec_args[k] = NULL;
 	cmd->num_of_args = k;
