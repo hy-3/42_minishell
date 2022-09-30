@@ -14,10 +14,14 @@
 
 void	child(t_cmd *cmd, t_env *env)
 {
-	char	*cmdath;
+	char	*cmdpath;
 
-	cmdath = is_cmd_exist_and_executable(env->pathenv, cmd->exec_args[0]);
-	if (execve(cmdath, cmd->exec_args, env->current_envp) == -1)
+	cmdpath = is_cmd_exist_and_executable(env->pathenv, cmd->exec_args[0]);
+	if (cmdpath == NULL && ft_strchr(cmd->exec_args[0], '/') != NULL)
+		cust_write("No such file or directory\n", 127);
+	if (open(cmdpath, O_DIRECTORY) != -1)
+		cust_write("is a directory\n", 126);
+	if (execve(cmdpath, cmd->exec_args, env->current_envp) == -1)
 		cust_write("command not found\n", 127);
 }
 
