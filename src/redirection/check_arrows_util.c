@@ -40,6 +40,7 @@ void	handle_err2(char *str, t_env *env, t_cmd *cmd, int status_code)
 	printf("%s\n", str);
 	env->status_code = status_code;
 	cmd->is_error = 2;
+	cmd->input_fd = 0;
 }
 
 void	handle_err1(char *str, t_env *env, t_cmd *cmd, int status_code)

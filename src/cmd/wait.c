@@ -19,6 +19,8 @@ int	wexitstatus(int status)
 
 void	cust_waitpid(int num_of_executed_cmd)
 {
+	if (g_condition == -1)
+		return ;
 	while (num_of_executed_cmd-- > 0)
 	{
 		if (waitpid(-1, NULL, 0) == -1)

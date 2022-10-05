@@ -44,13 +44,13 @@ typedef struct s_env
 	int		num_of_next_node;
 	int		num_of_child;
 	int		status_code;
-	int		p[ARG_MAX][2];
+	int		p[100][2];
 	char	*history_file;
 }	t_env;
 
 typedef struct s_cmd
 {
-	char	*exec_args[ARG_MAX];
+	char	*exec_args[100];
 	int		pid;
 	int		input_fd;
 	int		output_fd;

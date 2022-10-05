@@ -29,8 +29,11 @@ char	*check_f_and_x(char	*cmd, char **each_path)
 	{
 		if (access(cmd, X_OK) == 0)
 		{
-			cust_free(each_path);
-			free(each_path);
+			if (each_path != NULL)
+			{
+				cust_free(each_path);
+				free(each_path);
+			}
 			return (cmd);
 		}
 		else
