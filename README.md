@@ -1,6 +1,6 @@
 # Minishell
 
-Create a simple shell.
+Create a bash-like simple shell.
 <br>
 
 ## Overview
